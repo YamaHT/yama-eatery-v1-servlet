@@ -1,0 +1,17 @@
+Data\Model\ImageResource.class
+Business\Service\User\ProductService.class
+Data\Model\Product.class
+Data\Model\Order.class
+Data\DbContext.class
+Data\Model\Feedback.class
+Data\Model\Account.class
+Data\Repository\User\ProductRepository.class
+Utils\ImageUtils.class
+Data\Model\Delivery.class
+Data\Model\Profile.class
+Data\Model\Category.class
+Data\Model\OrderDetail.class
+Business\Controller\User\ProductController.class
+Data\Model\Shipping.class
+Business\Controller\Admin\OverviewManagementController.class
+Data\Model\Status.class

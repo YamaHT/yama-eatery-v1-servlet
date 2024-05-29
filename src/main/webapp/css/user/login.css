@@ -1,0 +1,448 @@
+.form-container {
+    background: url(../../image/foodBackground.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.form {
+    width: 60%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    box-shadow: 0 0 25px #000;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    transition: 1s ease;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 0;
+    height: 0;
+
+    & .form-box {
+        width: 100%;
+    }
+
+    & .form-welcome {
+        display: none;
+    }
+
+    &.active {
+        opacity: 1;
+        z-index: 1;
+        height: max-content;
+
+        & .form-box {
+            width: 50%;
+        }
+
+        & .form-welcome {
+            display: flex;
+        }
+
+    }
+}
+
+.form-welcome {
+    width: 50%;
+    background: linear-gradient(0deg, #FFF, #0ef);
+    padding: 5% 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: #444;
+    transition: 1s ease;
+    overflow: hidden;
+
+    &.form-welcome-register {
+        background: linear-gradient(0deg, #FFF, #0F0);
+        color: #000;
+    }
+
+
+    & h2 {
+        text-transform: uppercase;
+    }
+
+    & p {
+        text-align: justify;
+        font-size: 1.125rem;
+        width: 90%;
+    }
+
+    & img {
+        border-radius: 15px;
+        width: 80%;
+    }
+}
+
+.form-box {
+    width: 50%;
+    padding: 5% 7.5%;
+    backdrop-filter: blur(50px);
+    background: transparent;
+    overflow: hidden;
+    transition: 1s ease;
+}
+
+.form-box-title {
+    font-size: 2rem;
+    color: #000;
+}
+
+.form-box-input {
+    position: relative;
+    margin: 10% 0;
+
+    & label {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        font-size: 1.125rem;
+        color: #000;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    & i {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        font-size: 1.25rem;
+        color: #000;
+        transition: .5s;
+    }
+
+    & input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        border-bottom: 2px solid #000;
+        padding: 2% 0;
+        padding-right: 5%;
+        font-size: 1rem;
+        color: #444;
+        font-weight: 500;
+        transition: .5s;
+
+        &:valid,
+            &:focus {
+            border-bottom-color: royalblue;
+
+            &~label {
+                color: royalblue;
+                top: -7px;
+            }
+
+            &~i {
+                color: royalblue;
+            }
+        }
+
+        &:user-invalid {
+            border-bottom-color: #F00;
+
+            &~label {
+                color: #F00;
+                top: -7px;
+            }
+
+            &~i {
+                color: #F00;
+            }
+        }
+    }
+}
+
+.form-box-forgot {
+    text-align: right;
+    margin-bottom: 5%;
+
+    & a {
+        color: #444;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+            color: #000;
+        }
+    }
+}
+
+.form-box-link {
+    color: #000;
+    margin-bottom: 5%;
+
+    & a {
+        text-decoration: none;
+        color: royalblue;
+        font-weight: 700;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.form-box-continue {
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-align: left;
+    font-family: monospace;
+}
+
+.form-box-button {
+    position: relative;
+    width: 100%;
+    background: transparent;
+    border: 2px solid royalblue;
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+    z-index: 1;
+    overflow: hidden;
+    letter-spacing: 0.25rem;
+    padding: 3% 0;
+    margin-bottom: 5%;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 300%;
+        background: linear-gradient(#081b29, royalblue, #081b29, royalblue);
+        z-index: -1;
+        transition: .5s;
+    }
+
+    &:hover::before {
+        top: 0;
+    }
+
+    &.google {
+        border: 2px solid #F00;
+        color: #F90;
+        letter-spacing: 0rem;
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.125rem;
+        align-items: center;
+
+        & i {
+            width: 20%;
+            font-size: 1.5rem;
+        }
+
+        & p {
+            width: 80%;
+        }
+
+        &::before {
+            background: linear-gradient(#081b29, #F00, #081b29, #F00);
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .form-box-title {
+        font-size: 1.75rem;
+    }
+
+    .form-box-input {
+        & label {
+            font-size: 1rem;
+        }
+
+        & i {
+            font-size: 1rem;
+        }
+    }
+
+    .form-box-forgot,
+    .form-box-link {
+        font-size: 0.875rem;
+    }
+
+    .form-box-continue {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .form-box-button {
+        font-size: 1.25rem;
+        letter-spacing: 0.125rem;
+
+        &.google {
+            font-size: 1rem;
+
+            & i {
+                font-size: 1.25rem;
+            }
+        }
+    }
+
+    .form-welcome {
+        & h2 {
+            font-size: 1.25rem;
+        }
+
+        & p {
+            font-size: 1rem;
+        }
+    }
+
+}
+
+
+@media (max-width: 768px) {
+    
+    .form.active .form-box {
+        width: 100%;
+    }
+
+    .form-box-title {
+        font-size: 2rem;
+    }
+
+    .form-box-input {
+        & label {
+            font-size: 1.25rem;
+        }
+
+        & input {
+            font-size: 1.125rem;
+        }
+
+        & i {
+            font-size: 1.25rem;
+        }
+    }
+
+    .form-box-forgot,
+    .form-box-link {
+        font-size: 1rem;
+    }
+
+    .form-box-continue {
+        font-weight: 700;
+        font-size: 1.25rem;
+    }
+
+    .form-box-button {
+        font-size: 1.5rem;
+        letter-spacing: 0.25rem;
+
+        &.google {
+            font-size: 1.25rem;
+
+            & i {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .form-welcome {
+        display: none !important;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .form-box-title {
+        font-size: 1.75rem;
+    }
+
+    .form-box-input {
+        & label {
+            font-size: 1rem;
+        }
+
+        & input {
+            font-size: 1rem;
+        }
+
+        & i {
+            font-size: 1rem;
+        }
+    }
+
+    .form-box-forgot,
+    .form-box-link {
+        font-size: 0.875rem;
+    }
+
+    .form-box-continue {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .form-box-button {
+        font-size: 1.25rem;
+        letter-spacing: 0.125rem;
+
+        &.google {
+            font-size: 1rem;
+
+            & i {
+                font-size: 1.25rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 350px) {
+    .form-box-title {
+        font-size: 1.75rem;
+    }
+
+    .form-box-input {
+
+        & label,
+        input,
+        i {
+            font-size: 0.875rem;
+        }
+    }
+
+    .form-box-forgot,
+    .form-box-link {
+        font-size: 0.75rem;
+    }
+
+    .form-box-continue {
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+
+    .form-box-button {
+        font-size: 1.125rem;
+        letter-spacing: 0rem;
+
+        &.google {
+            font-size: 0.875rem;
+
+            & i {
+                font-size: 1.125rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,157 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI';
+}
+
+body {
+    background: #f0f2f5;
+}
+
+.update-product-form {
+    margin: 5% auto;
+    width: 50%;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+
+    & .update-product-form-title {
+        background-color: #0F0;
+        letter-spacing: 2px;
+        font-size: 2rem;
+        padding: 1% 0;
+    }
+}
+
+.update-product-form-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1% 2%;
+    margin: 2% 0;
+    font-size: 1.125rem;
+
+    & label {
+        text-align: right;
+        width: 15%;
+    }
+
+    & input,
+    select {
+        border: none;
+        width: 80%;
+        padding: 1.5% 3%;
+        background-color: #f0f2f5;
+        border-radius: 8px;
+
+
+    }
+
+
+    & textarea {
+        padding: 1.5% 3%;
+        border: none;
+        background-color: #f0f2f5;
+        border-radius: 8px;
+        width: 80%;
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    & input[type=file]::file-selector-button {
+        border: none;
+        background-color: #999999;
+        width: max-content;
+        padding: 2%;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+}
+
+.update-product-form-input-image {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+
+    & input {
+        padding: 0;
+
+        &:hover::-webkit-file-upload-button {
+            filter: brightness(0.9);
+        }
+
+        &:active::-webkit-file-upload-button {
+            filter: brightness(0.8);
+        }
+    }
+
+    & div {
+        width: 100%;
+        text-align: center;
+
+        & img {
+            margin-top: 4%;
+            width: 50%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+        }
+    }
+}
+
+.update-product-form-button {
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    & .update-product-form-button-cancel {
+        background: #CCCCCC;
+        color: #444444;
+    }
+
+    & .update-product-form-button-update {
+        background: #0F0;
+        color: #fff;
+    }
+
+    & button {
+        padding: 1% 0;
+        width: 50%;
+        font-size: 1.5rem;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(0.8);
+        }
+
+        &:active {
+            filter: brightness(0.6);
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .update-product-form {
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .update-product-form {
+        width: 70%;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .update-product-form {
+        width: 80%;
+    }
+}

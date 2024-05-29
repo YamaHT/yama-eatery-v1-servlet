@@ -1,0 +1,149 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Segoe UI';
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #F0F2F5;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.management {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.management-left {
+    width: 20%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &.active {
+        width: 10%;
+
+        &~.management-right {
+            width: 90%;
+        }
+
+        .management-left-sidebar {
+            width: 10%;
+        }
+
+        & .management-left-resize {
+            left: 10%;
+        }
+
+        & .management-left-sidebar-component {
+            margin-top: 10%;
+            padding: 20% 0;
+
+
+            & i {
+                width: 100%;
+                font: 3rem;
+            }
+
+            & p {
+                display: none;
+            }
+        }
+
+    }
+}
+
+.management-left-resize {
+    position: fixed;
+    border: none;
+    clip-path: ellipse(150% 50% at -50% 50%);
+    background: #000;
+    color: #fff;
+    left: 20%;
+    font-size: 2rem;
+    padding: 5% 0.2%;
+    cursor: pointer;
+
+    & i {
+        transition: 0.25s ease;
+    }
+
+    &.resized i {
+        transform: rotate(540deg);
+    }
+}
+
+.management-left-sidebar {
+    background: #444;
+    height: 100vh;
+    width: 20%;
+    position: fixed;
+}
+
+.management-left-sidebar-logo img {
+    width: 100%;
+}
+
+.management-left-sidebar-component {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7.5% 10% 7.5% 5%;
+    color: #F0F2F5;
+    text-align: center;
+    margin-top: 5%;
+    cursor: pointer;
+
+    & i {
+        font-size: 2rem;
+        width: 20%;
+    }
+
+    & p {
+        font-size: 1.125rem;
+        width: 80%;
+        user-select: none;
+    }
+
+    &:hover {
+        background: #00000080;
+    }
+
+    &.active {
+        cursor: default;
+        background: #00000046;
+    }
+}
+
+
+.management-right {
+    width: 80%;
+
+    & .management-right-header {
+        width: 100%;
+        font-size: 3rem;
+        text-align: center;
+        color: #fff;
+        background: royalblue;
+        padding: 1% 0;
+        font-family: sans-serif;
+        text-transform: uppercase;
+        position: sticky;
+    }
+    & .management-right-body {
+        margin: 2% 0;
+        padding: 0 5%;
+    }
+}

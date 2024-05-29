@@ -1,0 +1,191 @@
+.overview-header {
+    white-space: auto;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+
+.overview-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.overview-body-chart {
+    width: 60%;
+}
+
+.overview-body-chart-general {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+}
+
+.overview-body-chart-general-component {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid #000;
+    padding: 2%;
+    width: 32%;
+    overflow: hidden;
+    user-select: none;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px 0 #00000080;
+
+    }
+
+    & .overview-body-chart-general-component-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        font-size: 1.5rem;
+    }
+
+    & .overview-body-chart-general-component-value {
+        font-weight: 600;
+        margin: 20% 0;
+        font-size: 2.5rem;
+    }
+
+    & .overview-body-chart-general-component-plus {
+        font-weight: 300;
+        font-size: 1.125rem;
+        white-space: nowrap;
+    }
+
+    &#general-user {
+        background: linear-gradient(to bottom, #FFFFFF, #FF99FF);
+    }
+
+    &#generel-product {
+        background: linear-gradient(to bottom, #FFFFFF, #00FFFF);
+    }
+
+    &#generel-revenue {
+        background: linear-gradient(to bottom, #FFFFFF, #00FF99);
+    }
+}
+
+.overview-body-chart-product,
+.overview-body-chart-revenue {
+    margin-top: 10%;
+
+    & .overview-body-chart-bar-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & p {
+            font-size: 2rem;
+            letter-spacing: 0.125rem;
+            font-weight: 500;
+        }
+
+        & select {
+            padding: 0 2%;
+            font-size: 1.5rem;
+            background: #AAA;
+            color: #000;
+            border: none;
+            font-weight: 500;
+        }
+    }
+
+    & canvas {
+        margin-top: 1%;
+    }
+}
+
+.overview-body-statistic {
+    width: 35%;
+    text-align: center;
+}
+
+.overview-body-statistic-mostSold-title {
+    font-size: 2rem;
+    letter-spacing: 0.125rem;
+    font-weight: 600;
+}
+
+.overview-body-statistic-mostSold-product {
+    background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
+    padding: 0 5%;
+    margin: 5% 20% 0;
+    border-radius: 30px;
+    transition: 1s ease;
+    text-align: center;
+    overflow: hidden;
+
+    & * {
+        transition: .125s ease;
+    }
+
+    &:hover {
+        & .overview-body-statistic-mostSold-product-image {
+            transform: scale(1.05);
+        }
+    }
+
+    & .overview-body-statistic-mostSold-product-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 7.5% 0;
+        font-weight: bold;
+        align-items: center;
+        width: 100%;
+    }
+
+    & .overview-body-statistic-mostSold-product-title-text {
+        font-size: 2.5rem;
+        color: #00F;
+    }
+
+    & .overview-body-statistic-mostSold-product-title-value {
+        background-color: #ffffff;
+        border-radius: 50%;
+        color: #14147F;
+        padding: 5%;
+        font-style: italic;
+        font-size: 1.5rem;
+    }
+
+    & .overview-body-statistic-mostSold-product-image {
+        width: 100%;
+        align-items: center;
+
+        & img {
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: 4px -4px 0 2px #eee;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+    }
+
+    & .overview-body-statistic-mostSold-product-name {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin: 8% 0;
+    }
+}
+
+.overview-body-statictis-product-title,
+.overview-body-statictis-revenue-title {
+    margin-top: 10%;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.overview-body-statictis-product,
+.overview-body-statictis-revenue {
+    padding: 0 10%;
+    margin-top: 5%;
+}

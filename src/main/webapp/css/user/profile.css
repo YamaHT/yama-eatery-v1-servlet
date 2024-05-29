@@ -1,0 +1,352 @@
+.profile {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
+    margin: 5% 0;
+    flex-wrap: wrap;
+}
+
+.profile-image {
+    text-align: center;
+    width: 45%;
+    position: relative;
+    height: fit-content;
+
+    & img {
+        width: 50%;
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+
+    & button {
+        cursor: pointer;
+        background-color: #A9A9A9;
+        font-size: 1.5rem;
+        padding: 2%;
+        border: none;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 1%;
+        right: 30%;
+
+        & i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &:hover {
+            background: #00A;
+            color: #FFF;
+        }
+    }
+}
+
+.profile-form {
+    width: 55%;
+    height: fit-content;
+    border-radius: 15px;
+    background: linear-gradient(167.88deg, #00FF99 15.68%, #99FFFF 72.24%);
+    text-align: center;
+    overflow: hidden;
+
+    & .profile-form-input {
+        padding: 5%;
+    }
+
+    & input[type='file'] {
+        display: none;
+    }
+
+    & .profile-button-save {
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        width: 100%;
+        color: #FFF;
+        background: #0099FF;
+        padding: 1% 0;
+        letter-spacing: 1rem;
+        font-family: sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+        transition: .25s linear;
+
+
+        &:hover {
+            transform: scaleX(1.5);
+            color: #444;
+        }
+
+        &:active {
+            filter: brightness(0.8);
+        }
+    }
+}
+
+.profile-form-input-tag {
+    margin: 5% 0;
+
+    & label {
+        display: block;
+        padding-bottom: 1%;
+        font-weight: 500;
+        text-align: left;
+        font-size: 1.25rem;
+    }
+
+    & input {
+        padding: 1.5% 2%;
+        border: none;
+        font-size: 1.25rem;
+        width: 100%;
+    }
+
+}
+
+.profile-form-input-tag-less {
+    display: flex;
+    justify-content: space-between;
+    margin: 5% 0;
+    font-weight: bold;
+    align-items: center;
+
+    & p {
+        font-family: cursive;
+        font-size: 1.25rem;
+    }
+
+    & button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    & label {
+        font-weight: 400;
+        font-size: 1.25rem;
+    }
+}
+
+.profile-form-input-button-changepassword {
+    text-align: center;
+    margin-top: 5%;
+    border-radius: 30px;
+    border: none;
+    width: 80%;
+    padding: 2% 5%;
+    background: #FF9900;
+    cursor: pointer;
+    font-size: 1.375rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    transition: .25s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        filter: brightness(0.8);
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .profile-form {
+        border-radius: 15px;
+
+        & .profile-button-save {
+            letter-spacing: 0.875rem;
+            font-size: 1.75rem;
+        }
+    }
+
+    .profile-form-input-tag {
+        & label {
+            font-size: 1.125rem;
+        }
+
+        & input {
+            font-size: 1.125rem;
+        }
+
+    }
+
+    .profile-form-input-tag-less {
+        & label {
+            font-size: 1.125rem;
+        }
+
+        & p {
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        & button {
+            font-size: 1.25rem;
+        }
+    }
+
+    .profile-form-input-button-changepassword {
+        border-radius: 30px;
+        font-size: 1.25rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .profile {
+        margin-top: 0;
+    }
+
+    .profile-image,
+    .profile-form {
+        width: 100%;
+    }
+
+    .profile-image {
+        margin: 5% 0;
+    }
+
+    .profile-form {
+        border-radius: 12px;
+
+        & .profile-button-save {
+            letter-spacing: 0.875rem;
+            font-size: 1.75rem;
+        }
+    }
+
+    .profile-form-input-tag {
+        & label {
+            font-size: 1.125rem;
+        }
+
+        & input {
+            font-size: 1.125rem;
+        }
+
+    }
+
+    .profile-form-input-tag-less {
+        & label {
+            font-size: 1.125rem;
+        }
+
+        & p {
+            font-size: 1.125rem;
+        }
+
+        & button {
+            font-size: 1.25rem;
+        }
+    }
+
+    .profile-form-input-button-changepassword {
+        border-radius: 15px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .profile-image {
+        & button {
+            font-size: 1.25rem;
+        }
+    }
+
+    .profile-form {
+        border-radius: 8px;
+
+        & .profile-button-save {
+            letter-spacing: 0.75rem;
+            font-size: 1.5rem;
+        }
+    }
+
+    .profile-form-input-tag {
+        & label {
+            font-size: 1rem;
+        }
+
+        & input {
+            font-size: 1rem;
+        }
+
+    }
+
+    .profile-form-input-tag-less {
+        & label {
+            font-size: 1rem;
+        }
+
+        & p {
+            font-size: 1rem;
+        }
+
+        & button {
+            font-size: 1.125rem;
+        }
+    }
+
+    .profile-form-input-button-changepassword {
+        border-radius: 12px;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 350px) {
+    .profile-image {
+        & button {
+            font-size: 1.125rem;
+        }
+    }
+
+    .profile-form {
+        border-radius: 5px;
+
+        & .profile-button-save {
+            letter-spacing: 0.625rem;
+            font-size: 1.25rem;
+        }
+    }
+
+    .profile-form-input-tag {
+        & label {
+            font-size: 0.75rem;
+        }
+
+        & input {
+            font-size: 0.75rem;
+        }
+
+    }
+
+    .profile-form-input-tag-less {
+        & label {
+            font-size: 0.75rem;
+        }
+
+        & p {
+            font-size: 0.75rem;
+        }
+
+        & button {
+            font-size: 0.875rem;
+        }
+    }
+
+    .profile-form-input-button-changepassword {
+        border-radius: 8px;
+        font-size: 0.75rem;
+    }
+}

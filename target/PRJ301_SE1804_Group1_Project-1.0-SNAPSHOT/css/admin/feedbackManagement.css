@@ -1,0 +1,122 @@
+.feedback {
+    display: flex;
+    margin: 2% 0;
+    flex-wrap: wrap;
+}
+
+.feedback-user-image {
+    width: 10%;
+    position: relative;
+
+    & img {
+        position: absolute;
+        width: 60%;
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        right: 0;
+    }
+}
+
+.feedback-user-content {
+    width: 90%;
+}
+
+.feedback-user-content-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1% 0;
+    align-items: center;
+
+    &>i {
+        font-weight: bold;
+        font-size: 1.25rem;
+        cursor: pointer;
+        transition: 0.1s;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+
+}
+
+.feedback-user-content-header-info {
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
+    align-items: center;
+    padding: 1% 2%;
+
+    & i {
+        font-size: 0.35rem;
+        margin: 0 2%;
+    }
+}
+
+.feedback-user-content-header-info-username {
+    font-weight: bold;
+}
+
+.feedback-user-content-comment {
+    padding: 1% 2%;
+    min-height: 200px;
+    background: #D9D9D9;
+}
+
+.feedback-admin {
+    width: 100%;
+    padding-left: 10%;
+}
+
+.feedback-admin-button {
+    border: none;
+    font-size: 1.125rem;
+    padding: 1% 0;
+    transition: 0.25s;
+    cursor: pointer;
+    background: transparent;
+
+    &:hover {
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+}
+
+.feedback-admin-input {
+    transition: 0.2s all;
+    position: relative;
+    border-left: #00F solid 5px;
+    text-align: right;
+    padding-left: 0.5%;
+    margin-left: 0.5%;
+
+    & textarea {
+        padding: 1.5% 1%;
+        font-size: 1.125rem;
+        padding-right: 6%;
+        width: 100%;
+        border: #000 solid 1px;
+        border-radius: 15px;
+        resize: none;
+    }
+
+    & i {
+        position: absolute;
+        right: 2%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #00F;
+        cursor: pointer;
+        height: 100%;
+        transition: 0.2s;
+        transform: rotate(45deg);
+    }
+
+    & i:hover {
+        transform: scale(1.2) rotate(45deg);
+    }
+}

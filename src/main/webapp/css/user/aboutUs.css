@@ -1,0 +1,148 @@
+
+.about-us {
+    display: flex;
+    padding: 1% 5%;
+    margin-top: 5%;
+    align-items: center;
+}
+
+.about-us-content {
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    & h1 {
+        text-align: center;
+        margin-bottom: 2%;
+    }
+
+    & p {
+        font-size: 1.25rem;
+        text-align: justify;
+        margin-bottom: 2%;
+        padding: 0% 5%;
+    }
+
+    & button {
+        border: hidden;
+        background-color: #6C757D;
+        color: white;
+        padding: 4% 15%;
+        font-size: 1.5rem;
+        margin-top: 5%;
+        transition: 0.25s ease;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(0.8);
+        }
+
+        &:active {
+            filter: brightness(0.6);
+        }
+    }
+}
+
+.about-us-content,
+.about-us-image {
+    width: 50%;
+    padding: 0 2%;
+    text-align: center;
+}
+
+.about-us-image img {
+    width: 90%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.link {
+    margin: 2% 0;
+    padding: 1% 35%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    font-size: 2.5rem;
+    align-items: center;
+
+    & i {
+        transition: 0.25s ease;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    & .fa-facebook:hover {
+        color: royalblue;
+    }
+
+    & .fa-instagram:hover {
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        color: white;
+    }
+
+    & .fa-youtube:hover {
+        color: #fd5949;
+    }
+}
+
+@media (max-width: 1024px) {
+    .about-us-content {
+        & p {
+            font-size: 1rem;
+        }
+
+        & button {
+            font-size: 1.25rem;
+        }
+    }
+
+    .link {
+        padding: 0 30%;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-us {
+        flex-direction: column-reverse;
+    }
+
+    .about-us-content {
+        width: 100%;
+    }
+
+    .about-us-image {
+        width: 100%;
+
+        & img {
+            aspect-ratio: 2/1;
+        }
+    }
+
+    .link {
+        padding: 5% 20%;
+    }
+}
+
+@media (max-width: 350px) {
+    .about-us-content {
+        & p {
+            font-size: 0.875rem;
+        }
+
+        & button {
+            padding: 4% 10%;
+            font-size: 1rem;
+        }
+    }
+
+    .link {
+        font-size: 2rem;
+        padding: 5% 15%;
+    }
+}

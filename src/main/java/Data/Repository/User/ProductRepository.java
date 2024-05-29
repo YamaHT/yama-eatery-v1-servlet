@@ -24,12 +24,12 @@ public class ProductRepository {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public List<Product> getAllProduct(int page, String filter, String price) {
+    public List<Product> getAllProduct(int page, String filter, String minPrice, String maxPrice) {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM Product INNER JOIN Category ON Product.CategoryId = Category.Id WHERE Product.Available = 1";
 
-        if (price != null) {
-            query += " AND Product.Price >= " + price.split("/")[0] + " AND Product.Price <= " + price.split("/")[1];
+        if (minPrice != null && maxPrice != null) {
+            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
         }
         query += filter != null ? " ORDER BY Product." + filter : " ORDER BY Product.Id DESC";
         try {

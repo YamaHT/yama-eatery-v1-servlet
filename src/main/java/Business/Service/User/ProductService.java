@@ -24,7 +24,7 @@ public class ProductService {
             int page = (int) Math.min(
                     Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
                     Math.max(Math.ceil(count / 6), 1));
-            List<Product> list = productRepo.getAllProduct(page, null, null);
+            List<Product> list = productRepo.getAllProduct(page, null, null, null);
             request.setAttribute("listProduct", list);
             request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
         } catch (Exception e) {

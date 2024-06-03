@@ -15,6 +15,13 @@ public class OrderDetail {
     private int amount;
     private double subtotal;
 
+    public OrderDetail(Order order, Product product, int amount, double subtotal) {
+        this.order = order;
+        this.product = product;
+        this.amount = amount;
+        this.subtotal = subtotal;
+    }
+
     public Order getOrder() {
         return order;
     }

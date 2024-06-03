@@ -4,13 +4,17 @@
  */
 package Business.Controller.User.ProductController;
 
-import Business.Service.User.ProductService;
+import Data.Model.Account;
+import Data.Model.Product;
+import Data.Repository.User.OrderRepository;
+import Data.Repository.User.ProductRepository;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -22,8 +26,23 @@ public class Index extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ProductService productService = new ProductService();
-        productService.index(request, response);
+        
+       
+        try {
+            ProductRepository productRepo = new ProductRepository();
+            int count = productRepo.getCountProduct();
+            int page = (int) Math.min(
+                    Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
+                    Math.max(Math.ceil(count / 6), 1));
+            List<Product> list = productRepo.getAllProduct(page, null, null, null);
+            request.setAttribute("listProduct", list);
+            request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
+        } catch (Exception e) {
+            try {
+                request.getRequestDispatcher("/html/error/404.jsp").forward(request, response);
+            } catch (Exception ex) {
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

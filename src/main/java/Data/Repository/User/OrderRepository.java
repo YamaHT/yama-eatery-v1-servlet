@@ -27,6 +27,9 @@ public class OrderRepository {
     PreparedStatement ps;
     ResultSet rs;
 
+    public OrderRepository() {
+    }
+    
     public Order getOrderByAccount(Account account) {
         String query = "SELECT [Order].*\n"
                 + "FROM [Order]\n"

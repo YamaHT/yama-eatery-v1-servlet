@@ -36,7 +36,6 @@ public class Login extends javax.swing.JFrame {
                             .getScaledInstance(121, 120, Image.SCALE_SMOOTH)));
         } catch (Exception e) {
         }
-        login_title.requestFocusInWindow();
         login_register.addHyperlinkListener((HyperlinkEvent e) -> {
             if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
                 Desktop desktop = Desktop.getDesktop();
@@ -66,6 +65,9 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
+
+        login_title.requestFocusInWindow();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -293,7 +295,7 @@ public class Login extends javax.swing.JFrame {
         if (account.isRole()) {
             new Dashboard();
         } else {
-            new Profile(account);
+            new User(account);
         }
     }//GEN-LAST:event_login_buttonActionPerformed
 
@@ -335,10 +337,7 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_login_input_passwordKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    public void run() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

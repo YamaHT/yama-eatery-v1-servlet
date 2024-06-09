@@ -18,6 +18,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import Business.Swing.Component.ProductCard;
 import Business.Swing.Component.Subcomponent.CustomScrollBarUI;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -41,6 +43,15 @@ public class User extends javax.swing.JFrame {
                             .getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
         }
         setProductCard(productRepository.getAllProduct(-1, null, null, null));
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                new Login().run();
+            }
+
+        });
         this.setVisible(true);
     }
 

@@ -23,6 +23,7 @@ public class StartController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        new Login().run();
         response.sendRedirect("product");
     }
 

@@ -40,7 +40,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -60,6 +59,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     public Dashboard() {
         initComponents();
+        setFalseComponentInit();
+        setVisible(true);
     }
 
     /**
@@ -652,12 +653,10 @@ public class Dashboard extends javax.swing.JFrame {
 
         detail_id.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         detail_id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        detail_id.setText("1");
         detail_id.setPreferredSize(new java.awt.Dimension(98, 100));
 
         detail_name.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         detail_name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        detail_name.setText("Yasuo");
         detail_name.setPreferredSize(new java.awt.Dimension(98, 100));
 
         detail_image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -666,17 +665,14 @@ public class Dashboard extends javax.swing.JFrame {
 
         detail_price.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         detail_price.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        detail_price.setText("$100");
         detail_price.setPreferredSize(new java.awt.Dimension(98, 100));
 
         detail_category.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         detail_category.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        detail_category.setText("Food");
         detail_category.setPreferredSize(new java.awt.Dimension(98, 100));
 
         detail_sold.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         detail_sold.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        detail_sold.setText("100");
         detail_sold.setPreferredSize(new java.awt.Dimension(98, 100));
 
         javax.swing.GroupLayout general_management_most_detailLayout = new javax.swing.GroupLayout(general_management_most_detail);
@@ -1829,12 +1825,6 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
-    // -------------------------------- Run
-    public void run() {
-        setFalseComponentInit();
-        setVisible(true);
-    }
-
     // -------------------------------- 
     // -------------------------------- General management
     // -------------------------------- 
@@ -1856,14 +1846,16 @@ public class Dashboard extends javax.swing.JFrame {
         generalRevenueProgressBar.setValue((int) Math.round(revenue));
 
         List<Object> mostProduct = productRepository.getMostSoldInMonth(month, year);
-        detail_id.setText(String.valueOf(((Product) mostProduct.get(0)).getId()));
-        detail_name.setText(((Product) mostProduct.get(0)).getName());
-        detail_image.setIcon(new ImageIcon(
-                ImageUtils.convertByteToImage(((Product) mostProduct.get(0)).getImage())
-                        .getScaledInstance(98, 100, Image.SCALE_SMOOTH)));
-        detail_price.setText(String.valueOf(((Product) mostProduct.get(0)).getPrice()));
-        detail_category.setText(((Product) mostProduct.get(0)).getCategory().getName());
-        detail_sold.setText(mostProduct.get(1).toString());
+        if (mostProduct.size() != 0) {
+            detail_id.setText(String.valueOf(((Product) mostProduct.get(0)).getId()));
+            detail_name.setText(((Product) mostProduct.get(0)).getName());
+            detail_image.setIcon(new ImageIcon(
+                    ImageUtils.convertByteToImage(((Product) mostProduct.get(0)).getImage())
+                            .getScaledInstance(98, 100, Image.SCALE_SMOOTH)));
+            detail_price.setText(String.valueOf(((Product) mostProduct.get(0)).getPrice()));
+            detail_category.setText(((Product) mostProduct.get(0)).getCategory().getName());
+            detail_sold.setText(mostProduct.get(1).toString());
+        }
     }
 
     // -------------------------------- 
@@ -1960,19 +1952,16 @@ public class Dashboard extends javax.swing.JFrame {
         productTableData.getColumnModel().getColumn(3).setPreferredWidth(50);
         productTableData.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        productTableData.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (productTableData.getSelectedRow() != -1) {
-                    productInputId.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 0).toString());
-                    productInputName.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 1).toString());
-                    productTextImage2.setIcon((Icon) productTableData.getValueAt(productTableData.getSelectedRow(), 2));
-                    productInputPrice.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 3).toString());
-                    productInputDescription.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 4).toString());
-                    productInputInventory.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 5).toString());
-                    productInputCategory.setSelectedItem(productTableData.getValueAt(productTableData.getSelectedRow(), 6).toString());
-                    turnOnProduct();
-                }
+        productTableData.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (productTableData.getSelectedRow() != -1) {
+                productInputId.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 0).toString());
+                productInputName.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 1).toString());
+                productTextImage2.setIcon((Icon) productTableData.getValueAt(productTableData.getSelectedRow(), 2));
+                productInputPrice.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 3).toString());
+                productInputDescription.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 4).toString());
+                productInputInventory.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 5).toString());
+                productInputCategory.setSelectedItem(productTableData.getValueAt(productTableData.getSelectedRow(), 6).toString());
+                turnOnProduct();
             }
         });
         product_management.requestFocusInWindow();
@@ -2039,7 +2028,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     public void addMouseListenerToScrollPane(FeedbackPanel fp) {
-        final Component view = ((JScrollPane) fp.getComponent(1)).getViewport().getView();
+        Component view = ((JScrollPane) fp.getComponent(1)).getViewport().getView();
         if (view != null) {
             view.addMouseListener(new MouseAdapter() {
                 @Override

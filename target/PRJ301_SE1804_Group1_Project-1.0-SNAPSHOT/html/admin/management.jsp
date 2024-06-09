@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<title>${managementTitle}</title>-->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/management.css">
+        <link rel="stylesheet" href="/css/admin/management.css">
         <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
     </head>
 
@@ -20,7 +20,7 @@
             <div class="management-left">
                 <div class="management-left-sidebar">
                     <div class="management-left-sidebar-logo">
-                        <img src="${pageContext.request.contextPath}/image/brand.jpg" alt="">
+                        <img src="/image/brand.jpg" alt="">
                     </div>
                     <div class="management-left-sidebar-component active" data-bind="overviewManagement" onclick="changeManagement(this)">
                         <i class="fa-solid fa-chart-column"></i>
@@ -70,7 +70,7 @@
             const dataBindValue = component.getAttribute('data-bind');
             document.querySelector('.management-right-header').innerHTML = dataBindValue.split("M")[0] + " M" + dataBindValue.split("M")[1];
             const rightBody = document.querySelector('.management-right-body');
-            const jspPageUrl = `${pageContext.request.contextPath}/html/admin/managementComponent/` + dataBindValue + `.jsp`;
+            const jspPageUrl = `/html/admin/managementComponent/` + dataBindValue + `.jsp`;
             fetch(jspPageUrl)
                     .then(response => {
                         return response.text();
@@ -97,11 +97,11 @@
             if (!buttonResize.classList.contains('resized')) {
                 buttonResize.classList.add('resized');
                 sidebar.classList.add('active');
-                logoImage.src = `${pageContext.request.contextPath}/image/logofff.jpg`;
+                logoImage.src = `/image/logofff.jpg`;
             } else {
                 buttonResize.classList.remove('resized');
                 sidebar.classList.remove('active');
-                logoImage.src = `${pageContext.request.contextPath}/image/brand.jpg`;
+                logoImage.src = `/image/brand.jpg`;
             }
         }
 

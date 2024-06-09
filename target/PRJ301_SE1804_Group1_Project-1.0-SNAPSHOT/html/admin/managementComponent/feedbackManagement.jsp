@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/feedbackManagement.css">
+<link rel="stylesheet" href="/css/admin/feedbackManagement.css">
 <div class="feedback-management">
     <div class="feedback">
         <div class="feedback-user-image"><img src="" alt="avatar"></div>

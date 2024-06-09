@@ -12,16 +12,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/home.css">
+        <link rel="stylesheet" href="/css/user/home.css">
     </head>
 
     <body>
         <jsp:include page="../layout/header.jsp"/>
         <div class="banner">
-            <img class="banner-image" src="${pageContext.request.contextPath}/image/banner.jpg" alt="" />
-            <img class="banner-image" src="${pageContext.request.contextPath}/image/brand.jpg" alt="" />
-            <img class="banner-image" src="${pageContext.request.contextPath}/image/category_dessert.jpg" alt="" />
-            <img class="banner-image" src="${pageContext.request.contextPath}/image/category_food.jpg" alt="" />
+            <img class="banner-image" src="/image/banner.jpg" alt="" />
+            <img class="banner-image" src="/image/brand.jpg" alt="" />
+            <img class="banner-image" src="/image/category_dessert.jpg" alt="" />
+            <img class="banner-image" src="/image/category_food.jpg" alt="" />
             <div class="banner-groupOfFeature">
                 <div class="banner-groupOfFeature-feature">
                     <i class="fa-solid fa-truck-fast"></i>
@@ -54,22 +54,22 @@
             </h1>
             <div class="category-groupOfCategory">
                 <div class="category-groupOfCategory-category" style="background: #964b0080">
-                    <img src="${pageContext.request.contextPath}/image/category_food.jpg" alt="">
+                    <img src="/image/category_food.jpg" alt="">
                     <p>Food</p>
                     <span></span>
                 </div>
                 <div class="category-groupOfCategory-category" style="background: #FF000080">
-                    <img src="${pageContext.request.contextPath}/image/category_drink.jpg" alt="">
+                    <img src="/image/category_drink.jpg" alt="">
                     <p>Drink</p>
                     <span></span>
                 </div>
                 <div class="category-groupOfCategory-category" style="background: #FF990080">
-                    <img src="${pageContext.request.contextPath}/image/category_dessert.jpg" alt="">
+                    <img src="/image/category_dessert.jpg" alt="">
                     <p>Dessert</p>
                     <span></span>
                 </div>
                 <div class="category-groupOfCategory-category" style="background: #00FF0080">
-                    <img src="${pageContext.request.contextPath}/image/category_snack.jpg" alt="">
+                    <img src="/image/category_snack.jpg" alt="">
                     <p>Snack</p>
                     <span></span>
                 </div>
@@ -107,6 +107,6 @@
         </div>
         <jsp:include page="../layout/footer.jsp"/>
     </body>
-    <script src="${pageContext.request.contextPath}/js/home.js"></script>
+    <script src="/js/home.js"></script>
 
 </html>

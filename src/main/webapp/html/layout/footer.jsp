@@ -8,7 +8,7 @@
 <footer>
     <div class="row">
         <div class="col" style="text-align:center">
-            <img class="logo" src="${pageContext.request.contextPath}/image/logo.jpg" alt="logo" />
+            <img class="logo" src="/image/logo.jpg" alt="logo" />
         </div>
         <div class="col">
             <h3>Office <div class="underline"><span></span></div>

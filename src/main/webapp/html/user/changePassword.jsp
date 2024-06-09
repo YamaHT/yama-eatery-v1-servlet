@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Change Password</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/changeForgotPassword.css">
+        <link rel="stylesheet" href="/css/user/changeForgotPassword.css">
     </head>
 
     <body>
@@ -57,6 +57,6 @@
         <jsp:include page="../layout/footer.jsp"/>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/changeforgotPassword.js"></script>
+    <script src="/js/changeforgotPassword.js"></script>
 
 </html>

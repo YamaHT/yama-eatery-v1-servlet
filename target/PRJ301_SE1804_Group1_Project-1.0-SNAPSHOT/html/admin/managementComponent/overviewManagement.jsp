@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/overviewManagement.css">
+<link rel="stylesheet" href="/css/admin/overviewManagement.css">
 
 <div class="overview">
     <h1 class="overview-header">

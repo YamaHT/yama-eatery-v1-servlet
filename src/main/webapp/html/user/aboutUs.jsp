@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/aboutUs.css">
+    <link rel="stylesheet" href="/css/user/aboutUs.css">
 </head>
 
 <body>
@@ -36,8 +36,8 @@
 
         <div class="about-us-image">
             <picture>
-                <source srcset="${pageContext.request.contextPath}/image/brand.jpg" media="(max-width: 768px)">
-                <img src="${pageContext.request.contextPath}/image/logo.jpg" alt="logo">
+                <source srcset="/image/brand.jpg" media="(max-width: 768px)">
+                <img src="/image/logo.jpg" alt="logo">
             </picture>
         </div>
     </div>

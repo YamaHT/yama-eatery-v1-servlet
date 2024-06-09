@@ -6,12 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/layout.css">
+<link rel="stylesheet" href="/css/layout/layout.css">
 
 <div class="blur" onclick="hideSidenav()"></div>
 <header>
     <div class="header-logo">
-        <img src="${pageContext.request.contextPath}/image/brand.jpg" alt="">
+        <img src="/image/brand.jpg" alt="">
     </div>
     <nav class="header-navigation">
         <ul class="header-navigation-menu">
@@ -45,7 +45,7 @@
             <i class="fa-solid fa-magnifying-glass header-button-search-bar-search" onclick="submitSearchForm()"></i>
         </form>
         <div class="header-button-user subnav-user-holder">
-            <img src="${pageContext.request.contextPath}/image/logo.jpg" alt="">
+            <img src="/image/logo.jpg" alt="">
             <ul class="subnav-user">
                 <li><a href="#"><i class="fa-solid fa-image"></i> Profile</a></li>
                 <li><a href="#"><i class="fa-solid fa-list-check"></i> History Order</a></li>
@@ -56,7 +56,7 @@
     </div>
     <nav class="header-navigation-side">
         <div class="header-navigation-side-logo">
-            <img src="${pageContext.request.contextPath}/image/brand.jpg" alt="">
+            <img src="/image/brand.jpg" alt="">
             <i class="fa-solid fa-xmark" onclick="hideSidenav()"></i>
         </div>
         <ul class="header-navigation-side-menu">
@@ -82,4 +82,4 @@
     </nav>
 </header>
 
-<script src="${pageContext.request.contextPath}/js/header.js"></script>
+<script src="/js/header.js"></script>

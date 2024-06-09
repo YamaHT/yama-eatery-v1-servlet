@@ -4,7 +4,9 @@
  */
 package Business.Swing;
 
+import Data.Model.Account;
 import Data.Repository.Admin.ResourceRepository;
+import Data.Repository.User.AccountRepository;
 import Utils.ImageUtils;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -12,8 +14,10 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
 /**
  *
@@ -33,44 +37,32 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception e) {
         }
         login_title.requestFocusInWindow();
-        login_register.addHyperlinkListener(new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent e) {
-                if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        desktop.browse(e.getURL().toURI());
-                    } catch (Exception ex) {
-                        // Handle exception
-                    }
+        login_register.addHyperlinkListener((HyperlinkEvent e) -> {
+            if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    desktop.browse(e.getURL().toURI());
+                } catch (Exception ex) {
                 }
             }
         });
 
-        login_forgotPass.addHyperlinkListener(new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent e) {
-                if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        desktop.browse(e.getURL().toURI());
-                    } catch (Exception ex) {
-                        // Handle exception
-                    }
+        login_forgotPass.addHyperlinkListener((HyperlinkEvent e) -> {
+            if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    desktop.browse(e.getURL().toURI());
+                } catch (Exception ex) {
                 }
             }
         });
 
-        login_aboutus.addHyperlinkListener(new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent e) {
-                if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        desktop.browse(e.getURL().toURI());
-                    } catch (Exception ex) {
-                        // Handle exception
-                    }
+        login_aboutus.addHyperlinkListener((HyperlinkEvent e) -> {
+            if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    desktop.browse(e.getURL().toURI());
+                } catch (Exception ex) {
                 }
             }
         });
@@ -126,9 +118,9 @@ public class Login extends javax.swing.JFrame {
 
         login_input_username.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         login_input_username.setForeground(new java.awt.Color(204, 204, 204));
-        login_input_username.setText("Username");
+        login_input_username.setText("Username/Email");
         login_input_username.setToolTipText("");
-        login_input_username.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        login_input_username.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         login_input_username.setPreferredSize(new java.awt.Dimension(75, 40));
         login_input_username.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -147,7 +139,7 @@ public class Login extends javax.swing.JFrame {
         login_input_password.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         login_input_password.setForeground(new java.awt.Color(204, 204, 204));
         login_input_password.setText("Password");
-        login_input_password.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        login_input_password.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         login_input_password.setEchoChar((char) 0);
         login_input_password.setPreferredSize(new java.awt.Dimension(207, 40));
         login_input_password.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -283,12 +275,30 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_login_input_usernameKeyPressed
 
     private void login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_buttonActionPerformed
+        String username = login_input_username.getText().trim();
+        String password = new String(login_input_password.getPassword());
+        if (username.equals("Username/Email") || password.equals("Password")) {
+            JOptionPane.showMessageDialog(this, "All field must be provided", "Empty input", JOptionPane.OK_OPTION);
+            return;
+        }
+        Account account = new AccountRepository().login(username, password);
+        if (account == null) {
+            JOptionPane.showMessageDialog(this, "Your information provided is not correct", "User error", JOptionPane.OK_OPTION);
+            login_input_username.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.RED), new EmptyBorder(5, 10, 5, 10)));
+            login_input_password.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.RED), new EmptyBorder(5, 10, 5, 10)));
+            return;
+        }
+
         this.dispose();
-        new User(null).run();
+        if (account.isRole()) {
+            new Dashboard();
+        } else {
+            new Profile(account);
+        }
     }//GEN-LAST:event_login_buttonActionPerformed
 
     private void login_input_usernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_login_input_usernameFocusGained
-        if (login_input_username.getText().equals("Username")) {
+        if (login_input_username.getText().equals("Username/Email")) {
             login_input_username.setText("");
             login_input_username.setForeground(Color.black);
         }
@@ -296,7 +306,7 @@ public class Login extends javax.swing.JFrame {
 
     private void login_input_usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_login_input_usernameFocusLost
         if (login_input_username.getText().isEmpty()) {
-            login_input_username.setText("Username");
+            login_input_username.setText("Username/Email");
             login_input_username.setForeground(Color.LIGHT_GRAY);
         }
     }//GEN-LAST:event_login_input_usernameFocusLost
@@ -325,7 +335,10 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_login_input_passwordKeyPressed
 
-    public void run() {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -351,7 +364,9 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        this.setVisible(true);
+        java.awt.EventQueue.invokeLater(() -> {
+            new Login().setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

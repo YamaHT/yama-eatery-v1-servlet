@@ -12,13 +12,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Feedback</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/feedback.css">
+        <link rel="stylesheet" href="/css/user/feedback.css">
     </head>
 
     <body>
         <jsp:include page="../layout/header.jsp"/>
         <div class="feedback-banner">
-            <img src="${pageContext.request.contextPath}/image/feedbackBanner.jpg" alt="feedbackBanner">
+            <img src="/image/feedbackBanner.jpg" alt="feedbackBanner">
         </div>
         <div class="feedback-comment">
             <div class="feedback-comment-image"><img src="Component/Image/category_food.jpg" alt="avatar"></div>

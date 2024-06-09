@@ -20,9 +20,24 @@ import java.util.List;
  */
 public class ProductRepository {
 
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+    private Connection conn;
+    private PreparedStatement ps;
+    private ResultSet rs;
+
+    public List<Category> getAllCategory() {
+        List<Category> list = new ArrayList<>();
+        String query = "SELECT * FROM Category";
+        try {
+            conn = new DbContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Category(rs.getInt(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
 
     public List<Product> getAllProduct(int page, String filter, String minPrice, String maxPrice) {
         List<Product> list = new ArrayList<>();
@@ -132,9 +147,5 @@ public class ProductRepository {
         } catch (Exception e) {
         }
         return list;
-    }
-
-    public int getCountProduct() {
-        return 0;
     }
 }

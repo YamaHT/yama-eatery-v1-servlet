@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/resourcemanagement.css">
+<link rel="stylesheet" href="/css/admin/resourcemanagement.css">
 
 <div class="resource">
     <div class="resource-title">
@@ -31,7 +31,7 @@
             <tr class="resource-table-body" id="1">
                 <td>1</td>
                 <td>banh my u</td>
-                <td class="resource-table-body-image"><img src="../image/category_food.jpg" alt=""></td>
+                <td class="resource-table-body-image"><img src="/image/category_food.jpg" alt=""></td>
                 <td><i class="fa-solid fa-trash"></i></td>
             </tr>
         </tbody>

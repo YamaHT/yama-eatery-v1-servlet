@@ -12,12 +12,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contact Us</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/contactUs.css">
+        <link rel="stylesheet" href="/css/user/contactUs.css">
     </head>
 
     <body>
         <jsp:include page="../layout/header.jsp"/>
-        <div class="banner"><img src="${pageContext.request.contextPath}/image/contact-banner.jpg" alt="banner"></div>
+        <div class="banner"><img src="/image/contact-banner.jpg" alt="banner"></div>
 
         <div class="contact-detail">
             <div class="contact-detail-content">

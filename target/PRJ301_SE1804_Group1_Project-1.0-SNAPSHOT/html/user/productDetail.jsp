@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Product Detail</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/productDetail.css">
+        <link rel="stylesheet" href="/css/user/productDetail.css">
     </head>
     <body>
         <jsp:include page="../layout/header.jsp"/>

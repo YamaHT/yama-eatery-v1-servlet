@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/login.css">
+        <link rel="stylesheet" href="/css/user/login.css">
     </head>
     <body>
         <jsp:include page="../layout/header.jsp"/>
@@ -47,7 +47,7 @@
                     <p>Please log in to explore our exquisite range of culinary delights and place your orders for an
                         exceptional dining experience at home.
                     </p>
-                    <img src="${pageContext.request.contextPath}/image/category_food.jpg">
+                    <img src="/image/category_food.jpg">
                 </div>
             </div>
             <div class="form register">
@@ -55,7 +55,7 @@
                     <h2>Welcome to Yama Eatery!</h2>
                     <p>Register to join us today and start enjoying exclusive benefits and tailored culinary experiences!
                     </p>
-                    <img src="${pageContext.request.contextPath}/image/banner.jpg" alt="">
+                    <img src="/image/banner.jpg" alt="">
                 </div>
                 <form action="" class="form-box">
                     <h1 class="form-box-title">Register</h1>

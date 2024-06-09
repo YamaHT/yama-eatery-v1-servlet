@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/orderManagement.css">
+<link rel="stylesheet" href="/css/admin/orderManagement.css">
 <div class="order-management">
     <div class="order-management-button">
         <button class="order-management-button-accept-all" onclick="showAcceptAll()">Accept all</button>

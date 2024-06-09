@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/paging.css">
+<link rel="stylesheet" href="/css/layout/paging.css">
 <div class="paging">
     <button type="button" class="paging-first" disabled><i class="fa-solid fa-angles-left"></i></button>
     <button type="button" class="paging-before" disabled><i class="fa-solid fa-angle-left"></i></button>

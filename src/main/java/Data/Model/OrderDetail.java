@@ -38,4 +38,14 @@ public class OrderDetail {
         return subtotal;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    
+    
 }

@@ -39,7 +39,7 @@ public class FeedbackRepository {
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Profile p = new Profile(0, ImageUtils.decompressImage(rs.getBytes(7)),
+                Profile p = new Profile(0, ImageUtils.decompressImage(rs.getBytes(8)),
                         null, null, null, null);
                 Account a = new Account(rs.getInt(6), null, null, null, null, false, p);
                 list.add(new Feedback(rs.getInt(1),

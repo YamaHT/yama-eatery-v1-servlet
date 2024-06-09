@@ -4,12 +4,13 @@
  */
 package Business.Swing.Component;
 
-import Business.Swing.ProductDetail;
 import Data.Model.Product;
 import Utils.ImageUtils;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import Business.Swing.ProductDetail;
+import Data.Model.Account;
 
 /**
  *
@@ -18,10 +19,12 @@ import javax.swing.ImageIcon;
 public class ProductCard extends javax.swing.JPanel {
 
     private Product product;
+    private Account account;
 
-    public ProductCard(Product product, Color color) {
+    public ProductCard(Product product, Color color, Account account) {
         initComponents();
         this.product = product;
+        this.account = account;
         setBackground(color);
         ProductCategory.setText(product.getCategory().getName());
         ProductPrice.setText("$" + product.getPrice());
@@ -40,9 +43,9 @@ public class ProductCard extends javax.swing.JPanel {
 
         ProductCategory = new javax.swing.JLabel();
         ProductPrice = new javax.swing.JLabel();
+        ProductImage = new Business.Swing.Component.Subcomponent.ImageAvatar();
         ProductName = new javax.swing.JLabel();
         ButtonView = new javax.swing.JButton();
-        ProductImage = new Business.Swing.Component.Subcomponent.ImageAvatar();
 
         setBackground(new java.awt.Color(255, 255, 153));
         setPreferredSize(new java.awt.Dimension(150, 300));
@@ -88,13 +91,12 @@ public class ProductCard extends javax.swing.JPanel {
                     .addComponent(ProductCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ProductName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(ProductImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(ButtonView, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(ProductImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,20 +104,18 @@ public class ProductCard extends javax.swing.JPanel {
                 .addComponent(ProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ProductImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ProductImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ButtonView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 24, Short.MAX_VALUE))
         );
-
-        getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonViewActionPerformed
-        new ProductDetail(product);
+        new ProductDetail(product, account);
     }//GEN-LAST:event_ButtonViewActionPerformed
 
 

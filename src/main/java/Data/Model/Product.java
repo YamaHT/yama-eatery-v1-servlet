@@ -5,6 +5,7 @@
 package Data.Model;
 
 import Utils.ImageUtils;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *

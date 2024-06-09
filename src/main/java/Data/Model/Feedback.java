@@ -30,8 +30,6 @@ public class Feedback {
         this.account = account;
     }
 
-    
-    
     public int getId() {
         return id;
     }
@@ -60,5 +58,4 @@ public class Feedback {
         return account;
     }
 
-    
 }

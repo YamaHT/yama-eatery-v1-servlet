@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/productManagement.css">
+<link rel="stylesheet" href="/css/admin/productManagement.css">
 
 <div class="product-management">
     <div class="product-management-button-add">

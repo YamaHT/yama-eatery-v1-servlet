@@ -30,7 +30,7 @@ public class Index extends HttpServlet {
        
         try {
             ProductRepository productRepo = new ProductRepository();
-            int count = productRepo.getCountProduct();
+            int count = 0;
             int page = (int) Math.min(
                     Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
                     Math.max(Math.ceil(count / 6), 1));

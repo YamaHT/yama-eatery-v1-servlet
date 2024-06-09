@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Product</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/product.css">
+        <link rel="stylesheet" href="/css/user/product.css">
     </head>
     <body>
         <jsp:include page="../layout/header.jsp"/>
@@ -90,6 +90,6 @@
         <jsp:include page="../layout/paging.jsp"/>
         <jsp:include page="../layout/footer.jsp"/>
     </body>
-    <script src="${pageContext.request.contextPath}/js/product.js"></script>
+    <script src="/js/product.js"></script>
 
 </html>

@@ -4,7 +4,6 @@
  */
 package Business.Swing.Component;
 
-
 import Business.Swing.Component.Subcomponent.CustomScrollBarUI;
 import Data.Model.Feedback;
 import Data.Repository.Admin.ResourceRepository;
@@ -35,7 +34,7 @@ public class FeedbackPanel extends javax.swing.JLayeredPane {
                             .getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
         } else {
             image.setIcon(new ImageIcon(                    
-                    ImageUtils.convertByteToImage(new ResourceRepository().getImageByName("logo"))
+                    ImageUtils.convertByteToImage(new ResourceRepository().getImageByName("user"))
                             .getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
         }
         date.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(feedback.getFeedbackDate()));
@@ -53,19 +52,16 @@ public class FeedbackPanel extends javax.swing.JLayeredPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        date = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt = new Business.Swing.Component.Subcomponent.ChatText();
         image = new Business.Swing.Component.Subcomponent.ImageAvatar();
+        date = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        date.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        date.setText("2024/04/05 00:00:00");
-
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 50));
 
         txt.setEditable(false);
         txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -76,11 +72,15 @@ public class FeedbackPanel extends javax.swing.JLayeredPane {
         txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jScrollPane1.setViewportView(txt);
 
-        image.setPreferredSize(new java.awt.Dimension(30, 30));
+        image.setPreferredSize(new java.awt.Dimension(40, 40));
 
-        setLayer(date, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        date.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        date.setText("2024/04/05 00:00:00");
+
         setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         setLayer(image, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        setLayer(date, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -88,9 +88,9 @@ public class FeedbackPanel extends javax.swing.JLayeredPane {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -98,11 +98,11 @@ public class FeedbackPanel extends javax.swing.JLayeredPane {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
     }// </editor-fold>//GEN-END:initComponents
 

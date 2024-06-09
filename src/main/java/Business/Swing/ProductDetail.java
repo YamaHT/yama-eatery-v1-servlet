@@ -4,10 +4,14 @@
  */
 package Business.Swing;
 
+import Data.Model.Account;
+import Data.Model.Order;
 import Data.Model.Product;
+import Data.Repository.User.OrderRepository;
 import Utils.ImageUtils;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,16 +19,21 @@ import javax.swing.ImageIcon;
  */
 public class ProductDetail extends javax.swing.JFrame {
 
-    public ProductDetail(Product p) {
+    private Account account;
+    private Product product;
+
+    public ProductDetail(Product product, Account account) {
+        this.account = account;
+        this.product = product;
         initComponents();
         productImage.requestFocusInWindow();
-        productImageText.setIcon(new ImageIcon(ImageUtils.convertByteToImage(p.getImage()).getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
-        productInventory.setText(p.getInventory() == 0 ? "Out of stock" : "In stock");
-        productCategory.setText(p.getCategory().getName());
-        productName.setText(p.getName());
-        productDescription.setText(p.getDescription());
-        productPrice.setText("$" + p.getPrice());
-        productPricex2.setText("<html>\n<p style='text-decoration: line-through'>$" + (p.getPrice() * 2) + "</p>\n</html>");
+        productImageText.setIcon(new ImageIcon(ImageUtils.convertByteToImage(product.getImage()).getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
+        productInventory.setText(product.getInventory() == 0 ? "Out of stock" : "In stock");
+        productCategory.setText(product.getCategory().getName());
+        productName.setText(product.getName());
+        productDescription.setText(product.getDescription());
+        productPrice.setText("$" + product.getPrice());
+        productPricex2.setText("<html>\n<p style='text-decoration: line-through'>$" + (product.getPrice() * 2) + "</p>\n</html>");
         this.setVisible(true);
     }
 
@@ -100,7 +109,7 @@ public class ProductDetail extends javax.swing.JFrame {
 
         productDescription.setEditable(false);
         productDescription.setBorder(null);
-        productDescription.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        productDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         productDescription.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaav");
         productDescription.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         productDescription.setEnabled(false);
@@ -115,7 +124,7 @@ public class ProductDetail extends javax.swing.JFrame {
 
         productPricex2.setBackground(new java.awt.Color(204, 204, 204));
         productPricex2.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
-        productPricex2.setForeground(new java.awt.Color(153, 153, 153));
+        productPricex2.setForeground(new java.awt.Color(204, 204, 204));
         productPricex2.setText("$120");
         productPricex2.setToolTipText("");
         productPricex2.setPreferredSize(new java.awt.Dimension(150, 30));
@@ -131,6 +140,11 @@ public class ProductDetail extends javax.swing.JFrame {
         buttonAddToCart.setForeground(new java.awt.Color(255, 255, 255));
         buttonAddToCart.setText("ADD TO CART");
         buttonAddToCart.setFocusPainted(false);
+        buttonAddToCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddToCartActionPerformed(evt);
+            }
+        });
 
         buttonReturn.setBackground(new java.awt.Color(102, 204, 255));
         buttonReturn.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
@@ -222,6 +236,23 @@ public class ProductDetail extends javax.swing.JFrame {
     private void buttonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReturnActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonReturnActionPerformed
+
+    private void buttonAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddToCartActionPerformed
+        if (!inputAmount.getText().matches("[+-]?\\d+")) {
+            JOptionPane.showMessageDialog(null, "Amount must be a number", "User error", JOptionPane.OK_OPTION);
+            return;
+        }
+        int amount = Integer.parseInt(inputAmount.getText());
+        if (amount <= 0) {
+            JOptionPane.showMessageDialog(null, "Amount must higher than 0", "User error", JOptionPane.OK_OPTION);
+            return;
+        }
+        OrderRepository orderRepo = new OrderRepository();
+        Order order = orderRepo.getOrderByAccount(account);
+        orderRepo.addOrderDetail(order, product, amount);
+        orderRepo.updateOrder(order, orderRepo.getOrderDetailByOrder(order));
+        this.dispose();
+    }//GEN-LAST:event_buttonAddToCartActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

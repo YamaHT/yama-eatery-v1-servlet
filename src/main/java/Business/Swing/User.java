@@ -4,8 +4,6 @@
  */
 package Business.Swing;
 
-import Business.Swing.Component.ProductCard;
-import Business.Swing.Component.Subcomponent.CustomScrollBarUI;
 import Data.Model.Account;
 import Data.Model.Product;
 import Data.Repository.Admin.ResourceRepository;
@@ -18,6 +16,8 @@ import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import Business.Swing.Component.ProductCard;
+import Business.Swing.Component.Subcomponent.CustomScrollBarUI;
 
 /**
  *
@@ -25,15 +25,23 @@ import javax.swing.JOptionPane;
  */
 public class User extends javax.swing.JFrame {
 
-    private Account a;
+    private Account account;
     private ProductRepository productRepository = new ProductRepository();
 
-    public User(Account a) {
+    public User(Account account) {
         initComponents();
-        this.a = a;
-        userAvatar.setIcon(new ImageIcon(
-                ImageUtils.convertByteToImage(new ResourceRepository().getImageByName("logo"))
-                        .getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        this.account = account;
+        if (account.getProfile().getImage() == null) {
+            userAvatar.setIcon(new ImageIcon(
+                    ImageUtils.convertByteToImage(new ResourceRepository().getImageByName("user"))
+                            .getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        } else {
+            userAvatar.setIcon(new ImageIcon(
+                    ImageUtils.convertByteToImage(account.getProfile().getImage())
+                            .getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        }
+        setProductCard(productRepository.getAllProduct(-1, null, null, null));
+        this.setVisible(true);
     }
 
     /**
@@ -60,6 +68,7 @@ public class User extends javax.swing.JFrame {
         priceInputMax = new javax.swing.JTextField();
         buttonApply = new javax.swing.JButton();
         buttonGetall = new javax.swing.JButton();
+        buttonCart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
@@ -82,16 +91,22 @@ public class User extends javax.swing.JFrame {
         ProductData.setLayout(ProductDataLayout);
         ProductDataLayout.setHorizontalGroup(
             ProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 848, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
         );
         ProductDataLayout.setVerticalGroup(
             ProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 698, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
 
         productPanel.setViewportView(ProductData);
 
+        userAvatar.setMinimumSize(new java.awt.Dimension(50, 50));
         userAvatar.setPreferredSize(new java.awt.Dimension(80, 80));
+        userAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userAvatarMouseClicked(evt);
+            }
+        });
 
         searchBar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchBar.setToolTipText("");
@@ -159,6 +174,19 @@ public class User extends javax.swing.JFrame {
             }
         });
 
+        buttonCart.setBackground(new java.awt.Color(0, 102, 102));
+        buttonCart.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        buttonCart.setForeground(new java.awt.Color(255, 255, 204));
+        buttonCart.setText("YOUR \nCART");
+        buttonCart.setBorder(null);
+        buttonCart.setFocusPainted(false);
+        buttonCart.setPreferredSize(new java.awt.Dimension(156, 156));
+        buttonCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCartActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout main_containerLayout = new javax.swing.GroupLayout(main_container);
         main_container.setLayout(main_containerLayout);
         main_containerLayout.setHorizontalGroup(
@@ -185,22 +213,22 @@ public class User extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_containerLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(main_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_containerLayout.createSequentialGroup()
+                                        .addComponent(userAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(44, 44, 44))
                                     .addComponent(categoryText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(priceText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(filterText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_containerLayout.createSequentialGroup()
-                                .addGroup(main_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(buttonGetall, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(buttonApply, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap())))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_containerLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                        .addComponent(userAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))))
+                            .addGroup(main_containerLayout.createSequentialGroup()
+                                .addGroup(main_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(buttonGetall, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(buttonApply, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(buttonCart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())))))
         );
         main_containerLayout.setVerticalGroup(
             main_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_containerLayout.createSequentialGroup()
+            .addGroup(main_containerLayout.createSequentialGroup()
                 .addGroup(main_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(main_containerLayout.createSequentialGroup()
                         .addContainerGap()
@@ -210,9 +238,9 @@ public class User extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(productPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(main_containerLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(15, 15, 15)
                         .addComponent(userAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(22, 22, 22)
                         .addComponent(filterText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filterInput, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,7 +257,9 @@ public class User extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(buttonApply, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(buttonGetall, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(buttonGetall, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonCart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -326,10 +356,15 @@ public class User extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonApplyActionPerformed
 
-    public void run() {
-        setProductCard(productRepository.getAllProduct(-1, null, null, null));
-        this.setVisible(true);
-    }
+    private void buttonCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCartActionPerformed
+        this.dispose();
+        new Cart(account);
+    }//GEN-LAST:event_buttonCartActionPerformed
+
+    private void userAvatarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userAvatarMouseClicked
+        this.dispose();
+        new Profile(account);
+    }//GEN-LAST:event_userAvatarMouseClicked
 
     public void setProductCard(List<Product> list) {
         ProductData.setPreferredSize(new Dimension(850, 700));
@@ -358,7 +393,7 @@ public class User extends javax.swing.JFrame {
                 case 4:
                     color = new Color(204, 204, 255);
             }
-            ProductData.add(new ProductCard(list.get(i), color));
+            ProductData.add(new ProductCard(list.get(i), color, account));
             ProductData.revalidate();
         }
     }
@@ -366,6 +401,7 @@ public class User extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ProductData;
     private javax.swing.JButton buttonApply;
+    private javax.swing.JButton buttonCart;
     private javax.swing.JButton buttonGetall;
     private javax.swing.JButton buttonSearch;
     private javax.swing.JComboBox<String> categoryInput;

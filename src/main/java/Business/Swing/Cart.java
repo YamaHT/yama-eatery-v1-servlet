@@ -75,7 +75,7 @@ public class Cart extends javax.swing.JFrame {
                     productAmount.setText((Integer.parseInt(productAmount.getText()) - 1) + "");
                     int amount = Integer.parseInt(productAmount.getText());
                     if (amount == 0) {
-                        orderRepo.deleteOrderDetail(orderDetail);
+                        orderRepo.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
                         Container parent = productInCart.getParent();
                         parent.remove(productInCart);
                         parent.revalidate();
@@ -84,7 +84,7 @@ public class Cart extends javax.swing.JFrame {
                     } else {
                         double subtotal = amount * orderDetail.getProduct().getPrice();
                         productTotal.setText("$" + subtotal);
-                        orderRepo.updateOrderDetail(orderDetail, amount);
+                        orderRepo.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
                         orderDetail.setAmount(amount);
                         orderDetail.setSubtotal(subtotal);
                     }
@@ -102,7 +102,7 @@ public class Cart extends javax.swing.JFrame {
                     int amount = Integer.parseInt(productAmount.getText());
                     double subtotal = amount * orderDetail.getProduct().getPrice();
                     productTotal.setText("$" + subtotal);
-                    orderRepo.updateOrderDetail(orderDetail, amount);
+                    orderRepo.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
                     orderRepo.updateOrder(order, list);
                     orderDetail.setAmount(amount);
                     orderDetail.setSubtotal(subtotal);
@@ -116,7 +116,7 @@ public class Cart extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     list.remove(orderDetail);
-                    orderRepo.deleteOrderDetail(orderDetail);
+                    orderRepo.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
                     orderRepo.updateOrder(order, list);
                     checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) - orderDetail.getAmount()) + "");
                     checkout_total_value.setText("$" + (Double.parseDouble(checkout_total_value.getText().substring(1)) - orderDetail.getSubtotal()));

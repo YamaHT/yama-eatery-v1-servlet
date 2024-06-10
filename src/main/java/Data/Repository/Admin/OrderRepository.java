@@ -8,8 +8,6 @@ import Data.DbContext;
 import Data.Model.Account;
 import Data.Model.Order;
 import Data.Model.Shipping;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -22,10 +20,6 @@ import java.util.List;
  */
 public class OrderRepository {
 
-    Connection conn;
-    PreparedStatement ps;
-    ResultSet rs;
-
     public List<Order> getWaitingOrder() {
         List<Order> list = new ArrayList<>();
         String query = "SELECT [Order].*, Account.Username, Shipping.Phone, Shipping.Address\n"
@@ -34,9 +28,7 @@ public class OrderRepository {
                 + "INNER JOIN Shipping ON [Order].ShippingId = Shipping.Id\n"
                 + "WHERE ([Order].StatusId = 2)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
                 Account acc = new Account(rs.getInt(5), rs.getString(8), null, null, null, false, null);
                 Shipping ship = new Shipping(rs.getInt(7), rs.getString(9), rs.getString(10), null, null, null);
@@ -63,34 +55,26 @@ public class OrderRepository {
                 + "INNER JOIN [Order] ON Shipping.Id = [Order].ShippingId\n"
                 + "WHERE ([Order].Id = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query1);
-            ps.setInt(1, id);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query1, id);
 
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timestamp.getTime());
-            calendar.add(Calendar.MINUTE, getDeliveryTime(id));
+            int deliveryTime = getDeliveryTime(id);
+            calendar.add(Calendar.MINUTE, deliveryTime);
             timestamp = new Timestamp(calendar.getTimeInMillis());
 
-            ps = conn.prepareStatement(query2);
-            ps.setTimestamp(1, timestamp);
-            ps.setInt(2, id);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query2, timestamp, id);
         } catch (Exception e) {
         }
     }
 
     public void refuseOrder(int id) {
-        String query1 = "UPDATE [Order]\n"
+        String query = "UPDATE [Order]\n"
                 + "SET StatusId = 4\n"
                 + "WHERE (Id = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query1);
-            ps.setInt(1, id);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query, id);
         } catch (Exception e) {
         }
     }
@@ -102,15 +86,12 @@ public class OrderRepository {
                 + "INNER JOIN [Order] ON Shipping.Id = [Order].ShippingId\n"
                 + "WHERE ([Order].Id = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, orderId);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, orderId);
             while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (Exception e) {
         }
-        return 100;
+        return 0;
     }
 }

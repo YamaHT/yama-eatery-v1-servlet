@@ -6,23 +6,49 @@ package Data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
  * @author ADMIN
  */
 public class DbContext {
-     public Connection getConnection() throws Exception {
+
+    public static Connection getConnection() throws Exception {
         String url = "jdbc:sqlserver://localhost:1433;databaseName=PRJ301_SE1804_Group1_Project";
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         return DriverManager.getConnection(url, "sa", "sa");
     }
 
-    public static void main(String[] args) {
+    public static void setParameters(PreparedStatement ps, Object... params) {
         try {
-            System.out.println(new DbContext().getConnection());
+            for (int i = 0; i < params.length; i++) {
+                ps.setObject(i + 1, params[i]);
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        }
+    }
+
+    public static int executeUpdate(String query, Object... params) {
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            setParameters(ps, params);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public static ResultSet executeQuery(String query, Object... params) {
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            setParameters(ps, params);
+            return ps.executeQuery();
+        } catch (Exception e) {
+            return null;
         }
     }
 }

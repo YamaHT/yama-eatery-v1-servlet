@@ -14,7 +14,4 @@ import java.sql.ResultSet;
  */
 public class AccountRepository {
 
-    Connection conn;
-    PreparedStatement ps;
-    ResultSet rs;
 }

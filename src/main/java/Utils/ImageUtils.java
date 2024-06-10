@@ -52,6 +52,9 @@ public class ImageUtils {
     }
 
     public static byte[] compressImageFromWinform(byte[] image) {
+        if (image == null) {
+            return null;
+        }
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
         deflater.setInput(image);
@@ -97,29 +100,11 @@ public class ImageUtils {
         return null;
     }
 
-    public static byte[] converImageToBytes(ImageIcon icon) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = new BufferedImage(
-                icon.getIconWidth(),
-                icon.getIconHeight(),
-                BufferedImage.TYPE_INT_RGB);
-        icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);
-        try {
-            ImageIO.write(bufferedImage, "png", baos);
-        } catch (Exception e) {
-            try {
-                ImageIO.write(bufferedImage, "jpg", baos);
-            } catch (Exception e2) {
-                System.out.println(e2.getMessage());
-            }
-        }
-        return baos.toByteArray();
-    }
     public static String toBase64(byte[] image) {
         if (image == null) {
             return null;
         }
         return new String(Base64.encodeBase64(image));
     }
-    
+
 }

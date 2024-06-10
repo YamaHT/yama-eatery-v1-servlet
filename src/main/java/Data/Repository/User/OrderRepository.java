@@ -25,20 +25,13 @@ import java.util.List;
  */
 public class OrderRepository {
 
-    Connection conn;
-    PreparedStatement ps;
-    ResultSet rs;
-
     public Order getOrderByAccount(Account account) {
         String query = "SELECT [Order].*\n"
                 + "FROM [Order]\n"
                 + "WHERE (AccountId = ?)\n"
                 + "  AND (StatusId = 1)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, account.getId());
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, account.getId());
             while (rs.next()) {
                 return new Order(rs.getInt(1),
                         rs.getInt(2),
@@ -49,7 +42,6 @@ public class OrderRepository {
                         null);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -64,10 +56,7 @@ public class OrderRepository {
                 + "INNER JOIN Category ON Product.CategoryId = Category.Id\n"
                 + "WHERE (OrderDetail.OrderId = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, order.getId());
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, order.getId());
             while (rs.next()) {
                 Product product = new Product(rs.getInt(5),
                         rs.getString(6),
@@ -90,10 +79,7 @@ public class OrderRepository {
                 + "OUTPUT INSERTED.Id\n"
                 + "VALUES (0, 0, NULL, ?, 1, NULL)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, account.getId());
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, account.getId());
             while (rs.next()) {
                 return rs.getInt(1);
             }
@@ -114,12 +100,10 @@ public class OrderRepository {
                 total += orderDetail.getSubtotal();
                 amount += orderDetail.getAmount();
             }
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, amount);
-            ps.setDouble(2, total);
-            ps.setInt(3, order.getId());
-            ps.executeUpdate();
+            DbContext.executeUpdate(query,
+                    amount,
+                    total,
+                    order.getId());
         } catch (Exception e) {
         }
     }
@@ -127,47 +111,41 @@ public class OrderRepository {
     public void addOrderDetail(Order order, Product product, int amount) {
         String query = "INSERT INTO OrderDetail VALUES (?, ?, ?, ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, order.getId());
-            ps.setInt(2, product.getId());
-            ps.setInt(3, amount);
-            ps.setDouble(4, amount * product.getPrice());
-            ps.executeUpdate();
+            DbContext.executeUpdate(query,
+                    order.getId(),
+                    product.getId(),
+                    amount,
+                    amount * product.getPrice());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void updateOrderDetail(OrderDetail orderDetail, int amount) {
+    public void updateOrderDetail(Order order, Product product, int amount) {
         String query = "UPDATE OrderDetail\n"
                 + "SET Amount = ?,\n"
                 + "    Subtotal = ?\n"
                 + "WHERE (OrderId = ?)\n"
                 + "  AND (ProductId = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, amount);
-            ps.setDouble(2, amount * orderDetail.getProduct().getPrice());
-            ps.setInt(3, orderDetail.getOrder().getId());
-            ps.setInt(4, orderDetail.getProduct().getId());
-            ps.executeUpdate();
+            DbContext.executeUpdate(query,
+                    amount,
+                    amount * product.getPrice(),
+                    order.getId(),
+                    product.getId());
         } catch (Exception e) {
         }
     }
 
-    public void deleteOrderDetail(OrderDetail orderDetail) {
+    public void deleteOrderDetail(int orderId, int productId) {
         String query = "DELETE\n"
                 + "FROM OrderDetail\n"
                 + "WHERE (OrderId = ?)\n"
                 + "  AND (ProductId = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, orderDetail.getOrder().getId());
-            ps.setInt(2, orderDetail.getProduct().getId());
-            ps.executeUpdate();
+            DbContext.executeUpdate(query,
+                    orderId,
+                    productId);
         } catch (Exception e) {
         }
     }
@@ -177,14 +155,12 @@ public class OrderRepository {
                 + "OUTPUT INSERTED.Id\n"
                 + "VALUES (?, ?, ?, ?, ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, recipientName);
-            ps.setString(2, phone);
-            ps.setString(3, address);
-            ps.setTime(4, null);
-            ps.setInt(5, deliveryId);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query,
+                    recipientName,
+                    phone,
+                    address,
+                    null,
+                    deliveryId);
             while (rs.next()) {
                 return rs.getInt(1);
             }
@@ -203,12 +179,10 @@ public class OrderRepository {
                 + "ShippingId = ?\n"
                 + "WHERE (Id = ?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setInt(2, shippingId);
-            ps.setInt(3, order.getId());
-            ps.executeUpdate();
+            DbContext.executeUpdate(query,
+                    Timestamp.valueOf(LocalDateTime.now()),
+                    shippingId,
+                    order.getId());
         } catch (Exception e) {
         }
     }

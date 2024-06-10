@@ -378,7 +378,7 @@ public class Profile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Date is invalid!", "User error", JOptionPane.OK_OPTION);
             return;
         }
-        accountRepo.updateProfile(account, image, birthday, name, phone, address);
+        accountRepo.updateProfile(account, ImageUtils.compressImageFromWinform(image), birthday, name, phone, address);
         account = accountRepo.getAccountById(account.getId());
         this.dispose();
         new Profile(account);

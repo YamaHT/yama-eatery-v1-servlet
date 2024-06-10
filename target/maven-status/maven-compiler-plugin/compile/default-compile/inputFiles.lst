@@ -2,9 +2,11 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\ProductCard.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\StartController.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\Subcomponent\CustomScrollBarUI.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Profile.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Profile.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\User\FeedbackRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Order.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\ProductInCart.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\ProductController\Index.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\ProductDetail.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\DbContext.java
@@ -23,9 +25,9 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Account.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Dashboard.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Feedback.java
-D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\User\ProfileRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Category.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Shipping.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Cart.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\Admin\OrderRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\Admin\ResourceRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\Admin\ProductRepository.java

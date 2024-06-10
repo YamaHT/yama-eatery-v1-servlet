@@ -13,9 +13,6 @@ import java.sql.ResultSet;
  * @author ADMIN
  */
 public class FeedbackRepository {
-    
-    private Connection conn;
-    private PreparedStatement ps;
-    private ResultSet rs;
+
     
 }

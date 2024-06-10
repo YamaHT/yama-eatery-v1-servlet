@@ -8,11 +8,11 @@ import Data.DbContext;
 import Data.Model.Category;
 import Data.Model.Product;
 import Utils.ImageUtils;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -20,17 +20,11 @@ import java.util.List;
  */
 public class ProductRepository {
 
-    private Connection conn;
-    private PreparedStatement ps;
-    private ResultSet rs;
-
     public List<Category> getAllCategory() {
         List<Category> list = new ArrayList<>();
         String query = "SELECT * FROM Category";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
                 list.add(new Category(rs.getInt(1), rs.getString(2)));
             }
@@ -44,9 +38,7 @@ public class ProductRepository {
         String query = "SELECT * FROM Product INNER JOIN Category ON Product.CategoryId = Category.Id WHERE Product.Available = 1\n"
                 + "ORDER BY Product.Id DESC";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -72,9 +64,7 @@ public class ProductRepository {
                 + "AND Product.Available = 1\n"
                 + "ORDER BY Product.Id DESC";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -100,10 +90,7 @@ public class ProductRepository {
                 + "AND Product.Available = 1\n"
                 + "ORDER BY Product.Id DESC";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, categoryName);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, categoryName);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -122,17 +109,14 @@ public class ProductRepository {
 
     public List<Product> getAllProductSearchByPrice(double price) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM "
-                + "Product INNER JOIN Category "
-                + "ON Product.CategoryId = Category.Id "
-                + "WHERE Product.Price <= ? "
-                + "AND Product.Available = 1"
+        String query = "SELECT * FROM\n"
+                + "Product INNER JOIN Categoryn"
+                + "ON Product.CategoryId = Category.Id\n"
+                + "WHERE Product.Price <= ?\n"
+                + "AND Product.Available = 1\n"
                 + "ORDER BY Product.Price DESC";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setDouble(1, price);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, price);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -149,8 +133,8 @@ public class ProductRepository {
         return list;
     }
 
-    public List<Object> getMostSoldInMonth(int month, int year) {
-        List<Object> list = new ArrayList<>();
+    public Map<Product, Integer> getMostSoldInMonth(int month, int year) {
+        Map<Product, Integer> map = new HashMap<>();
         String query
                 = "DECLARE @StartDate DATETIME;\n"
                 + "DECLARE @EndDate DATETIME;\n"
@@ -177,25 +161,21 @@ public class ProductRepository {
                 + "AND ([Order].OrderDate <= @EndDate)\n"
                 + "ORDER BY TotalSold DESC";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, year);
-            ps.setInt(2, month);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, year, month);
             while (rs.next()) {
-                list.add(new Product(rs.getInt(1),
+                Product product = new Product(rs.getInt(1),
                         rs.getString(2),
                         ImageUtils.decompressImage(rs.getBytes(3)),
                         rs.getDouble(4),
                         null,
                         0,
                         false,
-                        new Category(0, rs.getString(5))));
-                list.add(rs.getInt(6));
+                        new Category(0, rs.getString(5)));
+                map.put(product, rs.getInt(6));
             }
         } catch (Exception e) {
         }
-        return list;
+        return map;
     }
 
     public int getProductSoldInMonth(int month, int year) {
@@ -207,11 +187,7 @@ public class ProductRepository {
                 + "FROM [Order]\n"
                 + "WHERE (OrderDate >= @StartDate) AND (OrderDate <= @EndDate)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, year);
-            ps.setInt(2, month);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, year, month);
             while (rs.next()) {
                 return rs.getInt(1);
             }
@@ -229,11 +205,7 @@ public class ProductRepository {
                 + "FROM [Order]\n"
                 + "WHERE (OrderDate >= @StartDate) AND (OrderDate <= @EndDate)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, year);
-            ps.setInt(2, month);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, year, month);
             while (rs.next()) {
                 return rs.getDouble(1);
             }
@@ -245,48 +217,40 @@ public class ProductRepository {
     public void addProduct(String name, byte[] image, double price, String description, int inventory, int categoryId) {
         String query = "INSERT INTO [dbo].[Product] VALUES (?,?,?,?,?, 1,?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setBytes(2, ImageUtils.compressImageFromWinform(image));
-            ps.setDouble(3, price);
-            ps.setString(4, description);
-            ps.setInt(5, inventory);
-            ps.setInt(6, categoryId);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query,
+                    name,
+                    image,
+                    price,
+                    description,
+                    inventory,
+                    categoryId);
         } catch (Exception e) {
         }
     }
 
     public void updateProduct(int id, String name, byte[] image, double price, String description, int inventory, int categoryId) {
-        String query = "UPDATE [dbo].[Product] SET [Name] = ?, [Image] = ?, [Price] = ?, [Description] = ?, [Inventory] = ?, [CategoryId] = ? WHERE Id = ?";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setBytes(2, ImageUtils.compressImageFromWinform(image));
-            ps.setDouble(3, price);
-            ps.setString(4, description);
-            ps.setInt(5, inventory);
-            ps.setInt(6, categoryId);
-            ps.setInt(7, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
-        }
-    }
-
-    public void updateProductWithoutImage(int id, String name, double price, String description, int inventory, int categoryId) {
-        String query = "UPDATE [dbo].[Product] SET [Name] = ?, [Price] = ?, [Description] = ?, [Inventory] = ?, [CategoryId] = ? WHERE Id = ?";
-        try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setDouble(2, price);
-            ps.setString(3, description);
-            ps.setInt(4, inventory);
-            ps.setInt(5, categoryId);
-            ps.setInt(6, id);
-            ps.executeUpdate();
+            if (image != null) {
+                String query = "UPDATE [dbo].[Product] SET [Name] = ?, [Image] = ?, [Price] = ?, [Description] = ?, [Inventory] = ?, [CategoryId] = ?\n"
+                        + "WHERE Id = ?";
+                DbContext.executeUpdate(query,
+                        name,
+                        image,
+                        price,
+                        description,
+                        inventory,
+                        categoryId,
+                        id);
+            } else {
+                String query = "UPDATE [dbo].[Product] SET [Name] = ?, [Price] = ?, [Description] = ?, [Inventory] = ?, [CategoryId] = ? WHERE Id = ?";
+                DbContext.executeUpdate(query,
+                        name,
+                        price,
+                        description,
+                        inventory,
+                        categoryId,
+                        id);
+            }
         } catch (Exception e) {
         }
     }
@@ -294,10 +258,7 @@ public class ProductRepository {
     public void deleteProduct(int id) {
         String query = "UPDATE [dbo].[Product] SET [Available] = 0 WHERE Id = ?";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query, id);
         } catch (Exception e) {
         }
     }

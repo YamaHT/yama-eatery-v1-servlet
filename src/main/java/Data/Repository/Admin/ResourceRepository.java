@@ -19,18 +19,10 @@ import java.util.List;
  */
 public class ResourceRepository {
 
-    private Connection conn;
-    private PreparedStatement ps;
-    private ResultSet rs;
-
     public void upload(String name, byte[] image) {
         String query = "insert into ImageResource values(?,?)";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setBytes(2, image);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query, name, image);
         } catch (Exception e) {
         }
     }
@@ -38,10 +30,7 @@ public class ResourceRepository {
     public void delete(String name) {
         String query = "delete from ImageResource where Name = ?";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.executeUpdate();
+            DbContext.executeUpdate(query, name);
         } catch (Exception e) {
         }
     }
@@ -49,10 +38,7 @@ public class ResourceRepository {
     public byte[] getImageByName(String name) {
         String query = "select * from ImageResource where Name = ?";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query, name);
             while (rs.next()) {
                 return ImageUtils.decompressImage(rs.getBytes(2));
             }
@@ -65,9 +51,7 @@ public class ResourceRepository {
         List<ImageResource> list = new ArrayList<>();
         String query = "select * from ImageResource";
         try {
-            conn = new DbContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
                 list.add(new ImageResource(rs.getString(1), ImageUtils.decompressImage(rs.getBytes(2))));
             }

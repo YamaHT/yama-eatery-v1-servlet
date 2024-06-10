@@ -30,6 +30,7 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -49,14 +50,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Le Phuoc Duy - CE181153
  */
 public class Dashboard extends javax.swing.JFrame {
-
+    
     ResourceRepository resourceRepository = new ResourceRepository();
     ProductRepository productRepository = new ProductRepository();
     FeedbackRepository feedbackRepository = new FeedbackRepository();
     OrderRepository orderRepository = new OrderRepository();
-
+    
     byte[] image = null;
-
+    
     public Dashboard() {
         initComponents();
         setFalseComponentInit();
@@ -131,8 +132,8 @@ public class Dashboard extends javax.swing.JFrame {
         productInputId = new javax.swing.JTextField();
         productInputName = new javax.swing.JTextField();
         productLineName = new javax.swing.JLabel();
-        productTextImage1 = new javax.swing.JLabel();
-        productTextImage2 = new javax.swing.JLabel();
+        productImageText = new javax.swing.JLabel();
+        productImageDisplay = new javax.swing.JLabel();
         productInputImage = new javax.swing.JButton();
         productInputPrice = new javax.swing.JTextField();
         productLinePrice = new javax.swing.JLabel();
@@ -936,15 +937,15 @@ public class Dashboard extends javax.swing.JFrame {
         productLineName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         productLineName.setPreferredSize(new java.awt.Dimension(218, 2));
 
-        productTextImage1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        productTextImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        productTextImage1.setText("Image:");
+        productImageText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        productImageText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        productImageText.setText("Image:");
 
-        productTextImage2.setBackground(new java.awt.Color(204, 204, 204));
-        productTextImage2.setForeground(new java.awt.Color(204, 204, 204));
-        productTextImage2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        productTextImage2.setOpaque(true);
-        productTextImage2.setPreferredSize(new java.awt.Dimension(70, 50));
+        productImageDisplay.setBackground(new java.awt.Color(204, 204, 204));
+        productImageDisplay.setForeground(new java.awt.Color(204, 204, 204));
+        productImageDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        productImageDisplay.setOpaque(true);
+        productImageDisplay.setPreferredSize(new java.awt.Dimension(70, 50));
 
         productInputImage.setBackground(new java.awt.Color(204, 153, 255));
         productInputImage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1112,9 +1113,9 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(productInputName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productLineName, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(product_management_actionLayout.createSequentialGroup()
-                        .addComponent(productTextImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(productImageText, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(productTextImage2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(productImageDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(productInputImage, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(productInputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1145,8 +1146,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(productLineName, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(product_management_actionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(productTextImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productTextImage2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productImageText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productImageDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productInputImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(productInputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1248,8 +1249,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, product_managementLayout.createSequentialGroup()
                 .addComponent(product_management_action, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(product_management_table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(product_management_table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         product_managementLayout.setVerticalGroup(
             product_managementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1579,7 +1579,7 @@ public class Dashboard extends javax.swing.JFrame {
             File file = fileChooser.getSelectedFile();
             try {
                 image = Files.readAllBytes(file.toPath());
-                productTextImage2.setIcon(
+                productImageDisplay.setIcon(
                         new ImageIcon(ImageUtils.convertByteToImage(image).getScaledInstance(70, 50, Image.SCALE_SMOOTH))
                 );
             } catch (Exception e) {
@@ -1648,7 +1648,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "This product's Id is already existed!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (productInputName.getForeground() != Color.BLACK
                 || image == null
                 || productInputPrice.getForeground() != Color.BLACK
@@ -1658,13 +1658,13 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All field must be fulfilled!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (!productInputPrice.getText().trim().matches("^[+-]?\\d+[.]?\\d*$")
                 || !productInputInventory.getText().trim().matches("^[+-]?\\d+$")) {
             JOptionPane.showMessageDialog(this, "Some fields are not in the correct format (e.g., price, inventory). Please enter numeric values!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (Double.parseDouble(productInputPrice.getText().trim()) <= 0) {
             JOptionPane.showMessageDialog(this, "Price can't less than or equal to 0!", "Error", JOptionPane.OK_OPTION);
             return;
@@ -1673,9 +1673,9 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Inventory must be a positive number!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         productRepository.addProduct(productInputName.getText(),
-                image,
+                ImageUtils.compressImageFromWinform(image),
                 Double.parseDouble(productInputPrice.getText()),
                 productInputDescription.getText(),
                 Integer.parseInt(productInputInventory.getText()),
@@ -1703,7 +1703,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select a product before update", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (productInputName.getForeground() != Color.BLACK
                 || productInputPrice.getForeground() != Color.BLACK
                 || productInputDescription.getForeground() != Color.BLACK
@@ -1712,13 +1712,13 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All field must be fulfilled!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (!productInputPrice.getText().trim().matches("^[+-]?\\d+[.]?\\d*$")
                 || !productInputInventory.getText().trim().matches("^[+-]?\\d+$")) {
             JOptionPane.showMessageDialog(this, "Some fields are not in the correct format (e.g., price, inventory). Please enter numeric values!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (Double.parseDouble(productInputPrice.getText().trim()) <= 0) {
             JOptionPane.showMessageDialog(this, "Price can't less than or equal to 0!", "Error", JOptionPane.OK_OPTION);
             return;
@@ -1727,23 +1727,14 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Inventory mustn't be a negative number!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
-        if (image == null) {
-            productRepository.updateProductWithoutImage(Integer.parseInt(productInputId.getText()),
-                    productInputName.getText(),
-                    Double.parseDouble(productInputPrice.getText()),
-                    productInputDescription.getText(),
-                    Integer.parseInt(productInputInventory.getText()),
-                    productInputCategory.getSelectedIndex());
-        } else {
-            productRepository.updateProduct(Integer.parseInt(productInputId.getText()),
-                    productInputName.getText(),
-                    image,
-                    Double.parseDouble(productInputPrice.getText()),
-                    productInputDescription.getText(),
-                    Integer.parseInt(productInputInventory.getText()),
-                    productInputCategory.getSelectedIndex());
-        }
+        
+        productRepository.updateProduct(Integer.parseInt(productInputId.getText()),
+                productInputName.getText(),
+                ImageUtils.compressImageFromWinform(image),
+                Double.parseDouble(productInputPrice.getText()),
+                productInputDescription.getText(),
+                Integer.parseInt(productInputInventory.getText()),
+                productInputCategory.getSelectedIndex());
         turnOffProduct();
         setProductData(productRepository.getAllProduct());
     }//GEN-LAST:event_productButtonUpdateActionPerformed
@@ -1771,12 +1762,12 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select a feedback before send response!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         if (feedbackInputResponse.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Type your response text before send response!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-
+        
         int option = JOptionPane
                 .showConfirmDialog(this, "Are you sure you want to response to this feedback?",
                         "Confirm response", JOptionPane.YES_NO_OPTION);
@@ -1815,7 +1806,7 @@ public class Dashboard extends javax.swing.JFrame {
     public void setColor(JPanel p) {
         p.setBackground(new Color(41, 57, 80));
     }
-
+    
     public void resetColor(JPanel[] p, JPanel[] indicators) {
         for (JPanel p1 : p) {
             p1.setBackground(new Color(23, 35, 51));
@@ -1844,17 +1835,20 @@ public class Dashboard extends javax.swing.JFrame {
         generalRevenueGoals.setText("Goals: $" + revenueGoals);
         generalRevenueProgressBar.setMaximum((int) revenueGoals);
         generalRevenueProgressBar.setValue((int) Math.round(revenue));
-
-        List<Object> mostProduct = productRepository.getMostSoldInMonth(month, year);
-        if (mostProduct.size() != 0) {
-            detail_id.setText(String.valueOf(((Product) mostProduct.get(0)).getId()));
-            detail_name.setText(((Product) mostProduct.get(0)).getName());
+        
+        Map<Product, Integer> mostProduct = productRepository.getMostSoldInMonth(month, year);
+        if (!mostProduct.isEmpty()) {
+            Map.Entry<Product, Integer> entry = mostProduct.entrySet().iterator().next();
+            Product mostSoldProduct = entry.getKey();
+            Integer quantitySold = entry.getValue();
+            detail_id.setText(String.valueOf(mostSoldProduct.getId()));
+            detail_name.setText(mostSoldProduct.getName());
             detail_image.setIcon(new ImageIcon(
-                    ImageUtils.convertByteToImage(((Product) mostProduct.get(0)).getImage())
+                    ImageUtils.convertByteToImage(mostSoldProduct.getImage())
                             .getScaledInstance(98, 100, Image.SCALE_SMOOTH)));
-            detail_price.setText(String.valueOf(((Product) mostProduct.get(0)).getPrice()));
-            detail_category.setText(((Product) mostProduct.get(0)).getCategory().getName());
-            detail_sold.setText(mostProduct.get(1).toString());
+            detail_price.setText(String.valueOf(mostSoldProduct.getPrice()));
+            detail_category.setText(mostSoldProduct.getCategory().getName());
+            detail_sold.setText(String.valueOf(quantitySold));
         }
     }
 
@@ -1870,7 +1864,7 @@ public class Dashboard extends javax.swing.JFrame {
                 }
                 return Object.class;
             }
-
+            
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -1912,7 +1906,7 @@ public class Dashboard extends javax.swing.JFrame {
                 }
                 return Object.class;
             }
-
+            
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -1925,7 +1919,7 @@ public class Dashboard extends javax.swing.JFrame {
         model.addColumn("Description");
         model.addColumn("Inventory");
         model.addColumn("Category");
-
+        
         for (int i = 0; i < list.size(); i++) {
             model.addRow(new Object[]{
                 list.get(i).getId(),
@@ -1951,12 +1945,12 @@ public class Dashboard extends javax.swing.JFrame {
         productTableData.getColumnModel().getColumn(2).setPreferredWidth(60);
         productTableData.getColumnModel().getColumn(3).setPreferredWidth(50);
         productTableData.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        
         productTableData.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (productTableData.getSelectedRow() != -1) {
                 productInputId.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 0).toString());
                 productInputName.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 1).toString());
-                productTextImage2.setIcon((Icon) productTableData.getValueAt(productTableData.getSelectedRow(), 2));
+                productImageDisplay.setIcon((Icon) productTableData.getValueAt(productTableData.getSelectedRow(), 2));
                 productInputPrice.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 3).toString());
                 productInputDescription.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 4).toString());
                 productInputInventory.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 5).toString());
@@ -1966,21 +1960,21 @@ public class Dashboard extends javax.swing.JFrame {
         });
         product_management.requestFocusInWindow();
     }
-
+    
     public void turnOnProduct() {
         productInputId.setForeground(Color.BLACK);
         productInputName.setForeground(Color.BLACK);
-        productTextImage2.setBackground(Color.WHITE);
+        productImageDisplay.setBackground(Color.WHITE);
         productInputPrice.setForeground(Color.BLACK);
         productInputDescription.setForeground(Color.BLACK);
         productInputInventory.setForeground(Color.BLACK);
     }
-
+    
     public void turnOffProduct() {
         image = null;
         productInputId.setText("Id");
         productInputName.setText("Name");
-        productTextImage2.setIcon(null);
+        productImageDisplay.setIcon(null);
         productInputPrice.setText("Price");
         productInputDescription.setText("Description");
         productInputInventory.setText("Inventory");
@@ -1988,7 +1982,7 @@ public class Dashboard extends javax.swing.JFrame {
         productTableData.getSelectionModel().clearSelection();
         productInputId.setForeground(new Color(153, 153, 153));
         productInputName.setForeground(new Color(204, 204, 204));
-        productTextImage2.setBackground(new Color(204, 204, 204));
+        productImageDisplay.setBackground(new Color(204, 204, 204));
         productInputPrice.setForeground(new Color(204, 204, 204));
         productInputDescription.setForeground(new Color(204, 204, 204));
         productInputInventory.setForeground(new Color(204, 204, 204));
@@ -2014,7 +2008,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public FeedbackPanel getSelectedFeedbackPanel() {
         FeedbackPanel fp = null;
         for (Component c : feedbackTextPanel.getComponents()) {
@@ -2026,7 +2020,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
         return fp;
     }
-
+    
     public void addMouseListenerToScrollPane(FeedbackPanel fp) {
         Component view = ((JScrollPane) fp.getComponent(1)).getViewport().getView();
         if (view != null) {
@@ -2172,6 +2166,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton productButtonDelete;
     private javax.swing.JButton productButtonSearch;
     private javax.swing.JButton productButtonUpdate;
+    private javax.swing.JLabel productImageDisplay;
+    private javax.swing.JLabel productImageText;
     private javax.swing.JComboBox<String> productInputCategory;
     private javax.swing.JTextArea productInputDescription;
     private javax.swing.JTextField productInputId;
@@ -2184,8 +2180,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel productLinePrice;
     private javax.swing.JTable productTableData;
     private javax.swing.JLabel productTextCategory;
-    private javax.swing.JLabel productTextImage1;
-    private javax.swing.JLabel productTextImage2;
     private javax.swing.JPanel product_highlight;
     private javax.swing.JLabel product_label;
     private javax.swing.JPanel product_management;

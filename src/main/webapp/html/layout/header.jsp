@@ -38,7 +38,7 @@
     <div class="header-button">
         <i class="fa-solid fa-bars header-navigation-mobile" onclick="showSidenav()"></i>
         <i onclick="showSearchBar(this)" class="fa-solid fa-magnifying-glass header-button-search"></i>
-        <form class="header-button-search-bar" style=" display: none;">
+        <form action="/product/search" method="get" class="header-button-search-bar" style=" display: none;">
             <input type="text" id="name" name="name" placeholder="Search product..." />
             <i class="fa-solid fa-xmark header-button-search-bar-close" onclick="emptySearchInput()"></i>
             <i class="fa-solid fa-magnifying-glass header-button-search-bar-search" onclick="submitSearchForm()"></i>

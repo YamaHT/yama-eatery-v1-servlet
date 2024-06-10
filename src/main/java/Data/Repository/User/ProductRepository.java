@@ -38,15 +38,15 @@ public class ProductRepository {
                 + "\nWHERE Product.Available = 1";
 
         if (minPrice != null && maxPrice != null) {
-            query += " AND Product.Price >= ? AND Product.Price <= ?";
+            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
         }
-        query += filter != null ? "\nORDER BY Product." + filter : "\nORDER BY Product.Id DESC";
+        query += (filter == null || filter.equals("")) ? "\nORDER BY Product.Id DESC" : "\nORDER BY Product." + filter;
         if (page != -1) {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
         try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, minPrice, maxPrice, (page - 1) * 12)
-                : DbContext.executeQuery(query, minPrice, maxPrice)) {
+                ? DbContext.executeQuery(query, (page - 1) * 12)
+                : DbContext.executeQuery(query)) {
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -63,23 +63,23 @@ public class ProductRepository {
         return list;
     }
 
-    public List<Product> getAllProductSearchByName(String name, int page, String filter, String minPrice, String maxPrice) {
+    public List<Product> getAllProductBySearchName(String name, int page, String filter, String minPrice, String maxPrice) {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM "
                 + "Product INNER JOIN Category ON Product.CategoryId = Category.Id "
-                + "\nWHERE Product.Name LIKE '%" + name + "%'\n"
-                + "AND Product.Available = 1";
+                + "\nWHERE Product.Name LIKE '%" + name + "%'"
+                + "\nAND Product.Available = 1";
 
         if (minPrice != null && maxPrice != null) {
-            query += " AND Product.Price >= ? AND Product.Price <= ?";
+            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
         }
-        query += filter != null ? "\nORDER BY Product." + filter : "\nORDER BY Product.Id DESC";
+        query += (filter == null || filter.equals("")) ? "\nORDER BY Product.Id DESC" : "\nORDER BY Product." + filter;
         if (page != -1) {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
         try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, minPrice, maxPrice, (page - 1) * 12)
-                : DbContext.executeQuery(query, minPrice, maxPrice)) {
+                ? DbContext.executeQuery(query, (page - 1) * 12)
+                : DbContext.executeQuery(query)) {
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -96,23 +96,23 @@ public class ProductRepository {
         return list;
     }
 
-    public List<Product> getAllProductSearchByCategoryName(String categoryName, int page, String filter, String minPrice, String maxPrice) {
+    public List<Product> getAllProductByCategoryName(String categoryName, int page, String filter, String minPrice, String maxPrice) {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM "
                 + "Product INNER JOIN Category ON Product.CategoryId = Category.Id "
-                + "\nWHERE Category.Name = ? "
-                + "AND Product.Available = 1";
+                + "\nWHERE Category.Name = ?"
+                + "\nAND Product.Available = 1";
 
         if (minPrice != null && maxPrice != null) {
-            query += " AND Product.Price >= ? AND Product.Price <= ?";
+            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
         }
-        query += filter != null ? "\nORDER BY Product." + filter : "\nORDER BY Product.Id DESC";
+        query += (filter == null || filter.equals("")) ? "\nORDER BY Product.Id DESC" : "\nORDER BY Product." + filter;
         if (page != -1) {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
         try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, minPrice, maxPrice, (page - 1) * 12)
-                : DbContext.executeQuery(query, minPrice, maxPrice)) {
+                ? DbContext.executeQuery(query, (page - 1) * 12)
+                : DbContext.executeQuery(query)) {
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -127,5 +127,86 @@ public class ProductRepository {
         } catch (Exception e) {
         }
         return list;
+    }
+
+    public int getCountProduct(String action, String name, String minPrice, String maxPrice) {
+        String query = "SELECT COUNT(*) FROM Product";
+        switch (String.valueOf(action)) {
+            case "null":
+                query += "\nWHERE Product.Available = 1";
+                break;
+            case "search":
+                query += "\nWHERE Product.Name LIKE '%" + name + "%'"
+                        + "\nAND Product.Available = 1";
+                break;
+            case "category":
+                query += "\nINNER JOIN Category ON Product.CategoryId = Category.Id "
+                        + "\nWHERE Category.Name = ?"
+                        + "\nAND Product.Available = 1";
+                break;
+        }
+
+        if (minPrice != null && maxPrice != null) {
+            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
+        }
+        try {
+            ResultSet rs = DbContext.executeQuery(query, name);
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public int getMinPriceProduct(String action, String name) {
+        String query = "SELECT TOP 1 Product.Price FROM Product";
+        switch (String.valueOf(action)) {
+            case "null":
+                query += "\nWHERE Product.Available = 1";
+                break;
+            case "search":
+                query += "\nWHERE Product.Name LIKE '%" + name + "%'"
+                        + "\nAND Product.Available = 1";
+                break;
+            case "category":
+                query += "\nINNER JOIN Category ON Product.CategoryId = Category.Id "
+                        + "\nWHERE Category.Name = ?"
+                        + "\nAND Product.Available = 1";
+                break;
+        }
+        query += "\nOrder By Product.Price ASC";
+        try {
+            ResultSet rs = DbContext.executeQuery(query, name);
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public int getMaxPriceProduct(String action, String name) {
+        String query = "SELECT TOP 1 Product.Price FROM Product";
+        switch (String.valueOf(action)) {
+            case "null":
+                query += "\nWHERE Product.Available = 1";
+                break;
+            case "search":
+                query += "\nWHERE Product.Name LIKE '%" + name + "%'"
+                        + "\nAND Product.Available = 1";
+                break;
+            case "category":
+                query += "\nINNER JOIN Category ON Product.CategoryId = Category.Id "
+                        + "\nWHERE Category.Name = ?"
+                        + "\nAND Product.Available = 1";
+                break;
+        }
+        query += "\nOrder By Product.Price DESC";
+        try {
+            ResultSet rs = DbContext.executeQuery(query, name);
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+        }
+        return 0;
     }
 }

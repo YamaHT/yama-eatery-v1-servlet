@@ -26,30 +26,37 @@ public class Index extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-       
-        try {
-            ProductRepository productRepo = new ProductRepository();
-            int count = 0;
-            int page = (int) Math.min(
-                    Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
-                    Math.max(Math.ceil(count / 6), 1));
-            List<Product> list = productRepo.getAllProduct(page, null, null, null);
-            request.setAttribute("listProduct", list);
-            request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
-        } catch (Exception e) {
-            try {
-                request.getRequestDispatcher("/html/error/404.jsp").forward(request, response);
-            } catch (Exception ex) {
-            }
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            ProductRepository productRepo = new ProductRepository();
+            String filter = request.getParameter("filter");
+            String lastMinPrice = request.getParameter("priceMin");
+            String lastMaxPrice = request.getParameter("priceMax");
+
+            int count = productRepo.getCountProduct(null, filter, lastMinPrice, lastMaxPrice);
+            int endPage = (int) Math.ceil(count / 12.0);
+            int page = (int) Math.min(
+                    Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
+                    Math.max(endPage, 1));
+            List<Product> list = productRepo.getAllProduct(page, filter, lastMinPrice, lastMaxPrice);
+
+            request.setAttribute("listProduct", list);
+            request.setAttribute("filter", (filter == null || filter.equals("")) ? "Id-DESC" : filter.replace(" ", "-"));
+            request.setAttribute("minPrice", productRepo.getMinPriceProduct(null, null));
+            request.setAttribute("maxPrice", productRepo.getMaxPriceProduct(null, null));
+            request.setAttribute("lastMinPrice", lastMinPrice);
+            request.setAttribute("lastMaxPrice", lastMaxPrice);
+            request.setAttribute("page", page);
+            request.setAttribute("endPage", endPage);
+            request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.getRequestDispatcher("/html/error/404.jsp").forward(request, response);
+        }
     }
 
     @Override

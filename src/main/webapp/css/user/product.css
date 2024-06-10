@@ -159,37 +159,54 @@
     justify-content: flex-start;
     flex-wrap: wrap;
 
-    & #p1 {
+    & #p0 {
         background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
     }
 
-    & #p2 {
+    & #p1 {
         background: linear-gradient(to bottom, #FFA500, #FFFFFF);
     }
 
-    & #p3 {
+    & #p2 {
         background: linear-gradient(to bottom, #0000FF, #FFFFFF);
     }
 
-    & #p4 {
+    & #p3 {
         background: linear-gradient(to bottom, #960075, #FFFFFF);
     }
 
-    & #p5 {
+    & #p4 {
         background: linear-gradient(to bottom, #02E233, #FFFFFF);
     }
 
-    & #p6 {
+    & #p5 {
         background: linear-gradient(to bottom, #e72020, #FFFFFF);
     }
 
+    & #p6 {
+        background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
+    }
+
     & #p7 {
-        background: linear-gradient(to bottom, #17dfe9, #ffffff);
+        background: linear-gradient(to bottom, #FFA500, #FFFFFF);
     }
 
     & #p8 {
-        background: linear-gradient(to bottom, #e72094, #FFFFFF);
+        background: linear-gradient(to bottom, #0000FF, #FFFFFF);
     }
+
+    & #p9 {
+        background: linear-gradient(to bottom, #960075, #FFFFFF);
+    }
+
+    & #p10 {
+        background: linear-gradient(to bottom, #02E233, #FFFFFF);
+    }
+
+    & #p11 {
+        background: linear-gradient(to bottom, #e72020, #FFFFFF);
+    }
+
 }
 
 

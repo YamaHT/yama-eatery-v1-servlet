@@ -322,7 +322,7 @@ public class User extends javax.swing.JFrame {
 
         priceInputMin.setText("");
         priceInputMax.setText("");
-        setProductCard(productRepository.getAllProductSearchByName(searchBar.getText().trim(), -1, filter, minPrice, maxPrice));
+        setProductCard(productRepository.getAllProductBySearchName(searchBar.getText().trim(), -1, filter, minPrice, maxPrice));
     }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void buttonGetallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGetallActionPerformed
@@ -335,7 +335,7 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonGetallActionPerformed
 
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
-        String filter = null;
+        String filter = "";
         switch (filterInput.getSelectedIndex()) {
             case 1:
             case 2:
@@ -363,7 +363,7 @@ public class User extends javax.swing.JFrame {
         if (categoryInput.getSelectedIndex() == 0) {
             setProductCard(productRepository.getAllProduct(-1, filter, minPrice, maxPrice));
         } else {
-            setProductCard(productRepository.getAllProductSearchByCategoryName(categoryInput.getSelectedItem().toString(), -1, filter, minPrice, maxPrice));
+            setProductCard(productRepository.getAllProductByCategoryName(categoryInput.getSelectedItem().toString(), -1, filter, minPrice, maxPrice));
         }
     }//GEN-LAST:event_buttonApplyActionPerformed
 

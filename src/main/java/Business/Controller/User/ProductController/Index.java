@@ -28,11 +28,9 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
             ProductRepository productRepo = new ProductRepository();
             String filter = request.getParameter("filter");
             String lastMinPrice = request.getParameter("priceMin");
@@ -54,9 +52,6 @@ public class Index extends HttpServlet {
             request.setAttribute("page", page);
             request.setAttribute("endPage", endPage);
             request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
-        } catch (Exception e) {
-            request.getRequestDispatcher("/html/error/404.jsp").forward(request, response);
-        }
     }
 
     @Override
@@ -64,7 +59,8 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     public String getServletInfo() {
         return "Short description";

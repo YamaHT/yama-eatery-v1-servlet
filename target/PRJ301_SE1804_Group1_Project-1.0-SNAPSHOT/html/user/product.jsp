@@ -16,7 +16,7 @@
     </head>
     <body>
         <jsp:include page="../layout/header.jsp"/>
-        <form action="" method="get" class="filter">
+        <form method="get" class="filter">
             <input type="hidden" name="name" value="${name}"/>
             <div class="filter-price">
                 <div class="filter-price-description">
@@ -48,31 +48,31 @@
 
         <div class="product-category-container">
             <div class="groupOfCategory">
-                <div class="groupOfCategory-category active">
+                <div class="groupOfCategory-category ${categoryName == null ? "active" : ""}" onclick="window.location.href = '/product'">
                     <i class="fa-solid fa-house"></i>
-                    <p>ALL</p>
+                    <p>All</p>
                 </div>
-                <div class="groupOfCategory-category">
-                    <i class="fa-solid fa-house"></i>
-                    <p>ALL</p>
+                <div class="groupOfCategory-category ${categoryName == "Food" ? "active" : ""}" onclick="window.location.href = '/product/category?name=Food'" >
+                    <i class="fa-solid fa-utensils"></i>
+                    <p>Food</p>
                 </div>
-                <div class="groupOfCategory-category">
-                    <i class="fa-solid fa-house"></i>
-                    <p>ALL</p>
+                <div class="groupOfCategory-category ${categoryName == "Drink" ? "active" : ""}" onclick="window.location.href = '/product/category?name=Drink'" >
+                    <i class="fa-solid fa-martini-glass"></i>
+                    <p>Drink</p>
                 </div>
-                <div class="groupOfCategory-category">
-                    <i class="fa-solid fa-house"></i>
-                    <p>ALL</p>
+                <div class="groupOfCategory-category ${categoryName == "Dessert" ? "active" : ""}" onclick="window.location.href = '/product/category?name=Dessert'" >
+                    <i class="fa-solid fa-ice-cream"></i>                    
+                    <p>Dessert</p>
                 </div>
-                <div class="groupOfCategory-category">
-                    <i class="fa-solid fa-house"></i>
-                    <p>ALL</p>
+                <div class="groupOfCategory-category ${categoryName == "Snack" ? "active" : ""}" onclick="window.location.href = '/product/category?name=Snack'" >
+                    <i class="fa-solid fa-burger"></i>
+                    <p>Snack</p>
                 </div>
             </div>
 
             <div class="groupOfProduct">
                 <c:forEach items="${listProduct}" var="product" varStatus="i">
-                    <div class="groupOfProduct-product" id="p${i.index}">
+                    <div class="groupOfProduct-product" id="p${i.index}" onclick="window.location.href = '/product/detail?id=${product.id}'">
                         <div class="groupOfProduct-product-header">
                             <div class="groupOfProduct-product-category">${product.category.name}</div>
                             <div class="groupOfProduct-product-price">$${product.price}</div>
@@ -92,5 +92,5 @@
         <jsp:include page="../layout/footer.jsp"/>
     </body>
     <script src="/js/product.js"></script>
-    
+
 </html>

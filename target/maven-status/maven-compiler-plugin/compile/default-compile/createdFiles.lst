@@ -31,6 +31,7 @@ Data\Model\Product.class
 Business\Swing\Dashboard$19.class
 Data\Model\Order.class
 Business\Swing\Component\FeedbackPanel.class
+Business\Controller\User\ProductController\Category.class
 Business\Swing\Profile.class
 Business\Swing\Dashboard$27.class
 Business\Swing\Profile$4.class
@@ -45,12 +46,14 @@ Business\Controller\Admin\OverviewManagementController.class
 Business\Swing\Dashboard$12.class
 Business\Swing\Login$3.class
 Business\Swing\ProductDetail$1.class
+Business\Controller\User\ProductController\Detail.class
 Business\Swing\User$6.class
 Business\Swing\Dashboard$8.class
 Data\Repository\Admin\ProductRepository.class
 Business\Swing\Dashboard$10.class
 Business\Swing\Login$5.class
 Data\Model\Feedback.class
+Business\Controller\User\ProductController\Search.class
 Data\Repository\Admin\FeedbackRepository.class
 Business\Swing\Dashboard$20.class
 Data\Model\Delivery.class

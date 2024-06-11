@@ -219,7 +219,8 @@
     margin: 2% 0;
     transition: 1s ease;
     overflow: hidden;
-
+    cursor: pointer;
+    
     & * {
         transition: .125s ease;
     }

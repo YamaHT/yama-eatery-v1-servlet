@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,14 +17,21 @@
     <body>
         <jsp:include page="../layout/header.jsp"/>
         <div class="productDetail">
-            <div class="productDetail-image"><img src="" alt=""></div>
+            <div class="productDetail-image">
+                <img src="data:image/jpeg;base64,${product.imgBase64}" >
+            </div>
             <div class="productDetail-content">
                 <div class="productDetail-content-header">
-                    <div>IN-STOCK</div>
-                    <div>Category</div>
+                    <c:if test="${product.inventory == 0}">
+                        <div style="color: #F00">OUT OF STOCK</div>
+                    </c:if>
+                        <c:if test="${product.inventory != 0}">
+                        <div>IN STOCK</div>
+                    </c:if>
+                    <div>${product.category.name}</div>
                 </div>
-                <div class="productDetail-content-name">PRODUCT NAME</div>
-                <div class="productDetail-content-price">$60 <span>$120</span></div>
+                <div class="productDetail-content-name">${product.name}</div>
+                <div class="productDetail-content-price">$${product.price} <span>$${product.price*2}</span></div>
                 <form class="productDetail-content-action">
                     <div class="productDetail-content-action-quantity">
                         <input type="number" name="quantity" value="0">
@@ -35,28 +43,28 @@
                     </div>
                 </form>
                 <div class="productDetail-content-description">
-                    Dưới ánh bình minh mơ màng, làn sương mỏng trải dài như tấm thảm mịn màng trên cánh
-                    đồng. Tiếng chim ríu rít làm cho không gian thêm phần huyền bí, như một bài hát của tự nhiên dành riêng
-                    cho buổi sớm mai. Cảm giác bình yên và hạnh phúc như muốn ghi sâu vào lòng người, như một lời nhắc nhở
-                    về vẻ đẹp tinh thần của cuộc sống. Ánh nắng ấm áp từ những tia mặt trời mới bắt đầu vươn lên, nhấp nhô
-                    qua từng hàng cỏ xanh mướt, như muốn đánh thức mọi sinh linh trong tự nhiên. Cảm giác ấm áp lan tỏa từ
-                    trái tim, đầy ắp niềm hy vọng và khát khao về một ngày mới tràn đầy năng lượng và thành công.</div>
+                    ${product.description}
+                </div>
             </div>
         </div>
         <div class="title">SIMILIAR PRODUCT</div>
         <div class="groupOfProduct">
-            <div class="groupOfProduct-product" id="p1">
-                <div class="groupOfProduct-product-header">
-                    <div class="groupOfProduct-product-category">Category</div>
-                    <div class="groupOfProduct-product-price">$50</div>
+            <c:forEach items="${listProduct}" var="pro" varStatus="i">
+                <div class="groupOfProduct-product" id="p${i.index}" onclick="window.location.href = '/product/detail?id=${pro.id}'">
+                    <div class="groupOfProduct-product-header">
+                        <div class="groupOfProduct-product-category">${pro.category.name}</div>
+                        <div class="groupOfProduct-product-price">$${pro.price}</div>
+                    </div>
+                    <div class="groupOfProduct-product-image"> 
+                        <img src="data:image/jpeg;base64,${pro.imgBase64}" alt="category_food">
+                    </div>
+                    <div class="groupOfProduct-product-name">${pro.name}</div>
+                    <button class="groupOfProduct-product-button-viewdetail">
+                        VIEW DETAIL
+                    </button>
                 </div>
-                <div class="groupOfProduct-product-img"> <img src="" alt="category_food">
-                </div>
-                <div class="groupOfProduct-product-name">Product name</div>
-                <button class="groupOfProduct-product-button-viewdetail">
-                    VIEW DETAIL
-                </button>
-            </div>
+            </c:forEach>
+
         </div>
         <jsp:include page="../layout/footer.jsp"/>
     </body>

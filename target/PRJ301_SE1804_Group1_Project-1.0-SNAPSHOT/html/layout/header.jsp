@@ -4,11 +4,15 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/layout/layout.css">
-
 <div class="blur" onclick="hideSidenav()"></div>
+<%
+    java.util.List<Data.Model.Category> listCategory = new Data.Repository.User.ProductRepository().getAllCategory();
+    request.setAttribute("listCategory", listCategory);
+%>
 <header>
     <div class="header-logo">
         <img src="/image/brand.jpg" alt="">
@@ -17,15 +21,13 @@
         <ul class="header-navigation-menu">
             <li><a href="#">Home</a><span></span></li>
             <li class="subnav-holder">
-                <a href="#">
+                <a href="/product">
                     Product <i class="fa-solid fa-caret-down"></i>
                 </a>
                 <ul class="subnav">
-                    <li><a href="#">Foods</a></li>
-                    <li><a href="#">Drinks</a></li>
-                    <li><a href="#">Dessert</a></li>
-                    <li> <a href="#">Snack</a></li>
-
+                    <c:forEach items="${listCategory}" var="category">
+                        <li><a href="/product/category?name=${category.name}">${category.name}</a></li>
+                        </c:forEach>
                 </ul>
             </li>
             <li><a href="#">About</a><span></span></li>
@@ -58,12 +60,10 @@
                 </a>
                 <span></span>
                 <ul class="subnav">
-                    <li><a href="#">All Product</a></li>
-                    <li><a href="#">Foods</a></li>
-                    <li><a href="#">Drinks</a></li>
-                    <li><a href="#">Dessert</a></li>
-                    <li> <a href="#">Snack</a></li>
-
+                    <li><a href="/product">All Product</a></li>
+                        <c:forEach items="${listCategory}" var="category">
+                        <li><a href="/product/category?name=${category.name}">${category.name}</a></li>
+                        </c:forEach>
                 </ul>
             </li>
             <li><a href="#">About</a><span></span></li>

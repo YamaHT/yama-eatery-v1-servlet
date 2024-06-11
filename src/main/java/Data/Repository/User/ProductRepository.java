@@ -24,7 +24,8 @@ public class ProductRepository {
         try {
             ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
-                list.add(new Category(rs.getInt(1), rs.getString(2)));
+                list.add(new Category(rs.getInt(1),
+                        rs.getString(2)));
             }
         } catch (Exception e) {
         }
@@ -111,8 +112,8 @@ public class ProductRepository {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
         try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, (page - 1) * 12)
-                : DbContext.executeQuery(query)) {
+                ? DbContext.executeQuery(query, categoryName, (page - 1) * 12)
+                : DbContext.executeQuery(query, categoryName)) {
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -127,6 +128,29 @@ public class ProductRepository {
         } catch (Exception e) {
         }
         return list;
+    }
+
+    public Product getProductById(int id) {
+        String query = "SELECT Product.*,\n"
+                + "       Category.*\n"
+                + "FROM Product\n"
+                + "INNER JOIN Category ON Product.CategoryId = Category.Id\n"
+                + "WHERE (Product.Id = ?)";
+        try {
+            ResultSet rs = DbContext.executeQuery(query, id);
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getBoolean(7),
+                        new Category(rs.getInt(9), rs.getString(10)));
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public int getCountProduct(String action, String name, String minPrice, String maxPrice) {

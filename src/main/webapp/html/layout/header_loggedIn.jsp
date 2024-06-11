@@ -4,10 +4,14 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/layout/layout.css">
-
+<%
+    java.util.List<Data.Model.Category> listCategory = new Data.Repository.User.ProductRepository().getAllCategory();
+    request.setAttribute("listCategory", listCategory);
+%>
 <div class="blur" onclick="hideSidenav()"></div>
 <header>
     <div class="header-logo">
@@ -21,10 +25,9 @@
                     Product <i class="fa-solid fa-caret-down"></i>
                 </a>
                 <ul class="subnav">
-                    <li><a href="#">Foods</a></li>
-                    <li><a href="#">Drinks</a></li>
-                    <li><a href="#">Dessert</a></li>
-                    <li> <a href="#">Snack</a></li>
+                    <c:forEach items="${listCategory}" var="category">
+                        <li><a href="/product/category?name=${category.name}">${category.name}</a></li>
+                    </c:forEach>
 
                 </ul>
             </li>
@@ -67,11 +70,10 @@
                 </a>
                 <span></span>
                 <ul class="subnav">
-                    <li><a href="#">All Product</a></li>
-                    <li><a href="#">Foods</a></li>
-                    <li><a href="#">Drinks</a></li>
-                    <li><a href="#">Dessert</a></li>
-                    <li> <a href="#">Snack</a></li>
+                    <li><a href="/product">All Product</a></li>
+                    <c:forEach items="${listCategory}" var="category">
+                        <li><a href="/product/category?name=${category.name}">${category.name}</a></li>
+                        </c:forEach>
                 </ul>
 
             </li>

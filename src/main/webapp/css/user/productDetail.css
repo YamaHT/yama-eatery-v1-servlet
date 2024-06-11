@@ -37,23 +37,22 @@
     text-align: center;
     font-weight: bold;
     font-size: 1.75rem;
-    letter-spacing: 0.5rem;
+
 }
 
 .productDetail-content-price {
     font-family: 'Segoe UI';
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
     align-items: end;
     padding: 5% 40% 5% 5%;
-    letter-spacing: 0.5rem;
+
 
     & span {
         text-decoration: line-through;
-        font-size: 1.25rem;
-        letter-spacing: 0.25rem;
+        font-size: 1.75rem;
         color: #aaa;
     }
 }
@@ -145,36 +144,52 @@
     padding: 0 10%;
     flex-wrap: wrap;
 
-    & #p1 {
+    & #p0 {
         background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
     }
 
-    & #p2 {
+    & #p1 {
         background: linear-gradient(to bottom, #FFA500, #FFFFFF);
     }
 
-    & #p3 {
+    & #p2 {
         background: linear-gradient(to bottom, #0000FF, #FFFFFF);
     }
 
-    & #p4 {
+    & #p3 {
         background: linear-gradient(to bottom, #960075, #FFFFFF);
     }
 
-    & #p5 {
+    & #p4 {
         background: linear-gradient(to bottom, #02E233, #FFFFFF);
     }
 
-    & #p6 {
+    & #p5 {
         background: linear-gradient(to bottom, #e72020, #FFFFFF);
     }
 
+    & #p6 {
+        background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
+    }
+
     & #p7 {
-        background: linear-gradient(to bottom, #17dfe9, #ffffff);
+        background: linear-gradient(to bottom, #FFA500, #FFFFFF);
     }
 
     & #p8 {
-        background: linear-gradient(to bottom, #e72094, #FFFFFF);
+        background: linear-gradient(to bottom, #0000FF, #FFFFFF);
+    }
+
+    & #p9 {
+        background: linear-gradient(to bottom, #960075, #FFFFFF);
+    }
+
+    & #p10 {
+        background: linear-gradient(to bottom, #02E233, #FFFFFF);
+    }
+
+    & #p11 {
+        background: linear-gradient(to bottom, #e72020, #FFFFFF);
     }
 }
 
@@ -186,6 +201,7 @@
     margin: 2% 0;
     transition: 1s ease;
     overflow: hidden;
+    cursor: pointer;
 
     & * {
         transition: .125s ease;
@@ -193,10 +209,13 @@
 
     &:hover {
         & .groupOfProduct-product-category {
-            color: #eee;
+            background: #444;
+            color: #F0F2F5;
+            border-radius: 15px;
+            padding: 0 5%;
         }
 
-        & .groupOfProduct-product-img {
+        & .groupOfProduct-product-image {
             transform: scale(1.05);
         }
     }
@@ -224,7 +243,7 @@
     font-size: 1.125rem;
 }
 
-.groupOfProduct-product-img {
+.groupOfProduct-product-image {
     width: 100%;
     align-items: center;
 
@@ -275,16 +294,13 @@
 
     .productDetail-content-name {
         font-size: 1.625rem;
-        letter-spacing: 0.5rem;
     }
 
     .productDetail-content-price {
-        font-size: 1.75rem;
-        letter-spacing: 0.5rem;
+        font-size: 2.5rem;
 
         & span {
-            font-size: 1.125rem;
-            letter-spacing: 0.25rem;
+            font-size: 1.5rem;
         }
     }
 
@@ -336,16 +352,13 @@
 
     .productDetail-content-name {
         font-size: 1.75rem;
-        letter-spacing: 0.25rem;
     }
 
     .productDetail-content-price {
-        font-size: 2rem;
-        letter-spacing: 0.5rem;
+        font-size: 3rem;
 
         & span {
-            font-size: 1.5rem;
-            letter-spacing: 0.25rem;
+            font-size: 2rem;
         }
     }
 
@@ -396,16 +409,13 @@
 
     .productDetail-content-name {
         font-size: 1.5rem;
-        letter-spacing: 0.125rem;
     }
 
     .productDetail-content-price {
-        font-size: 1.75rem;
-        letter-spacing: 0.25rem;
+        font-size: 2rem;
 
         & span {
             font-size: 1.25rem;
-            letter-spacing: 0.125rem;
         }
     }
 
@@ -471,7 +481,6 @@
 
     .productDetail-content-price {
         font-size: 1.5rem;
-        letter-spacing: 0.125rem;
 
         & span {
             font-size: 1rem;

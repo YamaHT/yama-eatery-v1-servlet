@@ -44,7 +44,7 @@ public class ForgotPassword extends HttpServlet {
             SendMailUtils sendMailUtils = new SendMailUtils();
             if (action.equals("send")) {
                 String email = request.getParameter("email");
-                if (!accountRepo.checkAccountExisted(email)) {
+                if (accountRepo.checkAccountExisted(email) == null) {
                     request.setAttribute("error", "Email does not existed to send OTP");
                     request.getRequestDispatcher("/html/user/forgotPassword.jsp").forward(request, response);
                     return;

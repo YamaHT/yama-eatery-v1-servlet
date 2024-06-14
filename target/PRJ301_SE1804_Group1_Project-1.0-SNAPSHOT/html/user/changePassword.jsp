@@ -31,7 +31,7 @@
                     <i class="fa-solid fa-key"></i>
                 </div>
                 <div class="form-box-input">
-                    <input type="password" name="comPass" id="conPass" required>
+                    <input type="password" name="conPass" id="conPass" required>
                     <label for="comPass">Confirm Password</label>
                     <i class="fa-solid fa-key"></i>
                 </div>

@@ -67,8 +67,7 @@ public class ChangePassword extends HttpServlet {
             }
 
             new AccountRepository().changePassword(account.getEmail(), newPassword);
-            request.setAttribute("success", "Change password successfully!");
-            request.getRequestDispatcher("/home").forward(request, response);
+            request.getRequestDispatcher("/product").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("/auth/changePassword");
         }

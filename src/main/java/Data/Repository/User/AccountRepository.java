@@ -97,7 +97,7 @@ public class AccountRepository {
         return null;
     }
 
-    public boolean checkAccountExisted(String username) {
+    public Account checkAccountExisted(String username) {
         String query = "SELECT *\n"
                 + "FROM Account\n"
                 + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
@@ -109,10 +109,25 @@ public class AccountRepository {
                     + "WHERE (Account.Email = ?)";
         }
         try {
-            return DbContext.executeQuery(query, username).next();
+            ResultSet rs = DbContext.executeQuery(query, username);
+            while (rs.next()) {
+                return new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getTimestamp(5),
+                        rs.getBoolean(6),
+                        new Profile(rs.getInt(8),
+                                ImageUtils.decompressImage(rs.getBytes(9)),
+                                rs.getTimestamp(10),
+                                rs.getString(11),
+                                rs.getString(12),
+                                rs.getString(13)));
+
+            }
         } catch (Exception e) {
         }
-        return true;
+        return null;
     }
 
     public void changePassword(String email, String password) {

@@ -40,7 +40,7 @@ public class Detail extends HttpServlet {
             List<Product> list = productRepo.getAllProductByCategoryName(product.getCategory().getName(), -1, null, null, null);
             Collections.shuffle(list);
             request.setAttribute("product", product);
-            request.setAttribute("listProduct", list.subList(0, 4));
+            request.setAttribute("listProduct", list.subList(0, Math.min(4, list.size())));
             request.getRequestDispatcher("/html/user/productDetail.jsp").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("/product");

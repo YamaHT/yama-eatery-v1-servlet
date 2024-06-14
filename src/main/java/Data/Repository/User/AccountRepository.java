@@ -11,6 +11,7 @@ import Utils.ImageUtils;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 /**
  *
@@ -53,6 +54,21 @@ public class AccountRepository {
         return null;
     }
 
+    public void register(String username, String email, String password, int profileId) {
+        String query = "INSERT INTO [dbo].[Account]\n"
+                + "VALUES (?, ?, ?, ?, 0, ?)";
+        try {
+            DbContext.executeUpdate(query,
+                    username,
+                    email,
+                    password,
+                    Date.valueOf(LocalDate.now()),
+                    profileId);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
     public Account getAccountById(int accountId) {
         String query = "SELECT Account.*,\n"
                 + "       Profile.*\n"
@@ -79,6 +95,47 @@ public class AccountRepository {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public boolean checkAccountExisted(String username) {
+        String query = "SELECT *\n"
+                + "FROM Account\n"
+                + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
+                + "WHERE (Account.Username = ?)";
+        if (username.contains("@")) {
+            query = "SELECT *\n"
+                    + "FROM Account\n"
+                    + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
+                    + "WHERE (Account.Email = ?)";
+        }
+        try {
+            return DbContext.executeQuery(query, username).next();
+        } catch (Exception e) {
+        }
+        return true;
+    }
+
+    public void changePassword(String email, String password) {
+        String query = "UPDATE Account\n"
+                + "SET Password = ?\n"
+                + "WHERE (Email = ?)";
+        try {
+            DbContext.executeUpdate(query, email, password);
+        } catch (Exception e) {
+        }
+    }
+
+    public int addProfile() {
+        String query = "INSERT INTO [dbo].[Profile]\n"
+                + "OUTPUT inserted.Id\n"
+                + "VALUES (NULL, '1900-01-01', NULL, NULL, NULL)";
+        try {
+            ResultSet rs = DbContext.executeQuery(query);
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+        }
+        return 0;
     }
 
     public void updateProfile(Account account, byte[] image, String birthday, String name, String phone, String address) {

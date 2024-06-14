@@ -7,8 +7,6 @@ package Data.Repository.Admin;
 import Data.DbContext;
 import Data.Model.ImageResource;
 import Utils.ImageUtils;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;

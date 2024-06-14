@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,11 +17,11 @@
         <jsp:include page="../layout/header.jsp"/>
         <div class="form-container">
             <div class="form login active">
-                <form action="" class="form-box">
+                <form action="/auth/login" method="post" class="form-box">
                     <h1 class="form-box-title">Login</h1>
                     <div class="form-box-input">
                         <input type="text" name="username" id="username" required>
-                        <label for="username">Username</label>
+                        <label for="username">Username/Email</label>
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="form-box-input">
@@ -31,7 +30,7 @@
                         <i class="fa-solid fa-lock"></i>
                     </div>
                     <div class="form-box-forgot">
-                        <a href="#">Forgot your password?</a>
+                        <a href="/auth/forgotPassword">Forgot your password?</a>
                     </div>
                     <button type="submit" class="form-box-button">Login</button>
                     <p class="form-box-link">No account? <a href="#" onclick="return register()">Register here</a></p>
@@ -57,7 +56,7 @@
                     </p>
                     <img src="/image/banner.jpg" alt="">
                 </div>
-                <form action="" class="form-box">
+                <form action="/auth/register" method="get" class="form-box">
                     <h1 class="form-box-title">Register</h1>
                     <div class="form-box-input">
                         <input type="text" name="username" id="username" required>
@@ -90,10 +89,8 @@
         }
         function login() {
             document.querySelector('.register').classList.remove('active');
-
             document.querySelector('.login').classList.add('active');
             return false;
-
         }
     </script>
 

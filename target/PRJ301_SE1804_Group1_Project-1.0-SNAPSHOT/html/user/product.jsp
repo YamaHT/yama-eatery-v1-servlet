@@ -15,7 +15,12 @@
         <link rel="stylesheet" href="/css/user/product.css">
     </head>
     <body>
-        <jsp:include page="../layout/header.jsp"/>
+        <c:if test="${sessionScope.account == null}">
+            <jsp:include page="../layout/header.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.account != null}">
+            <jsp:include page="../layout/header_loggedIn.jsp" />
+        </c:if>
         <form method="get" class="filter">
             <input type="hidden" name="name" value="${name}"/>
             <div class="filter-price">

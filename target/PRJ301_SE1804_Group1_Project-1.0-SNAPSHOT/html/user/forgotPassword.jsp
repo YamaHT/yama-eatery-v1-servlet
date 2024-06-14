@@ -18,7 +18,7 @@
     <body>
         <jsp:include page="../layout/header.jsp"/>
         <div class="form-box-container">
-            <form action="" class="form-box forgotPassword active">
+            <form action="/auth/forgotPassword?action=send" method="post" class="form-box forgotPassword active">
                 <h1 class="form-box-title">Forgot your password?</h1>
                 <div class="form-box-input">
                     <input type="email" name="email" id="email" required>
@@ -30,7 +30,7 @@
 
                 <button type="submit" class="form-box-button">SUBMIT</button>
             </form>
-            <form action="" class="form-box otp">
+            <form action="/auth/forgotPassword?action=verify" method="post" class="form-box otp">
                 <h1 class="form-box-title">OTP Authentication</h1>
                 <p class="form-box-welcome">Enter the 6 digit OTP sent to your email</p>
                 <div class="form-box-otpInput">
@@ -43,12 +43,12 @@
                 </div>
                 <button type="submit" class="form-box-button" disabled>VERIFY</button>
                 <hr style="margin: 5% 0;" />
-                <p class="form-box-link">Didn't received OTP? <a href="#" onclick="return register()">Resend</a></p>
+                <p class="form-box-link">Didn't received OTP? <a href="#">Resend</a></p>
             </form>
         </div>
         <jsp:include page="../layout/footer.jsp"/>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="/js/changeforgotPassword.js"></script>
+    <script src="/js/forgotPassword.js"></script>
 
 </html>

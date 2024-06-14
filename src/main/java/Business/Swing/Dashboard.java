@@ -1723,7 +1723,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Price can't less than or equal to 0!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        if (Integer.parseInt(productInputInventory.getText().trim()) <= 0) {
+        if (Integer.parseInt(productInputInventory.getText().trim()) < 0) {
             JOptionPane.showMessageDialog(this, "Inventory mustn't be a negative number!", "Error", JOptionPane.OK_OPTION);
             return;
         }

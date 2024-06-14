@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,12 @@
     </head>
 
     <body>
-        <jsp:include page="../layout/header.jsp"/>
+        <c:if test="${sessionScope.account == null}">
+            <jsp:include page="../layout/header.jsp" />
+        </c:if>
+            <c:if test="${sessionScope.account != null}">
+            <jsp:include page="../layout/header_loggedIn.jsp" />
+        </c:if>
         <div class="feedback-banner">
             <img src="/image/feedbackBanner.jpg" alt="feedbackBanner">
         </div>

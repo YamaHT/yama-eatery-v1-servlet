@@ -21,13 +21,13 @@
         <ul class="header-navigation-menu">
             <li><a href="#">Home</a><span></span></li>
             <li class="subnav-holder">
-                <a href="#">
+                <a href="/product">
                     Product <i class="fa-solid fa-caret-down"></i>
                 </a>
                 <ul class="subnav">
                     <c:forEach items="${listCategory}" var="category">
                         <li><a href="/product/category?name=${category.name}">${category.name}</a></li>
-                    </c:forEach>
+                        </c:forEach>
 
                 </ul>
             </li>
@@ -48,12 +48,17 @@
             <i class="fa-solid fa-magnifying-glass header-button-search-bar-search" onclick="submitSearchForm()"></i>
         </form>
         <div class="header-button-user subnav-user-holder">
-            <img src="/image/logo.jpg" alt="">
+            <c:if test="${sessionScope.account.profile.image == null}">
+                <img src="/image/logo.jpg">
+            </c:if>
+            <c:if test="${sessionScope.account.profile.image != null}">
+                <img src="data:image/jpeg;base64, ${sessionScope.account.profile.imgBase64}">
+            </c:if>
             <ul class="subnav-user">
                 <li><a href="#"><i class="fa-solid fa-image"></i> Profile</a></li>
                 <li><a href="#"><i class="fa-solid fa-list-check"></i> History Order</a></li>
                 <li><a href="#"><i class="fa-solid fa-comments"></i> My feedback</a></li>
-                <li> <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a></li>
+                <li> <a href="/auth/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a></li>
             </ul>
         </div>
     </div>
@@ -71,7 +76,7 @@
                 <span></span>
                 <ul class="subnav">
                     <li><a href="/product">All Product</a></li>
-                    <c:forEach items="${listCategory}" var="category">
+                        <c:forEach items="${listCategory}" var="category">
                         <li><a href="/product/category?name=${category.name}">${category.name}</a></li>
                         </c:forEach>
                 </ul>

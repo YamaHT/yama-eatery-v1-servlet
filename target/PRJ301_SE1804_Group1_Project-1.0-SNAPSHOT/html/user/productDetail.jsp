@@ -15,7 +15,12 @@
         <link rel="stylesheet" href="/css/user/productDetail.css">
     </head>
     <body>
-        <jsp:include page="../layout/header.jsp"/>
+        <c:if test="${sessionScope.account == null}">
+            <jsp:include page="../layout/header.jsp" />
+        </c:if>
+        <c:if test="${sessionScope.account != null}">
+            <jsp:include page="../layout/header_loggedIn.jsp" />
+        </c:if>
         <div class="productDetail">
             <div class="productDetail-image">
                 <img src="data:image/jpeg;base64,${product.imgBase64}" >
@@ -25,7 +30,7 @@
                     <c:if test="${product.inventory == 0}">
                         <div style="color: #F00">OUT OF STOCK</div>
                     </c:if>
-                        <c:if test="${product.inventory != 0}">
+                    <c:if test="${product.inventory != 0}">
                         <div>IN STOCK</div>
                     </c:if>
                     <div>${product.category.name}</div>

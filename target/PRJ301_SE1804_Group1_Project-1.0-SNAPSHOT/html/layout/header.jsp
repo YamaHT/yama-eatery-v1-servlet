@@ -45,7 +45,7 @@
             <i class="fa-solid fa-xmark header-button-search-bar-close" onclick="emptySearchInput()"></i>
             <i class="fa-solid fa-magnifying-glass header-button-search-bar-search" onclick="submitSearchForm()"></i>
         </form>
-        <button type="button" class="header-button-login">Login</button>
+        <button type="button" class="header-button-login" onclick="window.location.href='/auth/login'">Login</button>
     </div>
     <nav class="header-navigation-side">
         <div class="header-navigation-side-logo">

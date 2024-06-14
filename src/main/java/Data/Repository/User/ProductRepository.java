@@ -126,6 +126,7 @@ public class ProductRepository {
                 ));
             }
         } catch (Exception e) {
+            e.getMessage();
         }
         return list;
     }

@@ -16,7 +16,7 @@
     </head>
 
     <body>
-        <jsp:include page="../layout/header.jsp"/>
+        <jsp:include page="../layout/header_loggedIn.jsp"/>
         <div class="historyOrder-container">
             <div class="historyOrder">
                 <h1 class="historyOrder-header">History Order</h1>

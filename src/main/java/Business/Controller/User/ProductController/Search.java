@@ -7,7 +7,6 @@ package Business.Controller.User.ProductController;
 import Data.Model.Product;
 import Data.Repository.User.ProductRepository;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -56,7 +55,7 @@ public class Search extends HttpServlet {
             request.setAttribute("endPage", endPage);
             request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
         } catch (Exception e) {
-            request.getRequestDispatcher("/html/error/404.jsp").forward(request, response);
+            request.getRequestDispatcher("/product").forward(request, response);
         }
     }
 

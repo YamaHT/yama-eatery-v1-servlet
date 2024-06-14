@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="/css/user/transaction.css">
     </head>
     <body>
-        <jsp:include page="/html/layout/header.jsp"/>
+        <jsp:include page="/html/layout/header_loggedIn.jsp"/>
         <div class="transaction">
             <div class="transaction-left">
                 <button class="transaction-left-button-return" onclick="window.location.href = '/Product/Index'"><i

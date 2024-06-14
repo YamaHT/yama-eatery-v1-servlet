@@ -57,7 +57,7 @@ public class Category extends HttpServlet {
             request.setAttribute("endPage", endPage);
             request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
         } catch (Exception e) {
-            request.getRequestDispatcher("/html/error/404.jsp").forward(request, response);
+            request.getRequestDispatcher("/product").forward(request, response);
         }
     }
     

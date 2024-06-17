@@ -7,15 +7,15 @@ function onFileSelected(event) {
     var selectedFile = event.target.files[0];
     var reader = new FileReader();
 
-    var imgtag = document.getElementById("avatar");
-    imgtag.title = selectedFile.name;
+    var image = document.getElementById("avatar");
+    image.title = selectedFile.name;
 
     reader.onload = function (event) {
-        imgtag.src = event.target.result;
+        image.src = event.target.result;
     };
     reader.readAsDataURL(selectedFile);
 }
-function updateBirthdayDisplay(event) {
+function updateBirthdayDisplay() {
     var selectedDate = document.getElementById('birthday-input').value;
     var formattedDate = `${selectedDate.split("-")[2]}-${selectedDate.split("-")[1]}-${selectedDate.split("-")[0]}`;
     var birthdayDisplay = document.getElementById('birthday');

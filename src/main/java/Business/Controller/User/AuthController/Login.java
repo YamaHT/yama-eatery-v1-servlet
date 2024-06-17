@@ -38,6 +38,9 @@ public class Login extends HttpServlet {
         try {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
+            if (username == null || password == null) {
+                throw new Exception();
+            }
             Account account = new AccountRepository().login(username, password);
             if (account == null) {
                 request.setAttribute("error", "Wrong username or password");
@@ -45,8 +48,7 @@ public class Login extends HttpServlet {
                 return;
             }
             request.getSession().setAttribute("account", account);
-            request.setAttribute("success", "Login successfully");
-            request.getRequestDispatcher("/product").forward(request, response);
+            response.sendRedirect("/product");
         } catch (Exception e) {
             request.getRequestDispatcher("/html/user/login.jsp").forward(request, response);
         }

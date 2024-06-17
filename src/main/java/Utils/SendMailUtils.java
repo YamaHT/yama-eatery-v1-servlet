@@ -4,7 +4,6 @@
  */
 package Utils;
 
-import Data.Repository.Admin.ResourceRepository;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -60,7 +59,6 @@ public class SendMailUtils {
                     + "        </div>\n"
                     + "        <div style=\"margin-top: 5%; padding: 0 5%;\">\n"
                     + "            <p style=\"font-size: 1.75rem; margin: 0;\">Hello,</p>\n"
-                    + "            <br>\n"
                     + "            <p style=\"font-size: 1.75rem; margin: 0;\">Here is your security code to verify your account</p>\n"
                     + "            <h1\n"
                     + "                style=\"overflow-x: auto; background: #AAF8; border: 1px solid #0004; box-shadow: 0 0 5px #0004; color: #44F; text-shadow: 0 0 1px #000; padding: 3%; margin: 5% 0; font-size: 3rem; letter-spacing: 0.5rem;\">\n"
@@ -91,7 +89,6 @@ public class SendMailUtils {
                     + "        </div>\n"
                     + "        <div style=\"margin-top: 5%; padding: 0 5%;\">\n"
                     + "            <p style=\"font-size: 1.75rem; margin: 0;\">Hello,</p>\n"
-                    + "            <br>\n"
                     + "            <p style=\"font-size: 1.75rem; margin: 0;\">Here is your new password</p>\n"
                     + "            <h1\n"
                     + "                style=\"overflow-x: auto; background: #AAF8; border: 1px solid #0004; box-shadow: 0 0 5px #0004; color: #44F; text-shadow: 0 0 1px #000; padding: 3%; margin: 5% 0; font-size: 3rem; letter-spacing: 0.5rem;\">\n"

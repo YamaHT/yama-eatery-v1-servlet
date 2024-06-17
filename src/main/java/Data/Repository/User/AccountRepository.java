@@ -97,7 +97,7 @@ public class AccountRepository {
         return null;
     }
 
-    public Account checkAccountExisted(String username) {
+    public Account getAccountByUsernameOrEmail(String username) {
         String query = "SELECT *\n"
                 + "FROM Account\n"
                 + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
@@ -132,11 +132,12 @@ public class AccountRepository {
 
     public void changePassword(String email, String password) {
         String query = "UPDATE Account\n"
-                + "SET Password = ?\n"
+                + "SET [Password] = ?\n"
                 + "WHERE (Email = ?)";
         try {
-            DbContext.executeUpdate(query, email, password);
+            DbContext.executeUpdate(query, password, email);
         } catch (Exception e) {
+            e.getMessage();
         }
     }
 

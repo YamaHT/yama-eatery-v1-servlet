@@ -17,42 +17,42 @@
     </head>
 
     <body>
-        <c:if test="${sessionScope.account == null}">
-            <jsp:include page="../layout/header.jsp"/>
-        </c:if>
-        <c:if test="${sessionScope.account != null}">
-            <jsp:include page="../layout/header_loggedIn.jsp"/>
-        </c:if>
+        <jsp:include page="../layout/header_loggedIn.jsp"/>
         <div class="profile">
             <div class="profile-image">
-                <img id="avatar" src="data:image/jpeg;base64,${sessionScope.account.profile.imgBase64}" alt="Avatar">
+                <c:if test="${sessionScope.account.profile.image == null}">
+                    <img id="avatar" src="/image/logo.jpg">
+                </c:if>
+                <c:if test="${sessionScope.account.profile.image != null}">
+                    <img id="avatar" src="data:image/jpeg;base64, ${sessionScope.account.profile.imgBase64}">
+                </c:if>
                 <button type="button" onclick="document.getElementById('file').click()">
                     <i class="fa-solid fa-camera"></i>
                 </button>
             </div>
-            <form action="/profile/update" method="post" class="profile-form" enctype="multipart/form-data">
+            <form action="/account/profile" method="post" class="profile-form" enctype="multipart/form-data">
                 <div class="profile-form-input">
                     <div class="profile-form-input-tag">
-                        <label for="fullname">Full name</label>
-                        <input type="text" id="fullname" name="fullname" value="${sessionScope.account.profile.name}">
+                        <label for="name">Full name</label>
+                        <input type="text" id="name" name="name" value="${sessionScope.account.profile.name}" required>
                     </div>
 
                     <div class="profile-form-input-tag">
                         <label for="phone">Phone</label>
-                        <input type="text" id="phone" name="phone" value="${sessionScope.account.profile.phone}" pattern="\d{10}"
+                        <input type="text" id="phone" name="phone" value="${sessionScope.account.profile.phone}" required pattern="\d{10}"
                                oninvalid="setCustomValidity('Please enter a valid 10-digit phone number')"
                                oninput="setCustomValidity('')">
                     </div>
 
                     <div class="profile-form-input-tag">
                         <label for="address">Address</label>
-                        <input type="text" id="address" name="address" value="${sessionScope.account.profile.address}">
+                        <input type="text" id="address" name="address" value="${sessionScope.account.profile.address}" required>
                     </div>
 
                     <div class="profile-form-input-tag-less">
                         <label for="email">Email:</label>
                         <p>${sessionScope.account.email}</p>
-                        <button>
+                        <button type="button" onclick="window.location.href = '/account/profile'">
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </div>
@@ -62,16 +62,16 @@
                         <input type="text" id="birthday" name="birthday" value="${birthday}" readonly>
                         <button type="button" id="date-picker-button">
                             <i class="fa-solid fa-calendar-days"></i>
-                            <input type="date" id="birthday-input" onchange="updateBirthdayDisplay(event)">
+                            <input type="date" id="birthday-input" onchange="updateBirthdayDisplay()">
                         </button>
 
                     </div>
 
-                    <button  class="profile-form-input-button-changepassword">
+                    <button type="button" onclick="window.location.href = '/auth/changePassword'"  class="profile-form-input-button-changepassword">
                         Change password
                     </button>
                 </div>
-                <input type="file" onchange="onFileSelected(event)" name="image" id="file">
+                <input type="file" accept="image/jpeg, image/png" onchange="onFileSelected(event)" name="image" id="file">
                 <button type="submit" class="profile-button-save">SAVE</button>
             </form>
         </div>

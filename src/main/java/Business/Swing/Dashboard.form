@@ -66,7 +66,7 @@
                   <Component id="product" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="order" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Component id="resource" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="feedback" min="-2" max="-2" attributes="0"/>
@@ -1903,7 +1903,7 @@
                       <Component id="jScrollPane5" max="32767" attributes="0"/>
                       <Component id="feedbackButton" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="53" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="51" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

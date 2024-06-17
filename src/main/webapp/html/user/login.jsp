@@ -35,7 +35,7 @@
                     <button type="submit" class="form-box-button">Login</button>
                     <p class="form-box-link">No account? <a href="#" onclick="return register()">Register here</a></p>
                     <p class="form-box-continue">Or continue with</p>
-                    <button type="submit" class="form-box-button google">
+                    <button type="button" onclick="window.location.href='/auth/loginGoogle'" class="form-box-button google">
                         <i class="fa-brands fa-google-plus-g"></i>
                         <p>Login with Google</p>
                     </button>

@@ -55,7 +55,7 @@
                 <img src="data:image/jpeg;base64, ${sessionScope.account.profile.imgBase64}">
             </c:if>
             <ul class="subnav-user">
-                <li><a href="#"><i class="fa-solid fa-image"></i> Profile</a></li>
+                <li><a href="/account/profile"><i class="fa-solid fa-image"></i> Profile</a></li>
                 <li><a href="#"><i class="fa-solid fa-list-check"></i> History Order</a></li>
                 <li><a href="#"><i class="fa-solid fa-comments"></i> My feedback</a></li>
                 <li> <a href="/auth/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a></li>

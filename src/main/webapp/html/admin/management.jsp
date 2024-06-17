@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--<title>${managementTitle}</title>-->
+        <title>Management</title>
         <link rel="stylesheet" href="/css/admin/management.css">
         <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
     </head>
@@ -22,23 +22,23 @@
                     <div class="management-left-sidebar-logo">
                         <img src="/image/brand.jpg" alt="">
                     </div>
-                    <div class="management-left-sidebar-component active" data-bind="overviewManagement" onclick="changeManagement(this)">
+                    <div class="management-left-sidebar-component active" onclick="changeManagement('overviewManagement')">
                         <i class="fa-solid fa-chart-column"></i>
                         <p>Overview<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" data-bind="productManagement" onclick="changeManagement(this)">
+                    <div class="management-left-sidebar-component" onclick="changeManagement('productManagement')">
                         <i class="fa-solid fa-box-archive"></i>
                         <p>Product<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" data-bind="feedbackManagement" onclick="changeManagement(this)">
+                    <div class="management-left-sidebar-component"  onclick="changeManagement('feedbackManagement')">
                         <i class="fa-solid fa-message"></i>
                         <p>Feedback<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" data-bind="orderManagement" onclick="changeManagement(this)">
+                    <div class="management-left-sidebar-component" onclick="changeManagement('orderManagement')">
                         <i class="fa-solid fa-file-invoice"></i>
                         <p>Order<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" data-bind="resourceManagement" onclick="changeManagement(this)">
+                    <div class="management-left-sidebar-component" onclick="changeManagement('resourceManagement')">
                         <i class="fa-solid fa-warehouse"></i>
                         <p>Resource<br />Management</p>
                     </div>
@@ -47,7 +47,10 @@
                         class="fa-solid fa-angle-left"></i></button>
             </div>
             <div class="management-right">
-                <div class="management-right-header">OVERVIEW MANAGEMENT</div>
+                <div class="management-right-header">
+                    <p>OVERVIEW MANAGEMENT</p>
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </div>
                 <!-- ========== Start link html ========== -->
                 <div class="management-right-body">
                     <jsp:include page="managementComponent/overviewManagement.jsp"/>
@@ -57,7 +60,16 @@
         </div>
     </body>
     <script>
-        function changeManagement(component) {
+        window.onload = function () {
+            if (`${endPoint}` === null) {
+                changeManagement("overviewManagement");
+            } else {
+                changeManagement(`${endPoint}`);
+            }
+        };
+
+        function changeManagement(lastEndPoint) {
+            var component = document.getElementById(lastEndPoint);
             if (component.classList.contains('active')) {
                 return;
             }
@@ -67,10 +79,8 @@
                 c.classList.remove('active');
             });
             component.classList.add('active');
-            const dataBindValue = component.getAttribute('data-bind');
-            document.querySelector('.management-right-header').innerHTML = dataBindValue.split("M")[0] + " M" + dataBindValue.split("M")[1];
             const rightBody = document.querySelector('.management-right-body');
-            const jspPageUrl = `/html/admin/managementComponent/` + dataBindValue + `.jsp`;
+            const jspPageUrl = `/management/` + lastEndPoint;
             fetch(jspPageUrl)
                     .then(response => {
                         return response.text();
@@ -97,15 +107,13 @@
             if (!buttonResize.classList.contains('resized')) {
                 buttonResize.classList.add('resized');
                 sidebar.classList.add('active');
-                logoImage.src = `/image/logofff.jpg`;
+                logoImage.src = `${pageContext.request.contextPath}/image/logofff.jpg`;
             } else {
                 buttonResize.classList.remove('resized');
                 sidebar.classList.remove('active');
-                logoImage.src = `/image/brand.jpg`;
+                logoImage.src = `${pageContext.request.contextPath}/image/brand.jpg`;
             }
         }
-
-
         // BLOCK DEVTOOLS
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         (function () {

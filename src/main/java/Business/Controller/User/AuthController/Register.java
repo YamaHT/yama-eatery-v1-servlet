@@ -40,8 +40,8 @@ public class Register extends HttpServlet {
             String[] names = {"username", "email", "password"};
             String[] values = {username, email, password};
 
-            if (accountRepo.checkAccountExisted(username) != null 
-                    || accountRepo.checkAccountExisted(email) != null) {
+            if (accountRepo.getAccountByUsernameOrEmail(username) != null 
+                    || accountRepo.getAccountByUsernameOrEmail(email) != null) {
                 request.setAttribute("error", "Username or email existed");
                 request.getRequestDispatcher("/auth/login").forward(request, response);
                 return;

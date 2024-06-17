@@ -135,12 +135,25 @@ body {
         width: 100%;
         font-size: 3rem;
         text-align: center;
-        color: #fff;
-        background: royalblue;
-        padding: 1% 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #FFF;
+        background: #444;
+        padding: 1% 5%;
         font-family: sans-serif;
         text-transform: uppercase;
         position: sticky;
+        word-wrap: break-word;
+        user-select: none;
+
+        & i {
+            cursor: pointer;
+
+            &:hover {
+                color: #aaa;
+            }
+        }
     }
     & .management-right-body {
         margin: 2% 0;

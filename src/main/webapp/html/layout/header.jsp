@@ -14,12 +14,12 @@
     request.setAttribute("listCategory", listCategory);
 %>
 <header>
-    <div class="header-logo">
-        <img src="/image/brand.jpg" alt="">
+    <div class="header-logo" onclick="window.location.href='/home'">
+        <img src="/image/brand.jpg">
     </div>
     <nav class="header-navigation">
         <ul class="header-navigation-menu">
-            <li><a href="#">Home</a><span></span></li>
+            <li><a href="/home">Home</a><span></span></li>
             <li class="subnav-holder">
                 <a href="/product">
                     Product <i class="fa-solid fa-caret-down"></i>
@@ -30,9 +30,9 @@
                         </c:forEach>
                 </ul>
             </li>
-            <li><a href="#">About</a><span></span></li>
-            <li><a href="#">Contact </a><span></span></li>
-            <li><a href="#">Feedback </a><span></span></li>
+            <li><a href="/home/aboutUs">About</a><span></span></li>
+            <li><a href="/home/contactUs">Contact</a><span></span></li>
+            <li><a href="/home/feedback">Feedback</a><span></span></li>
 
         </ul>
     </nav>
@@ -45,7 +45,7 @@
             <i class="fa-solid fa-xmark header-button-search-bar-close" onclick="emptySearchInput()"></i>
             <i class="fa-solid fa-magnifying-glass header-button-search-bar-search" onclick="submitSearchForm()"></i>
         </form>
-        <button type="button" class="header-button-login" onclick="window.location.href='/auth/login'">Login</button>
+        <button type="button" class="header-button-login" onclick="window.location.href = '/auth/login'">Login</button>
     </div>
     <nav class="header-navigation-side">
         <div class="header-navigation-side-logo">
@@ -53,7 +53,7 @@
             <i class="fa-solid fa-xmark" onclick="hideSidenav()"></i>
         </div>
         <ul class="header-navigation-side-menu">
-            <li><a href="#">Home</a><span></span></li>
+            <li><a href="/home">Home</a><span></span></li>
             <li>
                 <a href="#" onclick="return showSidenavSubmenu(this)">
                     Product <i class="fa-solid fa-caret-down"></i>
@@ -66,9 +66,9 @@
                         </c:forEach>
                 </ul>
             </li>
-            <li><a href="#">About</a><span></span></li>
-            <li><a href="#">Contact </a><span></span></li>
-            <li><a href="#">Feedback </a><span></span></li>
+            <li><a href="/home/aboutUs">About</a><span></span></li>
+            <li><a href="/home/contactUs">Contact</a><span></span></li>
+            <li><a href="/home/feedback">Feedback</a><span></span></li>
         </ul>
     </nav>
 </header>

@@ -8,10 +8,10 @@ import Data.DbContext;
 import Data.Model.Account;
 import Data.Model.Order;
 import Data.Model.Shipping;
+import Data.Model.Status;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ public class OrderRepository {
 
     public List<Order> getWaitingOrder() {
         List<Order> list = new ArrayList<>();
-        String query = "SELECT [Order].*, Account.Username, Shipping.Phone, Shipping.Address\n"
+        String query = "SELECT [Order].*, Account.Email, Shipping.RecipientName, Shipping.Phone, Shipping.Address\n"
                 + "FROM [Order]\n"
                 + "INNER JOIN Account ON [Order].AccountId = Account.Id\n"
                 + "INNER JOIN Shipping ON [Order].ShippingId = Shipping.Id\n"
@@ -30,14 +30,14 @@ public class OrderRepository {
         try {
             ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
-                Account acc = new Account(rs.getInt(5), rs.getString(8), null, null, null, false, null);
-                Shipping ship = new Shipping(rs.getInt(7), rs.getString(9), rs.getString(10), null, null, null);
+                Account acc = new Account(rs.getInt(5), null, rs.getString(8), null, null, false, null);
+                Shipping ship = new Shipping(rs.getInt(7), rs.getString(9), rs.getString(10), rs.getString(11), null, null);
                 list.add(new Order(rs.getInt(1),
                         rs.getInt(2),
                         rs.getDouble(3),
                         rs.getTimestamp(4),
                         acc,
-                        null,
+                        new Status(rs.getInt(6), null),
                         ship));
             }
         } catch (Exception e) {
@@ -46,25 +46,21 @@ public class OrderRepository {
     }
 
     public void acceptOrder(int id) {
-        String query1 = "UPDATE [Order]\n"
+        String queryToUpdateOrder = "UPDATE [Order]\n"
                 + "SET StatusId = 3\n"
                 + "WHERE (Id = ?)";
-        String query2 = "UPDATE Shipping\n"
+        String queryToUpdateShipping = "UPDATE Shipping\n"
                 + "SET DeliveryDate = ?\n"
                 + "FROM Shipping\n"
                 + "INNER JOIN [Order] ON Shipping.Id = [Order].ShippingId\n"
                 + "WHERE ([Order].Id = ?)";
         try {
-            DbContext.executeUpdate(query1, id);
+            DbContext.executeUpdate(queryToUpdateOrder, id);
 
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(timestamp.getTime());
-            int deliveryTime = getDeliveryTime(id);
-            calendar.add(Calendar.MINUTE, deliveryTime);
-            timestamp = new Timestamp(calendar.getTimeInMillis());
+            int deliveryTime = this.getDeliveryTimeByOrderId(id);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis() + deliveryTime * 60000);
 
-            DbContext.executeUpdate(query2, timestamp, id);
+            DbContext.executeUpdate(queryToUpdateShipping, timestamp, id);
         } catch (Exception e) {
         }
     }
@@ -79,7 +75,17 @@ public class OrderRepository {
         }
     }
 
-    public int getDeliveryTime(int orderId) {
+    public void refuseAllOrder() {
+        String query = "UPDATE [Order]\n"
+                + "SET StatusId = 4\n"
+                + "WHERE StatusId = 2";
+        try {
+            DbContext.executeUpdate(query);
+        } catch (Exception e) {
+        }
+    }
+
+    public int getDeliveryTimeByOrderId(int orderId) {
         String query = "SELECT Delivery.Time\n"
                 + "FROM Delivery\n"
                 + "INNER JOIN Shipping ON Delivery.Id = Shipping.DeliveryId\n"
@@ -87,9 +93,8 @@ public class OrderRepository {
                 + "WHERE ([Order].Id = ?)";
         try {
             ResultSet rs = DbContext.executeQuery(query, orderId);
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
+            rs.next();
+            return rs.getInt(1);
         } catch (Exception e) {
         }
         return 0;

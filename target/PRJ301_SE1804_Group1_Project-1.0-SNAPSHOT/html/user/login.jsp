@@ -82,6 +82,7 @@
         <jsp:include page="../layout/footer.jsp"/>
     </body>
     <script>
+        history.pushState({}, '', '/auth/login');
         function register() {
             document.querySelector('.login').classList.remove('active');
             document.querySelector('.register').classList.add('active');

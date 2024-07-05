@@ -13,6 +13,8 @@
         <title>Management</title>
         <link rel="stylesheet" href="/css/admin/management.css">
         <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
 
     <body>
@@ -20,25 +22,25 @@
             <div class="management-left">
                 <div class="management-left-sidebar">
                     <div class="management-left-sidebar-logo">
-                        <img src="/image/brand.jpg" alt="">
+                        <img src="/image/brand.jpg">
                     </div>
-                    <div class="management-left-sidebar-component active" onclick="changeManagement('overviewManagement')">
+                    <div class="management-left-sidebar-component" id="overview" onclick="changeManagement('overview', 'overview')">
                         <i class="fa-solid fa-chart-column"></i>
                         <p>Overview<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" onclick="changeManagement('productManagement')">
+                    <div class="management-left-sidebar-component" id="product" onclick="changeManagement('product', 'product')">
                         <i class="fa-solid fa-box-archive"></i>
                         <p>Product<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component"  onclick="changeManagement('feedbackManagement')">
+                    <div class="management-left-sidebar-component" id="feedback" onclick="changeManagement('feedback', 'feedback')">
                         <i class="fa-solid fa-message"></i>
                         <p>Feedback<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" onclick="changeManagement('orderManagement')">
+                    <div class="management-left-sidebar-component" id="order" onclick="changeManagement('order', 'order')">
                         <i class="fa-solid fa-file-invoice"></i>
                         <p>Order<br />Management</p>
                     </div>
-                    <div class="management-left-sidebar-component" onclick="changeManagement('resourceManagement')">
+                    <div class="management-left-sidebar-component" id="resource" onclick="changeManagement('resource', 'resource')">
                         <i class="fa-solid fa-warehouse"></i>
                         <p>Resource<br />Management</p>
                     </div>
@@ -49,28 +51,28 @@
             <div class="management-right">
                 <div class="management-right-header">
                     <p>OVERVIEW MANAGEMENT</p>
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <i class="fa-solid fa-arrow-right-from-bracket" onclick="window.location.href = '/auth/logout'"></i>
                 </div>
                 <!-- ========== Start link html ========== -->
                 <div class="management-right-body">
-                    <jsp:include page="managementComponent/overviewManagement.jsp"/>
                 </div>
                 <!-- ========== End link html ========== -->
             </div>
         </div>
     </body>
     <script>
-        window.onload = function () {
-            if (`${endPoint}` === null) {
-                changeManagement("overviewManagement");
-            } else {
-                changeManagement(`${endPoint}`);
-            }
-        };
+        history.pushState({}, '', '/admin/management');
 
-        function changeManagement(lastEndPoint) {
-            var component = document.getElementById(lastEndPoint);
-            if (component.classList.contains('active')) {
+        window.onload = () => {
+            changeManagement("overview", "overview");
+        }
+
+        function changeManagement(lastEndPoint, title) {
+            var component = document.getElementById(title);
+            if (component
+                    && component.classList.contains('active')
+                    && title === lastEndPoint)
+            {
                 return;
             }
 
@@ -78,9 +80,26 @@
             components.forEach((c) => {
                 c.classList.remove('active');
             });
-            component.classList.add('active');
+
+            if (component) {
+                component.classList.add('active');
+            }
+
+            document.querySelector('.management-right-header p').innerHTML = title + ' Management';
+
             const rightBody = document.querySelector('.management-right-body');
-            const jspPageUrl = `/management/` + lastEndPoint;
+            fetch("/html/layout/loading.jsp")
+                    .then(response => {
+                        return response.text();
+                    })
+                    .then(data => {
+                        rightBody.innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+
+            const jspPageUrl = `/admin/management/` + lastEndPoint;
             fetch(jspPageUrl)
                     .then(response => {
                         return response.text();
@@ -107,24 +126,24 @@
             if (!buttonResize.classList.contains('resized')) {
                 buttonResize.classList.add('resized');
                 sidebar.classList.add('active');
-                logoImage.src = `${pageContext.request.contextPath}/image/logofff.jpg`;
+                logoImage.src = `/image/logofff.jpg`;
             } else {
                 buttonResize.classList.remove('resized');
                 sidebar.classList.remove('active');
-                logoImage.src = `${pageContext.request.contextPath}/image/brand.jpg`;
+                logoImage.src = `/image/brand.jpg`;
             }
         }
-        // BLOCK DEVTOOLS
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        (function () {
-            const threshold = 160;
-            const checkDevTools = () => {
-                if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
-                    document.body.innerHTML = "<h1>Developer tools are not allowed!</h1>\n<button type='button' onclick='location.reload()'>Return to previous</button>";
-                }
-            };
-            setInterval(checkDevTools, 1000);
-        })();
+//        // BLOCK DEVTOOLS
+//        document.addEventListener('contextmenu', (e) => e.preventDefault());
+//        (function () {
+//            const threshold = 160;
+//            const checkDevTools = () => {
+//                if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+//                    document.body.innerHTML = "<h1>Developer tools are not allowed!</h1>\n<button type='button' onclick='location.reload()'>Return to previous</button>";
+//                }
+//            };
+//            setInterval(checkDevTools, 1000);
+//        })();
     </script>
 
 </html>

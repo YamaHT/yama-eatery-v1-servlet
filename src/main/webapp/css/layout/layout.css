@@ -43,6 +43,7 @@ header {
 header .header-logo {
     width: 20%;
     text-align: center;
+    cursor: pointer;
 
     & img {
         width: 100%;
@@ -65,6 +66,7 @@ header .header-navigation {
         &>li {
             width: 20%;
             line-height: 5rem;
+            position: relative;
 
             &>a {
                 transition: 0.25s;
@@ -77,6 +79,8 @@ header .header-navigation {
             &>span {
                 height: 2px;
                 width: 0;
+                right: 0;
+                position: absolute;
                 display: block;
                 transition: 0.5s ease;
                 background: #0af;
@@ -89,6 +93,7 @@ header .header-navigation {
                 }
 
                 &>span {
+                    left: 0;
                     width: 100%;
                 }
             }
@@ -123,8 +128,9 @@ header .headerLoggedIn-button {
         font-size: 2rem;
         cursor: pointer;
 
-        &:hover {
-            transform: scale(150%);
+        &:hover::before {
+            display: inline-block;
+            transform: scale(1.5);
         }
     }
 
@@ -154,8 +160,9 @@ header .headerLoggedIn-button {
         font-size: 2rem;
         cursor: pointer;
 
-        &:hover {
-            transform: scale(150%);
+        &:hover::before {
+            display: inline-block;
+            transform: scale(1.5);
         }
     }
 
@@ -168,6 +175,8 @@ header .headerLoggedIn-button {
     & .header-button-user img {
         width: 100%;
         border-radius: 50%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
     }
 
 }
@@ -219,8 +228,8 @@ header .headerLoggedIn-button .header-button-search-bar {
     position: absolute;
     z-index: 2;
     background: #fff;
-    width: 10.8%;
-    padding: 0 1%;
+    width: 100%;
+    padding: 0 10%;
     border-top: #0af solid 3px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: none;
@@ -234,8 +243,11 @@ header .headerLoggedIn-button .header-button-search-bar {
             color: #000;
             display: inline-block;
             width: 100%;
+            transition: .25s linear;
+
             &::before {
                 content: '';
+                transition: .25s linear;
                 color: #000;
             }
         }
@@ -243,13 +255,11 @@ header .headerLoggedIn-button .header-button-search-bar {
         &:hover {
             & a {
                 color: #0af;
-                transition: .25s linear;
             }
 
             & ::before {
                 content: '//';
                 margin: 0 5%;
-                transition: .25s linear;
                 color: #0af;
             }
         }

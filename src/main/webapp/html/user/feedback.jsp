@@ -20,45 +20,68 @@
         <c:if test="${sessionScope.account == null}">
             <jsp:include page="../layout/header.jsp" />
         </c:if>
-            <c:if test="${sessionScope.account != null}">
+        <c:if test="${sessionScope.account != null}">
             <jsp:include page="../layout/header_loggedIn.jsp" />
         </c:if>
         <div class="feedback-banner">
             <img src="/image/feedbackBanner.jpg" alt="feedbackBanner">
         </div>
-        <div class="feedback-comment">
-            <div class="feedback-comment-image"><img src="Component/Image/category_food.jpg" alt="avatar"></div>
-            <form class="feedback-comment-form" method="post">
-                <textarea name="feedback" placeholder="Enter your feedback..." oninput="auto_grow(this)"></textarea>
-                <div class="feedback-comment-form-button">
-                    <button type="reset" class="feedback-comment-form-button-cancel"
-                            oninput="auto_grow(this)">Cancel</button>
-                    <button type="submit" class="feedback-comment-form-button-send">Send</button>
+        <c:if test="${sessionScope.account != null && !myFeedback}">
+            <div class="feedback-comment">
+                <div class="feedback-comment-image">
+                    <c:if test="${sessionScope.account.profile.image == null}">
+                        <img src="/image/logo.jpg" alt="avatar">
+                    </c:if>
+                    <c:if test="${sessionScope.account.profile.image != null}">
+                        <img src="data:image/jpeg;base64,${sessionScope.account.profile.imgBase64}" alt="avatar">
+                    </c:if>
                 </div>
-            </form>
-        </div>
-        <div class="feedback">
-            <div class="feedback-user-image"><img src=""></div>
-            <div class="feedback-user-content">
-                <div class="feedback-user-content-header">
-                    <p>Dullahan</p>
-                    <i class="fa-solid fa-circle"></i>
-                    <span>00:00:00 13/12/2024</span>
+                <form action="/home/feedback" class="feedback-comment-form" method="post">
+                    <textarea name="feedback" placeholder="Enter your feedback..." required oninput="auto_grow(this)"></textarea>
+                    <div class="feedback-comment-form-button">
+                        <button type="reset" class="feedback-comment-form-button-cancel"
+                                oninput="auto_grow(this)">Cancel</button>
+                        <button type="submit" class="feedback-comment-form-button-send">Send</button>
+                    </div>
+                </form>
+            </div>
+        </c:if>
+        <c:forEach items="${listFeedback}" var="feedback">
+            <div class="feedback">
+                <div class="feedback-user-image">
+                    <c:if test="${feedback.account.profile.image == null}">
+                        <img src="/image/logo.jpg">
+                    </c:if>
+                    <c:if test="${feedback.account.profile.image != null}">
+                        <img src="data:image/jpeg;base64,${feedback.account.profile.imgBase64}">
+                    </c:if>
                 </div>
+                <div class="feedback-user-content">
+                    <div class="feedback-user-content-header">
+                        <p>${feedback.account.username}</p>
+                        <i class="fa-solid fa-circle"></i>
+                        <span>${feedback.feedbackDate}</span>
+                    </div>
 
-                <p class="feedback-user-content-comment">
-                    Chủ shop quá đẹp trai.
-                </p>
-            </div>
-            <div class="feedback-admin">
-                <div class="feedback-admin-info">
-                    <p>Yama's assistance</p>
-                    <i class="fa-solid fa-circle"></i>
-                    <span>00:00:00 13/12/2024</span>
+                    <p class="feedback-user-content-comment">
+                        ${feedback.feedback}
+                    </p>
                 </div>
-                <div class="feedback-admin-response">Very handsome is my name</div>
+                <c:if test="${feedback.response != null}">
+                    <div class="feedback-admin">
+                        <div class="feedback-admin-info">
+                            <p>Yama's assistance</p>
+                            <i class="fa-solid fa-circle"></i>
+                            <span>${feedback.responseDate}</span>
+                        </div>
+                        <div class="feedback-admin-response">${feedback.response}</div>
+                    </div>
+                </c:if>
             </div>
-        </div>
+        </c:forEach>
+        <c:if test="${!myFeedback}">
+            <jsp:include page="../layout/paging.jsp"/>
+        </c:if>
         <jsp:include page="../layout/footer.jsp"/>
     </body>
     <script>

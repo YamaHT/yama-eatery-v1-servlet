@@ -36,14 +36,14 @@
 .paging-groupOfPage {
     width: 60%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: left;
+    gap: 1.25%;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .paging-groupOfPage-page {
     width: 19%;
-    margin-left: 1.25%;
     text-align: center;
     padding: 1% 0;
     background: #fff;
@@ -54,10 +54,6 @@
 
     &:nth-child(n+6) {
         margin-top: 2%;
-    }
-
-    &:nth-child(5n+1) {
-        margin-left: 0;
     }
 
     &:hover {

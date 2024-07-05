@@ -41,6 +41,8 @@
     align-items: flex-start;
     margin: 1% 0;
     transition: 0.25s ease;
+    cursor: pointer;
+    user-select: none;
 
     & div {
         margin-left: 5%;

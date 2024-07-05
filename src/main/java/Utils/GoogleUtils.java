@@ -77,13 +77,9 @@ public class GoogleUtils {
     private String extractEmailFromToken(String responseBody) {
         String idToken = new Gson().fromJson(responseBody, JsonObject.class).get("id_token").getAsString();
         String[] idTokenParts = idToken.split("\\.");
-        if (idTokenParts.length == 3) {
-            String encodedPayload = idTokenParts[1];
-            String payload = new String(Base64.getDecoder().decode(encodedPayload));
-            JsonObject payloadObject = new JsonParser().parse(payload).getAsJsonObject();
-            return payloadObject.get("email").getAsString();
-        } else {
-            return null;
-        }
+        String encodedPayload = idTokenParts[1];
+        String payload = new String(Base64.getDecoder().decode(encodedPayload));
+        JsonObject payloadObject = new JsonParser().parse(payload).getAsJsonObject();
+        return payloadObject.get("email").getAsString();
     }
 }

@@ -10,7 +10,9 @@ import Data.Model.Product;
 import Utils.ImageUtils;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -39,15 +41,19 @@ public class ProductRepository {
                 + "\nWHERE Product.Available = 1";
 
         if (minPrice != null && maxPrice != null) {
-            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
+            query += " AND Product.Price >= " + minPrice
+                    + " AND Product.Price <= " + maxPrice;
         }
-        query += (filter == null || filter.equals("")) ? "\nORDER BY Product.Id DESC" : "\nORDER BY Product." + filter;
+        query += (filter == null || filter.equals(""))
+                ? "\nORDER BY Product.Id DESC"
+                : "\nORDER BY Product." + filter;
+
         if (page != -1) {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
-        try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, (page - 1) * 12)
-                : DbContext.executeQuery(query)) {
+
+        try {
+            ResultSet rs = DbContext.executeQuery(query, (page - 1) * 12);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -72,15 +78,20 @@ public class ProductRepository {
                 + "\nAND Product.Available = 1";
 
         if (minPrice != null && maxPrice != null) {
-            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
+            query += " AND Product.Price >= " + minPrice
+                    + " AND Product.Price <= " + maxPrice;
         }
-        query += (filter == null || filter.equals("")) ? "\nORDER BY Product.Id DESC" : "\nORDER BY Product." + filter;
+        query += (filter == null || filter.equals(""))
+                ? "\nORDER BY Product.Id DESC"
+                : "\nORDER BY Product." + filter;
+
         if (page != -1) {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
-        try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, (page - 1) * 12)
-                : DbContext.executeQuery(query)) {
+
+        try {
+            ResultSet rs = DbContext.executeQuery(query, (page - 1) * 12);
+
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -105,15 +116,20 @@ public class ProductRepository {
                 + "\nAND Product.Available = 1";
 
         if (minPrice != null && maxPrice != null) {
-            query += " AND Product.Price >= " + minPrice + " AND Product.Price <= " + maxPrice;
+            query += " AND Product.Price >= " + minPrice
+                    + " AND Product.Price <= " + maxPrice;
         }
-        query += (filter == null || filter.equals("")) ? "\nORDER BY Product.Id DESC" : "\nORDER BY Product." + filter;
+        query += (filter == null || filter.equals(""))
+                ? "\nORDER BY Product.Id DESC"
+                : "\nORDER BY Product." + filter;
+
         if (page != -1) {
             query += "\nOFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
         }
-        try ( ResultSet rs = (page != -1)
-                ? DbContext.executeQuery(query, categoryName, (page - 1) * 12)
-                : DbContext.executeQuery(query, categoryName)) {
+
+        try {
+            ResultSet rs = DbContext.executeQuery(query, categoryName, (page - 1) * 12);
+
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -127,6 +143,136 @@ public class ProductRepository {
             }
         } catch (Exception e) {
             e.getMessage();
+        }
+        return list;
+    }
+
+    public List<Product> getTop5MostSoldProduct() {
+        List<Product> list = new ArrayList<>();
+        String query
+                = "SELECT Product.Id,\n"
+                + "    Product.Name,\n"
+                + "    Product.Image,\n"
+                + "    Product.Price,\n"
+                + "    SUM(OrderDetail.Amount) AS TotalSold\n"
+                + "FROM OrderDetail\n"
+                + "INNER JOIN Product ON OrderDetail.ProductId = Product.Id\n"
+                + "INNER JOIN [Order] ON OrderDetail.OrderId = [Order].Id\n"
+                + "WHERE [Order].StatusId = 3\n"
+                + "GROUP BY \n"
+                + "    Product.Id,\n"
+                + "    Product.Name,\n"
+                + "    Product.Image,\n"
+                + "    Product.Price\n"
+                + "ORDER BY TotalSold DESC\n"
+                + "OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY";
+        try {
+            ResultSet rs = DbContext.executeQuery(query);
+            while (rs.next()) {
+                Product product = new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        null,
+                        0,
+                        false,
+                        null);
+                list.add(product);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Product> getTop10After5MostSoldProduct() {
+        List<Product> list = new ArrayList<>();
+        String query
+                = "SELECT Product.Id,\n"
+                + "    Product.Name,\n"
+                + "    Product.Image,\n"
+                + "    Product.Price,\n"
+                + "    SUM(OrderDetail.Amount) AS TotalSold\n"
+                + "FROM OrderDetail\n"
+                + "INNER JOIN Product ON OrderDetail.ProductId = Product.Id\n"
+                + "INNER JOIN [Order] ON OrderDetail.OrderId = [Order].Id\n"
+                + "WHERE [Order].StatusId = 3\n"
+                + "GROUP BY \n"
+                + "    Product.Id,\n"
+                + "    Product.Name,\n"
+                + "    Product.Image,\n"
+                + "    Product.Price,\n"
+                + "ORDER BY TotalSold DESC\n"
+                + "OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY";
+        try {
+            ResultSet rs = DbContext.executeQuery(query);
+            while (rs.next()) {
+                Product product = new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        null,
+                        0,
+                        false,
+                        null);
+                list.add(product);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Product> getTop5NewProduct() {
+        List<Product> list = new ArrayList<>();
+        String query
+                = "SELECT Id,\n"
+                + "       Name,\n"
+                + "       Image,\n"
+                + "       Price\n"
+                + "FROM Product\n"
+                + "ORDER BY Id DESC\n"
+                + "OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY";
+        try {
+            ResultSet rs = DbContext.executeQuery(query);
+            while (rs.next()) {
+                Product product = new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        null,
+                        0,
+                        false,
+                        null);
+                list.add(product);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Product> getTop10After5NewProduct() {
+        List<Product> list = new ArrayList<>();
+        String query
+                = "SELECT Id,\n"
+                + "       Name,\n"
+                + "       Image,\n"
+                + "       Price\n"
+                + "FROM Product\n"
+                + "ORDER BY Id DESC\n"
+                + "OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY";
+        try {
+            ResultSet rs = DbContext.executeQuery(query);
+            while (rs.next()) {
+                Product product = new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        null,
+                        0,
+                        false,
+                        null);
+                list.add(product);
+            }
+        } catch (Exception e) {
         }
         return list;
     }

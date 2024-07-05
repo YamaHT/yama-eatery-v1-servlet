@@ -48,7 +48,11 @@ public class Login extends HttpServlet {
                 return;
             }
             request.getSession().setAttribute("account", account);
-            response.sendRedirect("/product");
+            if (account.isRole()) {
+                response.sendRedirect("/admin/management");
+            } else {
+                response.sendRedirect("/home");
+            }
         } catch (Exception e) {
             request.getRequestDispatcher("/html/user/login.jsp").forward(request, response);
         }

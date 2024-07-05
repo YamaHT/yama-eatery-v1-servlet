@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/css/admin/orderManagement.css">
 <div class="order-management">
@@ -14,40 +15,41 @@
     <table class="order-management-table">
         <tr class="order-management-table-header">
             <th>ID</th>
-            <th>Username</th>
+            <th>Email</th>
             <th>Quantity</th>
             <th>Total</th>
             <th>OrderDate</th>
             <th></th>
             <th></th>
         </tr>
-        <tr class="order-management-table-order">
-            <td>1</td>
-            <td>yasuo123</td>
-            <td>2</td>
-            <td>200</td>
-            <td id="datetime">2024/01/02 00:00:00</td>
-            <td class="order-management-table-order-dropdown" onclick="displayDropdown(this)" on>
-                <div>
-                    ▼
-                </div>
-                <div class="order-management-table-order-dropdown-info">
-                    <p>Fullname</p>
-                    <input type="text" value="das" readonly>
-                    <p>Phone</p>
-                    <input type="text" value="das" readonly>
-                    <p>Address</p>
-                    <textarea type="text" readonly>09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho09 Nguyen van cu, ninh kieu, can tho
-                    </textarea>
-                </div>
-            </td>
-            <td>
-                <div class="order-management-table-order-button">
-                    <button class="order-management-table-order-button-accept">Accept</button>
-                    <button class="order-management-table-order-button-reject">Reject</button>
-                </div>
-            </td>
-        </tr>
+        <c:forEach items="${listOrder}" var="order">
+            <tr class="order-management-table-order">
+                <td>${order.id}</td>
+                <td>${order.account.email}</td>
+                <td>${order.quantity}</td>
+                <td>$${order.total}</td>
+                <td id="datetime">${order.orderDate}</td>
+                <td class="order-management-table-order-dropdown" onclick="displayDropdown(this)" on>
+                    <div>
+                        ▼
+                    </div>
+                    <div class="order-management-table-order-dropdown-info">
+                        <p>Fullname</p>
+                        <input type="text" value="${order.shipping.recipientName}" readonly>
+                        <p>Phone</p>
+                        <input type="text" value="${order.shipping.phone}" readonly>
+                        <p>Address</p>
+                        <textarea readonly>${order.shipping.address}</textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="order-management-table-order-button">
+                        <button onclick="changeManagement('order/process?action=accept&id=${order.id}', 'order')" class="order-management-table-order-button-accept">Accept</button>
+                        <button onclick="changeManagement('order/process?action=refuse&id=${order.id}', 'order')" class="order-management-table-order-button-reject">Reject</button>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
     </table>
 </div>
 
@@ -55,22 +57,22 @@
 <div class="order-management-confirm-acceptAll">
     <p>ARE YOU SURE TO ACCEPT ALL THESE ORDER ?</p>
     <div class="order-management-confirm-button">
-        <button class="order-management-confirm-button-acceptAll-yes" onclick="acceptAllOrders()">Yes</button>
-        <button class="order-management-confirm-button-cancel" onclick="cancelAction()">Cancel</button>
+        <button type="button" class="order-management-confirm-button-acceptAll-yes" onclick="changeManagement('order/process?action=acceptAll', 'order')">Yes</button>
+        <button type="button" class="order-management-confirm-button-cancel" onclick="cancelAction()">Cancel</button>
     </div>
 
 </div>
 <div class="order-management-confirm-rejectAll">
     <p>ARE YOU SURE TO REJECT ALL THESE ORDER ?</p>
     <div class="order-management-confirm-button">
-        <button class="order-management-confirm-button-rejectAll-yes" onclick="rejectAllOrders()">Yes</button>
-        <button class="order-management-confirm-button-cancel" onclick="cancelAction()">Cancel</button>
+        <button type="button" class="order-management-confirm-button-rejectAll-yes" onclick="changeManagement('order/process?action=refuseAll', 'order')">Yes</button>
+        <button type="button" class="order-management-confirm-button-cancel" onclick="cancelAction()">Cancel</button>
     </div>
 </div>
 
 <script>
-    const date = document.querySelectorAll('#datetime');
-    date.forEach((d) => {
+    const datetime = document.querySelectorAll('#datetime');
+    datetime.forEach((d) => {
         d.innerHTML = d.innerHTML.split(' ')[0] + '<br/>' + d.innerHTML.split(' ')[1];
     });
 

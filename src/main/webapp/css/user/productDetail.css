@@ -31,6 +31,14 @@
     text-align: center;
     font-style: italic;
     font-size: 1.25rem;
+
+    & .in-stock {
+        color: #090;
+    }
+
+    & .out-stock {
+        color: #F00;
+    }
 }
 
 .productDetail-content-name {
@@ -140,56 +148,25 @@
     height: fit-content;
     display: flex;
     text-align: center;
-    justify-content: space-between;
+    justify-content: left;
+    gap: calc(20%/3);
     padding: 0 10%;
     flex-wrap: wrap;
 
-    & #p0 {
-        background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
+    & #Dessert {
+        background: linear-gradient(to right, #ffcccb, #ffb6c1, #ff99aa, #ff8c94);
     }
 
-    & #p1 {
-        background: linear-gradient(to bottom, #FFA500, #FFFFFF);
+    & #Snack {
+        background: linear-gradient(to right, #ffd700, #ffbf00, #ffa500, #ff8c00);
     }
 
-    & #p2 {
-        background: linear-gradient(to bottom, #0000FF, #FFFFFF);
+    & #Drink {
+        background: linear-gradient(to right, #6effff, #00bfff, #00a9ff, #007fff);
     }
 
-    & #p3 {
-        background: linear-gradient(to bottom, #960075, #FFFFFF);
-    }
-
-    & #p4 {
-        background: linear-gradient(to bottom, #02E233, #FFFFFF);
-    }
-
-    & #p5 {
-        background: linear-gradient(to bottom, #e72020, #FFFFFF);
-    }
-
-    & #p6 {
-        background: linear-gradient(to bottom, #AEFF00, #FFFFFF);
-    }
-
-    & #p7 {
-        background: linear-gradient(to bottom, #FFA500, #FFFFFF);
-    }
-
-    & #p8 {
-        background: linear-gradient(to bottom, #0000FF, #FFFFFF);
-    }
-
-    & #p9 {
-        background: linear-gradient(to bottom, #960075, #FFFFFF);
-    }
-
-    & #p10 {
-        background: linear-gradient(to bottom, #02E233, #FFFFFF);
-    }
-
-    & #p11 {
-        background: linear-gradient(to bottom, #e72020, #FFFFFF);
+    & #Food {
+        background: linear-gradient(to right, #ffcc66, #ff9966, #ff6666, #ff4d4d);
     }
 }
 
@@ -330,6 +307,10 @@
         font-size: 1.625rem;
     }
 
+    .groupOfProduct {
+        gap: calc(8%/3);
+    }
+
     .groupOfProduct-product {
         width: 23%;
         border-radius: 20px;
@@ -381,6 +362,10 @@
     .productDetail-content-description {
         font-size: 1.125rem;
         line-height: 1.375rem;
+    }
+
+    .groupOfProduct {
+        gap: 5%;
     }
 
     .groupOfProduct-product {

@@ -37,13 +37,13 @@
                     flavors of our diverse cuisine. Whether you're in the mood for a hearty meal, a refreshing drink, a
                     sweet treat, or a quick snack, our extensive menu has you covered. Join us at Yama,
                     where every meal is a celebration of good food, great company, and unforgettable moments.</p>
-                <button>GET OUR FOOD NOW</button>
+                <button type="button" onclick="window.location.href='/product'">GET OUR FOOD NOW</button>
             </div>
 
             <div class="about-us-image">
                 <picture>
                     <source srcset="/image/brand.jpg" media="(max-width: 768px)">
-                    <img src="/image/logo.jpg" alt="logo">
+                    <img src="/image/logofff.jpg" alt="logo">
                 </picture>
             </div>
         </div>

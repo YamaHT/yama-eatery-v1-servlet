@@ -4,10 +4,6 @@
  */
 package Business.Controller;
 
-import Business.Swing.Login;
-import Data.Model.Account;
-import Data.Repository.User.OrderRepository;
-import Utils.SendMailUtils;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,7 +21,7 @@ public class StartController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        new Login().run();
-        response.sendRedirect("product");
+        response.sendRedirect("home");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

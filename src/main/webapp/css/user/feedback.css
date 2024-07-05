@@ -1,8 +1,9 @@
 
 .feedback-banner img {
     width: 100%;
-    aspect-ratio: 3/1;
-    object-fit: cover;
+    aspect-ratio: 5 / 1;
+    object-fit: fill;
+    border-bottom: #FFF 1px solid;
 }
 
 .feedback-comment {
@@ -16,7 +17,7 @@
 
     & img {
         width: 75%;
-        clip-path: circle(50%);
+        border-radius: 50%;
         aspect-ratio: 1/1;
         object-fit: cover;
     }
@@ -103,9 +104,10 @@
 }
 
 .feedback-user-content-comment {
-    padding: 1% 2%;
-    min-height: 200px;
+    padding: 3% 2%;
+    font-size: 1.5rem;
     background: #D9D9D9;
+    height: max-content;
 }
 
 .feedback-user-content-header {
@@ -130,6 +132,7 @@
 
 .feedback-admin {
     width: 100%;
+    max-width: -webkit-fill-available;
     border-left: #00FF00 solid 4px;
     margin: 2% 0;
     margin-left: 10%;
@@ -154,10 +157,17 @@
 
 .feedback-admin-response {
     min-height: 100px;
+    word-wrap: break-word;
+
     padding: 2%;
 }
 
 @media (max-width: 1024px) {
+
+    .feedback-banner img {
+        aspect-ratio: 4/1;
+    }
+    
     .feedback-comment-form {
         & textarea {
             font-size: 1rem;
@@ -167,9 +177,19 @@
             font-size: 1.125rem;
         }
     }
+    .feedback-user-content {
+        .feedback-user-content-comment {
+            font-size: 1.25rem;
+        }
+    }
 }
 
 @media (max-width:768px) {
+
+    .feedback-banner img {
+        aspect-ratio: 3/1;
+    }
+
     .feedback-comment-form {
         & textarea {
             font-size: 1rem;
@@ -188,7 +208,7 @@
         width: 85%;
 
         & .feedback-user-content-comment {
-            min-height: 150px;
+            font-size: 1rem;
         }
     }
 
@@ -202,6 +222,11 @@
 }
 
 @media (max-width:500px) {
+
+    .feedback-banner img {
+        aspect-ratio: 2/1;
+    }
+
     .feedback-comment-image {
         width: 20%;
     }
@@ -236,7 +261,6 @@
 
 
         & .feedback-user-content-comment {
-            min-height: 125px;
             font-size: 0.875rem;
         }
     }
@@ -281,13 +305,12 @@
 
             & p,
             span {
-                font-size: 0.875rem;
+                font-size: 0.75rem;
             }
         }
 
 
         & .feedback-user-content-comment {
-            min-height: 125px;
             font-size: 0.875rem;
         }
     }

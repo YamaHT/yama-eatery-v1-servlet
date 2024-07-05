@@ -69,6 +69,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .historyOrder-body-table {
     border-spacing: 0;
     min-width: 1000px;
+    width: 100%;
 
     & thead {
         background: #999;
@@ -91,6 +92,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
         height: max-content;
         overflow: hidden;
         font-size: 1.125rem;
+    }
+
+    & td:nth-child(1), td:nth-child(2), td:nth-child(3) {
+        max-width: 100px;
+        white-space: nowrap;
+        padding: 1%;
+        text-overflow: ellipsis;
+
+        &:hover {
+            text-overflow: clip;
+            white-space: break-spaces;
+        }
     }
 
     & th {
@@ -134,28 +147,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 .historyOrder-body-table-status {
-    &.refuse p {
+    &.Refused p {
         background: #d893a3;
         color: #b30021;
     }
 
-    &.deliver p {
+    &.Delivering p {
         background: #ebc474;
     }
 
-    &.success p {
+    &.Success p {
         background: #86e49d;
         color: #006b21;
     }
 
-    &.incart p {
+    &.In.cart p {
         color: #000;
         background: #fff;
     }
 
-    &.wait p {
+    &.Waiting.for.acception p {
         color: #fff;
         background: #2196F3;
+        padding: 5%;
     }
 
     & p {

@@ -17,45 +17,45 @@
             <div class="overview-body-chart-general">
                 <div class="overview-body-chart-general-component" id="general-user">
                     <div class="overview-body-chart-general-component-title">
-                        <p>User</p>
+                        <p>User Enrolled</p>
                         <i class="fa-solid fa-user"></i>
                     </div>
-                    <p class="overview-body-chart-general-component-value">100</p>
-                    <p class="overview-body-chart-general-component-plus">+1 last month</p>
+                    <p class="overview-body-chart-general-component-value">${countUser}</p>
+                    <p class="overview-body-chart-general-component-plus">+${countUserLastMonth} last month</p>
                 </div>
                 <div class="overview-body-chart-general-component" id="generel-product">
                     <div class="overview-body-chart-general-component-title">
-                        <p>Product</p>
+                        <p>Product Sold</p>
                         <i class="fa-solid fa-box-archive"></i>
                     </div>
-                    <p class="overview-body-chart-general-component-value">200</p>
-                    <p class="overview-body-chart-general-component-plus">+20 last month</p>
+                    <p class="overview-body-chart-general-component-value">${productSold}</p>
+                    <p class="overview-body-chart-general-component-plus">+${productSoldLastMonth} last month</p>
                 </div>
                 <div class="overview-body-chart-general-component" id="generel-revenue">
                     <div class="overview-body-chart-general-component-title">
                         <p>Revenue</p>
                         <i class="fa-solid fa-coins"></i>
                     </div>
-                    <p class="overview-body-chart-general-component-value">$10000</p>
-                    <p class="overview-body-chart-general-component-plus">+$100 last month</p>
+                    <p class="overview-body-chart-general-component-value">$${revenue}</p>
+                    <p class="overview-body-chart-general-component-plus">+$${revenueLastMonth} last month</p>
                 </div>
             </div>
             <div class="overview-body-chart-product">
                 <div class="overview-body-chart-bar-title">
-                    <p>Total product sold</p>
-                    <select name="productYear" id="">
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
+                    <p>Monthly product sold</p>
+                    <select name="productYear" id="productYear">
+                        <option ${productYear == thisYear ? 'selected' : ''} value="${thisYear}">${thisYear}</option>
+                        <option ${productYear == lastYear ? 'selected' : ''} value="${lastYear}">${lastYear}</option>
                     </select>
                 </div>
                 <canvas id="chart-product"></canvas>
             </div>
             <div class="overview-body-chart-revenue">
                 <div class="overview-body-chart-bar-title">
-                    <p>Total revenue</p>
-                    <select name="revenueYear" id="">
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
+                    <p>Monthly revenue</p>
+                    <select name="revenueYear" id="revenueYear">
+                        <option ${revenueYear == thisYear ? 'selected' : ''} value="${thisYear}">${thisYear}</option>
+                        <option ${revenueYear == lastYear ? 'selected' : ''} value="${lastYear}">${lastYear}</option>
                     </select>
                 </div>
                 <canvas id="chart-revenue"></canvas>
@@ -64,17 +64,18 @@
         <div class="overview-body-statistic">
             <div class="overview-body-statistic-mostSold">
                 <div class="overview-body-statistic-mostSold-title">
-                    MOST SOLD PRODUCT
+                    MOST SOLD PRODUCT ON ${date}
                 </div>
                 <div class="overview-body-statistic-mostSold-product">
                     <div class="overview-body-statistic-mostSold-product-title">
                         <div class="overview-body-statistic-mostSold-product-title-text">Sold:</div>
-                        <div class="overview-body-statistic-mostSold-product-title-value">50</div>
+                        <div class="overview-body-statistic-mostSold-product-title-value">${quantitySold}</div>
                     </div>
                     <div class="overview-body-statistic-mostSold-product-image">
-                        <img src="../image/category_food.jpg" alt="category_food">
+                        <img src="data:image/jpeg;base64, ${mostSoldProduct.imgBase64}">
                     </div>
-                    <div class="overview-body-statistic-mostSold-product-name">Product name</div>
+                    <div class="overview-body-statistic-mostSold-product-name">Id: ${mostSoldProduct.id}</div>
+                    <div class="overview-body-statistic-mostSold-product-name">${mostSoldProduct.name}</div>
                 </div>
             </div>
             <div class="overview-body-statictis-product-title">Product sold on ${date}</div>
@@ -88,8 +89,20 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    document.getElementById('productYear').addEventListener('change', function () {
+        updateSelection();
+    });
+
+    document.getElementById('revenueYear').addEventListener('change', function () {
+        updateSelection();
+    });
+
+    function updateSelection() {
+        const productYear = document.getElementById('productYear').value;
+        const revenueYear = document.getElementById('revenueYear').value;
+        changeManagement(`overview?productYear=` + productYear + `&revenueYear=` + revenueYear, 'overview');
+    }
 
     //////////////////////
     /// chart-product ///
@@ -100,7 +113,7 @@
             labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             datasets: [{
                     label: 'Total product sold',
-                    data: [10, 12, 15, 11, 16, 23, 19, 20, 24, 12, 32, 15],
+                    data: ${chartProduct},
                     backgroundColor: '#0AA'
                 }]
         },
@@ -128,7 +141,7 @@
             labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             datasets: [{
                     label: 'Total revenue received',
-                    data: [10, 120, 150, 101, 160, 230, 109, 200, 240, 102, 32, 150],
+                    data: ${chartRevenue},
                     backgroundColor: '#0A0'
                 }]
         },
@@ -160,7 +173,7 @@
         data: {
             labels: ['Product', 'Goal'],
             datasets: [{
-                    data: [75, Math.max(0, 100 - 75)],
+                    data: [${productSoldThisMonth}, Math.max(0, 100 - ${productSoldThisMonth})],
                     backgroundColor: [
                         "#00FFFF80",
                         "#AAAAAA80"
@@ -192,11 +205,7 @@
                     ctx.save();
 
                     const orderArray = [];
-                    if (data.datasets[0].data[0] > data.datasets[0].data[1]) {
-                        orderArray.push(0, 1);
-                    } else {
-                        orderArray.push(1, 0);
-                    }
+                    orderArray.push(0, 1);
                     ctx.textAlign = 'center';
                     // upperValue
                     ctx.fillStyle = data.datasets[0].borderColor[orderArray[0]];
@@ -232,7 +241,7 @@
         data: {
             labels: ['Revenue', 'Goal'],
             datasets: [{
-                    data: [750, Math.max(0, 1000 - 750)],
+                    data: [${revenueThisMonth}, Math.max(0, 1000 - ${revenueThisMonth})],
                     backgroundColor: [
                         "#00FF00B0",
                         "#AAAAAA80"
@@ -264,11 +273,7 @@
                     ctx.save();
 
                     const orderArray = [];
-                    if (data.datasets[0].data[0] > data.datasets[0].data[1]) {
-                        orderArray.push(0, 1);
-                    } else {
-                        orderArray.push(1, 0);
-                    }
+                    orderArray.push(0, 1);
                     ctx.textAlign = 'center';
                     // upperValue
                     ctx.fillStyle = data.datasets[0].borderColor[orderArray[0]];

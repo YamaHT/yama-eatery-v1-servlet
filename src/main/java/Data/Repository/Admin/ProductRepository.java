@@ -10,9 +10,7 @@ import Data.Model.Product;
 import Utils.ImageUtils;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -33,12 +31,19 @@ public class ProductRepository {
         return list;
     }
 
-    public List<Product> getAllProduct() {
+    public List<Product> getAllProduct(int page) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM Product INNER JOIN Category ON Product.CategoryId = Category.Id WHERE Product.Available = 1\n"
+        String query = "SELECT * FROM Product\n"
+                + "INNER JOIN Category ON Product.CategoryId = Category.Id\n"
+                + "WHERE Product.Available = 1\n"
                 + "ORDER BY Product.Id DESC";
+
+        if (page != -1) {
+            query += "\nOFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+        }
+
         try {
-            ResultSet rs = DbContext.executeQuery(query);
+            ResultSet rs = DbContext.executeQuery(query, (page - 1) * 6);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -55,7 +60,7 @@ public class ProductRepository {
         return list;
     }
 
-    public List<Product> getAllProductSearchByName(String name) {
+    public List<Product> getAllProductSearchByName(String name, int page) {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM "
                 + "Product INNER JOIN Category "
@@ -63,8 +68,13 @@ public class ProductRepository {
                 + "WHERE Product.Name LIKE '%" + name + "%'"
                 + "AND Product.Available = 1\n"
                 + "ORDER BY Product.Id DESC";
+
+        if (page != -1) {
+            query += "\nOFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+        }
+
         try {
-            ResultSet rs = DbContext.executeQuery(query);
+            ResultSet rs = DbContext.executeQuery(query, (page - 1) * 6);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -81,7 +91,7 @@ public class ProductRepository {
         return list;
     }
 
-    public List<Product> getAllProductSearchByCategoryName(String categoryName) {
+    public List<Product> getAllProductSearchByCategoryName(String categoryName, int page) {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM "
                 + "Product INNER JOIN Category "
@@ -89,8 +99,45 @@ public class ProductRepository {
                 + "WHERE Category.Name = ? "
                 + "AND Product.Available = 1\n"
                 + "ORDER BY Product.Id DESC";
+
+        if (page != -1) {
+            query += "\nOFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+        }
+
         try {
-            ResultSet rs = DbContext.executeQuery(query, categoryName);
+            ResultSet rs = DbContext.executeQuery(query, categoryName, (page - 1) * 6);
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getBoolean(7),
+                        new Category(rs.getInt(9), rs.getString(10))
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Product> getAllProductSearchBySearchNameAndCategoryName(String searchName, String categoryName, int page) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM "
+                + "Product INNER JOIN Category\n"
+                + "ON Product.CategoryId = Category.Id\n"
+                + "WHERE Category.Name = ?\n"
+                + "AND Product.Name LIKE '%" + searchName + "%'\n"
+                + "AND Product.Available = 1\n"
+                + "ORDER BY Product.Id DESC";
+
+        if (page != -1) {
+            query += "\nOFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+        }
+
+        try {
+            ResultSet rs = DbContext.executeQuery(query, categoryName, (page - 1) * 6);
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
@@ -133,82 +180,66 @@ public class ProductRepository {
         return list;
     }
 
-    public Map<Product, Integer> getMostSoldInMonth(int month, int year) {
-        Map<Product, Integer> map = new HashMap<>();
-        String query
-                = "DECLARE @StartDate DATETIME;\n"
-                + "DECLARE @EndDate DATETIME;\n"
-                + "SET @StartDate = DATEFROMPARTS(?, ?, 1);\n"
-                + "SET @EndDate = EOMONTH(@StartDate);\n"
-                + ""
-                + "SELECT TOP (1) Product.Id,\n"
-                + "       Product.Name,\n"
-                + "       Product.Image,\n"
-                + "       Product.Price,\n"
-                + "       Category.Name AS CategoryName,\n"
-                + "       SUM(OrderDetail.Amount) AS TotalSold\n"
-                + "FROM OrderDetail\n"
-                + "INNER JOIN Product ON OrderDetail.ProductId = Product.Id\n"
+    public Product getProductById(int id) {
+        String query = "SELECT * FROM Product\n"
                 + "INNER JOIN Category ON Product.CategoryId = Category.Id\n"
-                + "INNER JOIN [Order] ON OrderDetail.OrderId = [Order].Id\n"
-                + "GROUP BY Product.Id,\n"
-                + "         Product.Name,\n"
-                + "         Product.Image,\n"
-                + "         Product.Price,\n"
-                + "         Category.Name,\n"
-                + "         [Order].OrderDate\n"
-                + "HAVING ([Order].OrderDate >= @StartDate)\n"
-                + "AND ([Order].OrderDate <= @EndDate)\n"
-                + "ORDER BY TotalSold DESC";
+                + "WHERE Product.Id = ?";
+
         try {
-            ResultSet rs = DbContext.executeQuery(query, year, month);
+            ResultSet rs = DbContext.executeQuery(query, id);
             while (rs.next()) {
-                Product product = new Product(rs.getInt(1),
+                return new Product(rs.getInt(1),
                         rs.getString(2),
                         ImageUtils.decompressImage(rs.getBytes(3)),
                         rs.getDouble(4),
-                        null,
-                        0,
-                        false,
-                        new Category(0, rs.getString(5)));
-                map.put(product, rs.getInt(6));
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getBoolean(7),
+                        new Category(rs.getInt(9), rs.getString(10))
+                );
             }
         } catch (Exception e) {
         }
-        return map;
+        return null;
     }
 
-    public int getProductSoldInMonth(int month, int year) {
-        String query = "DECLARE @StartDate DATETIME;\n"
-                + "DECLARE @EndDate DATETIME;\n"
-                + "SET @StartDate = DATEFROMPARTS(?, ?, 1);\n"
-                + "SET @EndDate = EOMONTH(@StartDate);\n"
-                + "SELECT Quantity\n"
-                + "FROM [Order]\n"
-                + "WHERE (OrderDate >= @StartDate) AND (OrderDate <= @EndDate)";
+    public int getCountProduct(String action, String name) {
+        String query = "SELECT COUNT(*) FROM Product";
+        switch (String.valueOf(action)) {
+            case "null":
+                query += "\nWHERE Product.Available = 1";
+                break;
+            case "search":
+                query += "\nWHERE Product.Name LIKE '%" + name + "%'"
+                        + "\nAND Product.Available = 1";
+                break;
+            case "category":
+                query += "\nINNER JOIN Category ON Product.CategoryId = Category.Id "
+                        + "\nWHERE Category.Name = ?"
+                        + "\nAND Product.Available = 1";
+                break;
+        }
+
         try {
-            ResultSet rs = DbContext.executeQuery(query, year, month);
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
+            ResultSet rs = DbContext.executeQuery(query, name);
+            rs.next();
+            return rs.getInt(1);
         } catch (Exception e) {
         }
         return 0;
     }
 
-    public double getRevenueInMonth(int month, int year) {
-        String query = "DECLARE @StartDate DATETIME;\n"
-                + "DECLARE @EndDate DATETIME;\n"
-                + "SET @StartDate = DATEFROMPARTS(?, ?, 1);\n"
-                + "SET @EndDate = EOMONTH(@StartDate);\n"
-                + "SELECT Total\n"
-                + "FROM [Order]\n"
-                + "WHERE (OrderDate >= @StartDate) AND (OrderDate <= @EndDate)";
+    public int getCountProductBySearchNameAndCaegoryName(String searchName, String categoryName) {
+        String query = "SELECT COUNT(*) FROM Product\n"
+                + "INNER JOIN Category ON Product.CategoryId = Category.Id\n"
+                + "WHERE Category.Name = ?\n"
+                + "AND Product.Name LIKE '%" + searchName + "%'\n"
+                + "AND Product.Available = 1";
+
         try {
-            ResultSet rs = DbContext.executeQuery(query, year, month);
-            while (rs.next()) {
-                return rs.getDouble(1);
-            }
+            ResultSet rs = DbContext.executeQuery(query, categoryName);
+            rs.next();
+            return rs.getInt(1);
         } catch (Exception e) {
         }
         return 0;
@@ -231,7 +262,13 @@ public class ProductRepository {
     public void updateProduct(int id, String name, byte[] image, double price, String description, int inventory, int categoryId) {
         try {
             if (image != null) {
-                String query = "UPDATE [dbo].[Product] SET [Name] = ?, [Image] = ?, [Price] = ?, [Description] = ?, [Inventory] = ?, [CategoryId] = ?\n"
+                String query = "UPDATE [dbo].[Product] SET "
+                        + "[Name] = ?, "
+                        + "[Image] = ?, "
+                        + "[Price] = ?, "
+                        + "[Description] = ?, "
+                        + "[Inventory] = ?, "
+                        + "[CategoryId] = ?\n"
                         + "WHERE Id = ?";
                 DbContext.executeUpdate(query,
                         name,
@@ -242,7 +279,13 @@ public class ProductRepository {
                         categoryId,
                         id);
             } else {
-                String query = "UPDATE [dbo].[Product] SET [Name] = ?, [Price] = ?, [Description] = ?, [Inventory] = ?, [CategoryId] = ? WHERE Id = ?";
+                String query = "UPDATE [dbo].[Product] SET "
+                        + "[Name] = ?, "
+                        + "[Price] = ?, "
+                        + "[Description] = ?, "
+                        + "[Inventory] = ?, "
+                        + "[CategoryId] = ? "
+                        + "WHERE Id = ?";
                 DbContext.executeUpdate(query,
                         name,
                         price,

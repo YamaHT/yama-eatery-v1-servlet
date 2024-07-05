@@ -14,6 +14,7 @@ import Data.Model.Order;
 import Data.Model.Product;
 import Data.Repository.Admin.FeedbackRepository;
 import Data.Repository.Admin.OrderRepository;
+import Data.Repository.Admin.OverviewRepository;
 import Data.Repository.Admin.ProductRepository;
 import Data.Repository.Admin.ResourceRepository;
 import Utils.ImageUtils;
@@ -50,14 +51,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Le Phuoc Duy - CE181153
  */
 public class Dashboard extends javax.swing.JFrame {
-    
+
     ResourceRepository resourceRepository = new ResourceRepository();
     ProductRepository productRepository = new ProductRepository();
     FeedbackRepository feedbackRepository = new FeedbackRepository();
     OrderRepository orderRepository = new OrderRepository();
-    
+    OverviewRepository overviewRepository = new OverviewRepository();
+
     byte[] image = null;
-    
+
     public Dashboard() {
         initComponents();
         setFalseComponentInit();
@@ -1476,7 +1478,7 @@ public class Dashboard extends javax.swing.JFrame {
         setColor(product);
         resetColor(new JPanel[]{resource, order, feedback, general}, new JPanel[]{general_highlight, resource_highlight, order_highlight, feedback_highlight});
         product_management.setVisible(true);
-        setProductData(productRepository.getAllProduct());
+        setProductData(productRepository.getAllProduct(-1));
         general_management.setVisible(false);
         order_management.setVisible(false);
         feedback_management.setVisible(false);
@@ -1648,7 +1650,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "This product's Id is already existed!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (productInputName.getForeground() != Color.BLACK
                 || image == null
                 || productInputPrice.getForeground() != Color.BLACK
@@ -1658,13 +1660,13 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All field must be fulfilled!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (!productInputPrice.getText().trim().matches("^[+-]?\\d+[.]?\\d*$")
                 || !productInputInventory.getText().trim().matches("^[+-]?\\d+$")) {
             JOptionPane.showMessageDialog(this, "Some fields are not in the correct format (e.g., price, inventory). Please enter numeric values!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (Double.parseDouble(productInputPrice.getText().trim()) <= 0) {
             JOptionPane.showMessageDialog(this, "Price can't less than or equal to 0!", "Error", JOptionPane.OK_OPTION);
             return;
@@ -1673,7 +1675,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Inventory must be a positive number!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         productRepository.addProduct(productInputName.getText(),
                 ImageUtils.compressImageFromWinform(image),
                 Double.parseDouble(productInputPrice.getText()),
@@ -1681,7 +1683,7 @@ public class Dashboard extends javax.swing.JFrame {
                 Integer.parseInt(productInputInventory.getText()),
                 productInputCategory.getSelectedIndex());
         turnOffProduct();
-        setProductData(productRepository.getAllProduct());
+        setProductData(productRepository.getAllProduct(-1));
     }//GEN-LAST:event_productButtonAddActionPerformed
 
     private void productButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productButtonClearActionPerformed
@@ -1695,7 +1697,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
         productRepository.deleteProduct(Integer.parseInt(productInputId.getText()));
         turnOffProduct();
-        setProductData(productRepository.getAllProduct());
+        setProductData(productRepository.getAllProduct(-1));
     }//GEN-LAST:event_productButtonDeleteActionPerformed
 
     private void productButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productButtonUpdateActionPerformed
@@ -1703,7 +1705,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select a product before update", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (productInputName.getForeground() != Color.BLACK
                 || productInputPrice.getForeground() != Color.BLACK
                 || productInputDescription.getForeground() != Color.BLACK
@@ -1712,13 +1714,13 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All field must be fulfilled!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (!productInputPrice.getText().trim().matches("^[+-]?\\d+[.]?\\d*$")
                 || !productInputInventory.getText().trim().matches("^[+-]?\\d+$")) {
             JOptionPane.showMessageDialog(this, "Some fields are not in the correct format (e.g., price, inventory). Please enter numeric values!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (Double.parseDouble(productInputPrice.getText().trim()) <= 0) {
             JOptionPane.showMessageDialog(this, "Price can't less than or equal to 0!", "Error", JOptionPane.OK_OPTION);
             return;
@@ -1727,7 +1729,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Inventory mustn't be a negative number!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         productRepository.updateProduct(Integer.parseInt(productInputId.getText()),
                 productInputName.getText(),
                 ImageUtils.compressImageFromWinform(image),
@@ -1736,12 +1738,12 @@ public class Dashboard extends javax.swing.JFrame {
                 Integer.parseInt(productInputInventory.getText()),
                 productInputCategory.getSelectedIndex());
         turnOffProduct();
-        setProductData(productRepository.getAllProduct());
+        setProductData(productRepository.getAllProduct(-1));
     }//GEN-LAST:event_productButtonUpdateActionPerformed
 
     private void productButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productButtonSearchActionPerformed
         if (productInputName.getForeground() == Color.BLACK) {
-            setProductData(productRepository.getAllProductSearchByName(productInputName.getText().trim()));
+            setProductData(productRepository.getAllProductSearchByName(productInputName.getText().trim(), -1));
         } else if (productInputPrice.getForeground() == Color.BLACK) {
             if (!productInputPrice.getText().trim().matches("^[+-]?\\d+[.]?\\d*$")) {
                 JOptionPane.showMessageDialog(this, "Price must be a numeric values!", "Error", JOptionPane.OK_OPTION);
@@ -1749,9 +1751,9 @@ public class Dashboard extends javax.swing.JFrame {
             }
             setProductData(productRepository.getAllProductSearchByPrice(Double.parseDouble(productInputPrice.getText().trim())));
         } else if (productInputCategory.getSelectedIndex() != 0) {
-            setProductData(productRepository.getAllProductSearchByCategoryName(productInputCategory.getSelectedItem().toString()));
+            setProductData(productRepository.getAllProductSearchByCategoryName(productInputCategory.getSelectedItem().toString(), -1));
         } else {
-            setProductData(productRepository.getAllProduct());
+            setProductData(productRepository.getAllProduct(-1));
         }
         turnOffProduct();
     }//GEN-LAST:event_productButtonSearchActionPerformed
@@ -1762,12 +1764,12 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select a feedback before send response!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         if (feedbackInputResponse.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Type your response text before send response!", "Error", JOptionPane.OK_OPTION);
             return;
         }
-        
+
         int option = JOptionPane
                 .showConfirmDialog(this, "Are you sure you want to response to this feedback?",
                         "Confirm response", JOptionPane.YES_NO_OPTION);
@@ -1806,7 +1808,7 @@ public class Dashboard extends javax.swing.JFrame {
     public void setColor(JPanel p) {
         p.setBackground(new Color(41, 57, 80));
     }
-    
+
     public void resetColor(JPanel[] p, JPanel[] indicators) {
         for (JPanel p1 : p) {
             p1.setBackground(new Color(23, 35, 51));
@@ -1820,12 +1822,10 @@ public class Dashboard extends javax.swing.JFrame {
     // -------------------------------- General management
     // -------------------------------- 
     public void setGeneralData() {
-        int month = YearMonth.now().getMonthValue();
-        int year = YearMonth.now().getYear();
-        generalHeaderText.setText("STATISTICS AND REPORT IN " + YearMonth.now().getMonth().toString() + " " + year + " (" + month + "/" + year + ")");
-        int productSold = productRepository.getProductSoldInMonth(month, year);
+        generalHeaderText.setText("STATISTICS AND REPORT IN " + YearMonth.now().getMonth().toString() + " " + overviewRepository.thisMonthYear + " (" + overviewRepository.thisMonth + "/" + overviewRepository.thisMonthYear + ")");
+        int productSold = overviewRepository.getProductSoldThisMonth();
         int productGoals = 500;
-        double revenue = productRepository.getRevenueInMonth(month, year);
+        double revenue = overviewRepository.getRevenueThisMonth();
         double revenueGoals = 1000;
         generalProductSold.setText("Sold: " + productSold + " products");
         generalProductGoals.setText("Goals: " + productGoals + " products");
@@ -1835,8 +1835,8 @@ public class Dashboard extends javax.swing.JFrame {
         generalRevenueGoals.setText("Goals: $" + revenueGoals);
         generalRevenueProgressBar.setMaximum((int) revenueGoals);
         generalRevenueProgressBar.setValue((int) Math.round(revenue));
-        
-        Map<Product, Integer> mostProduct = productRepository.getMostSoldInMonth(month, year);
+
+        Map<Product, Integer> mostProduct = overviewRepository.getMostSoldProduct();
         if (!mostProduct.isEmpty()) {
             Map.Entry<Product, Integer> entry = mostProduct.entrySet().iterator().next();
             Product mostSoldProduct = entry.getKey();
@@ -1864,7 +1864,7 @@ public class Dashboard extends javax.swing.JFrame {
                 }
                 return Object.class;
             }
-            
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -1906,7 +1906,7 @@ public class Dashboard extends javax.swing.JFrame {
                 }
                 return Object.class;
             }
-            
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -1919,7 +1919,7 @@ public class Dashboard extends javax.swing.JFrame {
         model.addColumn("Description");
         model.addColumn("Inventory");
         model.addColumn("Category");
-        
+
         for (int i = 0; i < list.size(); i++) {
             model.addRow(new Object[]{
                 list.get(i).getId(),
@@ -1945,7 +1945,7 @@ public class Dashboard extends javax.swing.JFrame {
         productTableData.getColumnModel().getColumn(2).setPreferredWidth(60);
         productTableData.getColumnModel().getColumn(3).setPreferredWidth(50);
         productTableData.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         productTableData.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (productTableData.getSelectedRow() != -1) {
                 productInputId.setText(productTableData.getValueAt(productTableData.getSelectedRow(), 0).toString());
@@ -1960,7 +1960,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
         product_management.requestFocusInWindow();
     }
-    
+
     public void turnOnProduct() {
         productInputId.setForeground(Color.BLACK);
         productInputName.setForeground(Color.BLACK);
@@ -1969,7 +1969,7 @@ public class Dashboard extends javax.swing.JFrame {
         productInputDescription.setForeground(Color.BLACK);
         productInputInventory.setForeground(Color.BLACK);
     }
-    
+
     public void turnOffProduct() {
         image = null;
         productInputId.setText("Id");
@@ -1997,18 +1997,18 @@ public class Dashboard extends javax.swing.JFrame {
         feedbackTextPanel.repaint();
         List<Feedback> list = feedbackRepository.getAllFeedback();
         for (Feedback fb : list) {
-            FeedbackPanel fp = new FeedbackPanel(fb);
-            addMouseListenerToScrollPane(fp);
+            FeedbackPanel fpanel = new FeedbackPanel(fb);
+            addMouseListenerToScrollPane(fpanel);
             feedbackTextPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            feedbackTextPanel.add(fp);
+            feedbackTextPanel.add(fpanel);
             feedbackTextPanel.revalidate();
             if (feedbackTextPanel.getComponents().length > 5) {
                 feedbackTextPanel.setPreferredSize(new Dimension((int) feedbackTextPanel.getPreferredSize().getWidth(),
-                        (int) feedbackTextPanel.getPreferredSize().getHeight() + fp.getHeight() + 6));
+                        (int) feedbackTextPanel.getPreferredSize().getHeight() + fpanel.getHeight() + 6));
             }
         }
     }
-    
+
     public FeedbackPanel getSelectedFeedbackPanel() {
         FeedbackPanel fp = null;
         for (Component c : feedbackTextPanel.getComponents()) {
@@ -2020,7 +2020,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
         return fp;
     }
-    
+
     public void addMouseListenerToScrollPane(FeedbackPanel fp) {
         Component view = ((JScrollPane) fp.getComponent(1)).getViewport().getView();
         if (view != null) {
@@ -2055,7 +2055,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         };
         model.addColumn("Id");
-        model.addColumn("Username");
+        model.addColumn("Email");
         model.addColumn("Quantity");
         model.addColumn("Total");
         model.addColumn("OrderDate");
@@ -2065,7 +2065,7 @@ public class Dashboard extends javax.swing.JFrame {
         for (int i = 0; i < list.size(); i++) {
             model.addRow(new Object[]{
                 list.get(i).getId(),
-                list.get(i).getAccount().getUsername(),
+                list.get(i).getAccount().getEmail(),
                 list.get(i).getQuantity(),
                 list.get(i).getTotal(),
                 new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(list.get(i).getOrderDate()),

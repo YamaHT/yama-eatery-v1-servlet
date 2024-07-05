@@ -46,6 +46,10 @@
         font-size: 1.25rem;
     }
 
+    & th {
+        width: 13.25%;
+    }
+
     & th:nth-child(1) {
         width: 5%;
     }
@@ -71,6 +75,20 @@
 }
 
 .order-management-table-order {
+    & td:nth-child(2) {
+        max-width: 250px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 0 1%;
+
+        &:hover {
+            text-overflow: clip;
+            white-space: break-spaces;
+            word-wrap: break-word;
+        }
+    }
+
     & td:nth-child(6) {
         padding: 2% 0;
         background-color: #CCCCCC;

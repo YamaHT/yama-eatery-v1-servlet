@@ -4,6 +4,8 @@
  */
 package Data.Model;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author ADMIN
@@ -11,23 +13,27 @@ package Data.Model;
 public class Shipping {
 
     private int id;
+    private String recipientName;
     private String phone;
     private String address;
-    private String recipientName;
-    private String deliveryDate;
+    private Timestamp deliveryDate;
     private Delivery delivery;
 
-    public Shipping(int id, String phone, String address, String recipientName, String deliveryDate, Delivery delivery) {
+    public Shipping(int id, String recipientName, String phone, String address, Timestamp deliveryDate, Delivery delivery) {
         this.id = id;
+        this.recipientName = recipientName;
         this.phone = phone;
         this.address = address;
-        this.recipientName = recipientName;
         this.deliveryDate = deliveryDate;
         this.delivery = delivery;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getRecipientName() {
+        return recipientName;
     }
 
     public String getPhone() {
@@ -38,11 +44,7 @@ public class Shipping {
         return address;
     }
 
-    public String getRecipientName() {
-        return recipientName;
-    }
-
-    public String getDeliveryDate() {
+    public Timestamp getDeliveryDate() {
         return deliveryDate;
     }
 

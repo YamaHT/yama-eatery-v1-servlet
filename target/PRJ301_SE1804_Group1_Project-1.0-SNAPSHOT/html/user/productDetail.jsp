@@ -27,26 +27,26 @@
             </div>
             <div class="productDetail-content">
                 <div class="productDetail-content-header">
-                    <c:if test="${product.inventory == 0}">
-                        <div style="color: #F00">OUT OF STOCK</div>
-                    </c:if>
-                    <c:if test="${product.inventory != 0}">
-                        <div>IN STOCK</div>
-                    </c:if>
+                    <div class="${product.inventory == 0 ? 'out-stock' : 'in-stock'}">
+                        ${product.inventory == 0 ? 'OUT OF STOCK' : 'IN STOCK'}
+                    </div>
                     <div>${product.category.name}</div>
                 </div>
                 <div class="productDetail-content-name">${product.name}</div>
                 <div class="productDetail-content-price">$${product.price} <span>$${product.price*2}</span></div>
-                <form class="productDetail-content-action">
-                    <div class="productDetail-content-action-quantity">
-                        <input type="number" name="quantity" value="0">
-                    </div>
-                    <div class="productDetail-content-action-addToCart">
-                        <button>
-                            ADD TO CART <i class="fa-solid fa-cart-shopping"></i>
-                        </button>
-                    </div>
-                </form>
+                <c:if test="${product.inventory != 0}">
+                    <form action="/order/add" method="post" class="productDetail-content-action">
+                        <div class="productDetail-content-action-quantity">
+                            <input type="number" name="amount" value="1" min="1" max="${product.inventory}">
+                            <input type="hidden" name="productId" value="${product.id}">
+                        </div>
+                        <div class="productDetail-content-action-addToCart">
+                            <button type="submit">
+                                ADD TO CART <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                        </div>
+                    </form> 
+                </c:if>
                 <div class="productDetail-content-description">
                     ${product.description}
                 </div>
@@ -55,7 +55,7 @@
         <div class="title">SIMILIAR PRODUCT</div>
         <div class="groupOfProduct">
             <c:forEach items="${listProduct}" var="pro" varStatus="i">
-                <div class="groupOfProduct-product" id="p${i.index}" onclick="window.location.href = '/product/detail?id=${pro.id}'">
+                <div class="groupOfProduct-product" id="${pro.category.name}" onclick="window.location.href = '/product/detail?id=${pro.id}'">
                     <div class="groupOfProduct-product-header">
                         <div class="groupOfProduct-product-category">${pro.category.name}</div>
                         <div class="groupOfProduct-product-price">$${pro.price}</div>

@@ -4,9 +4,7 @@
  */
 package Business.Controller.User.ProductController;
 
-import Data.Model.Account;
 import Data.Model.Product;
-import Data.Repository.User.OrderRepository;
 import Data.Repository.User.ProductRepository;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -20,7 +18,7 @@ import java.util.List;
  *
  * @author ADMIN
  */
-@WebServlet(name = "ProductController", urlPatterns = {"/product"})
+@WebServlet(urlPatterns = {"/product"})
 public class Index extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -32,22 +30,23 @@ public class Index extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            ProductRepository productRepo = new ProductRepository();
+            ProductRepository productRepository = new ProductRepository();
             String filter = request.getParameter("filter");
             String lastMinPrice = request.getParameter("priceMin");
             String lastMaxPrice = request.getParameter("priceMax");
 
-            int count = productRepo.getCountProduct(null, filter, lastMinPrice, lastMaxPrice);
+            int count = productRepository.getCountProduct(null, filter, lastMinPrice, lastMaxPrice);
             int endPage = (int) Math.ceil(count / 12.0);
             int page = (int) Math.min(
                     Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
                     Math.max(endPage, 1));
-            List<Product> list = productRepo.getAllProduct(page, filter, lastMinPrice, lastMaxPrice);
+
+            List<Product> list = productRepository.getAllProduct(page, filter, lastMinPrice, lastMaxPrice);
 
             request.setAttribute("listProduct", list);
             request.setAttribute("filter", (filter == null || filter.equals("")) ? "Id-DESC" : filter.replace(" ", "-"));
-            request.setAttribute("minPrice", productRepo.getMinPriceProduct(null, null));
-            request.setAttribute("maxPrice", productRepo.getMaxPriceProduct(null, null));
+            request.setAttribute("minPrice", productRepository.getMinPriceProduct(null, null));
+            request.setAttribute("maxPrice", productRepository.getMaxPriceProduct(null, null));
             request.setAttribute("lastMinPrice", lastMinPrice);
             request.setAttribute("lastMaxPrice", lastMaxPrice);
             request.setAttribute("page", page);
@@ -62,7 +61,7 @@ public class Index extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/html/user/product.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

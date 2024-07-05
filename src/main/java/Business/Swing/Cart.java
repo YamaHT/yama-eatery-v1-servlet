@@ -12,6 +12,7 @@ import Business.Swing.Component.ProductInCart;
 import Business.Swing.Component.Subcomponent.CustomScrollBarUI;
 import Data.Model.Account;
 import Data.Model.Order;
+import Data.Model.Shipping;
 import Data.Repository.User.OrderRepository;
 import java.awt.Container;
 import java.awt.event.ActionListener;
@@ -40,7 +41,7 @@ public class Cart extends javax.swing.JFrame {
             int orderId = orderRepo.createOrder(account);
             order = new Order(orderId, 0, 0, null, account, null, null);
         }
-        List<OrderDetail> list = orderRepo.getOrderDetailByOrder(order);
+        List<OrderDetail> list = orderRepo.getAllOrderDetailByOrder(order);
         setProductCart(list);
         checkout_quantity_value.setText(String.valueOf(order.getQuantity()));
         checkout_total_value.setText("$" + order.getTotal());
@@ -450,7 +451,12 @@ public class Cart extends javax.swing.JFrame {
             return;
         }
         int shippingId = orderRepo.addShipping(name, phone, address, deliveryId);
-        orderRepo.checkout(order, shippingId);
+        Shipping shipping = orderRepo.getShippingById(shippingId);
+        orderRepo.checkout(order, shipping);
+        List<OrderDetail> list = orderRepo.getAllOrderDetailByOrder(order);
+        orderRepo.updateAllProductInventoryAfterCheckout(list);
+        list = orderRepo.getAllOrderDetailByOrder(order);
+        orderRepo.updateAllOrderAfterCheckout(list);
         this.dispose();
     }//GEN-LAST:event_checkout_button_checkoutActionPerformed
 

@@ -36,10 +36,7 @@ public class Profile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
-        if (account == null) {
-            response.sendRedirect("/auth/login");
-            return;
-        }
+
         String birthday = new SimpleDateFormat("dd-MM-yyyy").format(account.getProfile().getBirthday());
         request.setAttribute("birthday", birthday);
         request.getRequestDispatcher("/html/user/profile.jsp").forward(request, response);
@@ -50,10 +47,6 @@ public class Profile extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        if (account == null) {
-            response.sendRedirect("/auth/login");
-            return;
-        }
 
         AccountRepository accountRepo = new AccountRepository();
         String name = request.getParameter("name");

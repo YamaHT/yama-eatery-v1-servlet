@@ -23,11 +23,13 @@ public class FeedbackRepository {
     public List<Feedback> getAllFeedback() {
         List<Feedback> list = new ArrayList<>();
         String query = "SELECT Feedback.*,\n"
+                + "Account.Username,\n"
                 + "Profile.Image\n"
                 + "FROM Feedback\n"
                 + "INNER JOIN Account ON Feedback.AccountId = Account.Id\n"
                 + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
-                + "WHERE Feedback.Response IS NULL AND Feedback.Ignored = 0";
+                + "WHERE Feedback.Response IS NULL AND Feedback.Ignored = 0\n"
+                + "ORDER BY Feedback.FeedbackDate ASC";
         try {
             ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
@@ -36,9 +38,9 @@ public class FeedbackRepository {
                         rs.getString(3),
                         rs.getTimestamp(4),
                         rs.getTimestamp(5),
-                        false,
-                        new Account(rs.getInt(6), null, null, null, null, false,
-                                new Profile(0, ImageUtils.decompressImage(rs.getBytes(8)),
+                        rs.getBoolean(6),
+                        new Account(rs.getInt(7), rs.getString(8), null, null, null, false,
+                                new Profile(0, ImageUtils.decompressImage(rs.getBytes(9)),
                                         null, null, null, null))));
             }
         } catch (Exception e) {
@@ -49,12 +51,20 @@ public class FeedbackRepository {
     public void response(int feedbackId, String response) {
         String query = "UPDATE Feedback SET Response = ?, ResponseDate = ? WHERE Id = ?";
         try {
-            DbContext.executeUpdate(query, 
-                    response, 
-                    new Timestamp(System.currentTimeMillis()), 
+            DbContext.executeUpdate(query,
+                    response,
+                    new Timestamp(System.currentTimeMillis()),
                     feedbackId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void ignore(int feedbackId) {
+        String query = "UPDATE Feedback SET Ignored = 1 WHERE Id = ?";
+        try {
+            DbContext.executeUpdate(query, feedbackId);
+        } catch (Exception e) {
         }
     }
 }

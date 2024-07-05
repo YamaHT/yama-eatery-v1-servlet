@@ -14,12 +14,12 @@
 %>
 <div class="blur" onclick="hideSidenav()"></div>
 <header>
-    <div class="header-logo">
-        <img src="/image/brand.jpg" alt="">
+    <div class="header-logo" onclick="window.location.href = '/home'">
+        <img src="/image/brand.jpg">
     </div>
     <nav class="header-navigation">
         <ul class="header-navigation-menu">
-            <li><a href="#">Home</a><span></span></li>
+            <li><a href="/home">Home</a><span></span></li>
             <li class="subnav-holder">
                 <a href="/product">
                     Product <i class="fa-solid fa-caret-down"></i>
@@ -31,16 +31,16 @@
 
                 </ul>
             </li>
-            <li><a href="#">About</a><span></span></li>
-            <li><a href="#">Contact </a><span></span></li>
-            <li><a href="#">Feedback </a><span></span></li>
+            <li><a href="/home/aboutUs">About</a><span></span></li>
+            <li><a href="/home/contactUs">Contact</a><span></span></li>
+            <li><a href="/home/feedback">Feedback</a><span></span></li>
 
         </ul>
     </nav>
 
     <div class="headerLoggedIn-button">
         <i class="fa-solid fa-bars header-navigation-mobile" onclick="showSidenav()"></i>
-        <i class="fa-solid fa-cart-shopping header-button-cart"></i>
+        <i class="fa-solid fa-cart-shopping header-button-cart" onclick="window.location.href = '/order'"></i>
         <i onclick="showSearchBar(this)" class="fa-solid fa-magnifying-glass header-button-search"></i>
         <form action="/product/search" method="get" class="header-button-search-bar" style=" display: none;">
             <input type="text" id="name" name="name" placeholder="Search product..." />
@@ -56,8 +56,8 @@
             </c:if>
             <ul class="subnav-user">
                 <li><a href="/account/profile"><i class="fa-solid fa-image"></i> Profile</a></li>
-                <li><a href="#"><i class="fa-solid fa-list-check"></i> History Order</a></li>
-                <li><a href="#"><i class="fa-solid fa-comments"></i> My feedback</a></li>
+                <li><a href="/account/historyOrder"><i class="fa-solid fa-list-check"></i> History Order</a></li>
+                <li><a href="/account/myFeedback"><i class="fa-solid fa-comments"></i> My feedback</a></li>
                 <li> <a href="/auth/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a></li>
             </ul>
         </div>
@@ -68,7 +68,7 @@
             <i class="fa-solid fa-xmark" onclick="hideSidenav()"></i>
         </div>
         <ul class="header-navigation-side-menu">
-            <li><a href="#">Home</a><span></span></li>
+            <li><a href="/home">Home</a><span></span></li>
             <li>
                 <a href="#" onclick="return showSidenavSubmenu(this)">
                     Product <i class="fa-solid fa-caret-down"></i>
@@ -82,9 +82,9 @@
                 </ul>
 
             </li>
-            <li><a href="#">About</a><span></span></li>
-            <li><a href="#">Contact </a><span></span></li>
-            <li><a href="#">Feedback </a><span></span></li>
+            <li><a href="/home/aboutUs">About</a><span></span></li>
+            <li><a href="/home/contactUs">Contact</a><span></span></li>
+            <li><a href="/home/feedback">Feedback</a><span></span></li>
         </ul>
     </nav>
 </header>

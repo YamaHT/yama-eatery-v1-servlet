@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "ForgotPassword", urlPatterns = {"/auth/forgotPassword"})
 public class ForgotPassword extends HttpServlet {
 
-    AccountRepository accountRepo = new AccountRepository();
+    AccountRepository accountRepository = new AccountRepository();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,16 +40,17 @@ public class ForgotPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String action = request.getParameter("action");
+            String action = String.valueOf(request.getParameter("action"));
             SendMailUtils sendMailUtils = new SendMailUtils();
             if (action.equals("send")) {
                 String email = request.getParameter("email");
-                if (accountRepo.getAccountByUsernameOrEmail(email) == null) {
-                    request.setAttribute("error", "Email does not existed to send OTP");
-                    request.getRequestDispatcher("/html/user/forgotPassword.jsp").forward(request, response);
+                if (accountRepository.getAccountByUsernameOrEmail(email) == null) {
+                    sendMailUtils.sendMailNormal(email, "Yama Eatery - Error sending email.",
+                            "Sorry, Your email is not in our system to change your password.\n"
+                            + "Please sign up to our website to enjoy our wonderful food");
                     return;
                 }
-                
+
                 String OTP = sendMailUtils.sendMailOTP(email);
                 HttpSession session = request.getSession();
                 session.setAttribute("OTP", OTP);
@@ -76,10 +77,11 @@ public class ForgotPassword extends HttpServlet {
                         email = cooky.getValue();
                     }
                 }
+
                 String password = sendMailUtils.sendMailPass(email);
-                accountRepo.changePassword(email, password);
+                accountRepository.changePassword(email, password);
                 request.setAttribute("success", "Change password successfully. Please check your new email");
-                request.getRequestDispatcher("/auth/login").forward(request, response);
+                request.getRequestDispatcher("/html/user/login.jsp").forward(request, response);
             } else {
                 throw new Exception();
             }

@@ -20,6 +20,10 @@ public class Order {
     private Status status;
     private Shipping shipping;
 
+    public Order(int id) {
+        this.id = id;
+    }
+
     public Order(int id, int quantity, double total, Date orderDate, Account account, Status status, Shipping shipping) {
         this.id = id;
         this.quantity = quantity;

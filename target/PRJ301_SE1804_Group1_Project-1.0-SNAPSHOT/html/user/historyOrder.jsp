@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +25,7 @@
                     <table class="historyOrder-body-table">
                         <thead>
                             <tr>
-                                <th>Recipent<br />Name</th>
+                                <th>Recipient<br />Name</th>
                                 <th>Address</th>
                                 <th>Phone</th>
                                 <th>Order<br />Date</th>
@@ -36,31 +37,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="historyOrder-body-table-content" onclick="showContent(0)">
-                                <td>Le Phuoc Duy</td>
-                                <td>09 Nguyen Van Cu, Ninh Kieu, Can Tho</td>
-                                <td>0987654321</td>
-                                <td>00:00:00 25/05/2024</td>
-                                <td>00:05:00 25/05/2024</td>
-                                <td>FAST</td>
-                                <td>7</td>
-                                <td><strong>$100</strong></td>
-                                <td class="historyOrder-body-table-status incart">
-                                    <p>Success</p>
-                                </td>
-                            </tr>
-                            <tr class="historyOrder-body-table-subcontent" id="subcontent-0" style="display: none;">
-                                <td></td>
-                                <td class="historyOrder-body-table-subcontent-image"><img src="/image/category_dessert.jpg">
-                                </td>
-                                <td>Banh ngot</td>
-                                <td>$<span>120</span>/1 product</td>
-                                <td>7</td>
-                                <td><strong>$840</strong></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            <c:forEach begin="0" end="${listOrder.size()-1}" step="1" var="i" >
+                                <tr class="historyOrder-body-table-content" onclick="showContent(${i})">
+                                    <td>${listOrder[i].shipping.recipientName}</td>
+                                    <td>${listOrder[i].shipping.address}</td>
+                                    <td style="padding: 1% 0;">${listOrder[i].shipping.phone}</td>
+                                    <td>${listOrder[i].orderDate}</td>
+                                    <td>${listOrder[i].shipping.deliveryDate}</td>
+                                    <td>${listOrder[i].shipping.delivery.type}</td>
+                                    <td>${listOrder[i].quantity}</td>
+                                    <td><strong>$${listOrder[i].total}</strong></td>
+                                    <c:if test="${listOrder[i].status.id != 3}">
+                                        <td class="historyOrder-body-table-status ${listOrder[i].status.name}">
+                                            <p>${listOrder[i].status.name}</p>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${listOrder[i].status.id == 3}">
+                                        <%@ page import="java.util.Date" %>
+                                        <c:set var="currentDate" value="<%= new Date() %>" />
+                                        <c:if test="${listOrder[i].shipping.deliveryDate.before(currentDate)}">
+                                            <td class="historyOrder-body-table-status Success">
+                                                <p>Success</p>
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${listOrder[i].shipping.deliveryDate.after(currentDate)}">
+                                            <td class="historyOrder-body-table-status Delivering">
+                                                <p>Delivering</p>
+                                            </td>
+                                        </c:if>
+                                    </c:if>
+
+                                </tr>
+                                <c:forEach items="${listOrderDetailInOrder[i]}" var="orderDetail">
+                                    <tr class="historyOrder-body-table-subcontent" id="subcontent-${i}" style="display: none;">
+                                        <td></td>
+                                        <td class="historyOrder-body-table-subcontent-image"><img src="data:image/jpeg;base64, ${orderDetail.product.imgBase64}">
+                                        </td>
+                                        <td>${orderDetail.product.name}</td>
+                                        <td>$<span>${orderDetail.product.price}</span>/1 product</td>
+                                        <td>${orderDetail.amount}</td>
+                                        <td><strong>$${orderDetail.subtotal}</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </c:forEach>
+                            </c:forEach>
+
                         </tbody>
                     </table>
                 </div>

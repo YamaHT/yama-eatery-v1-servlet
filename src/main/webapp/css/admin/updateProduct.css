@@ -11,10 +11,10 @@ body {
 
 .update-product-form {
     margin: 5% auto;
-    width: 50%;
+    width: 80%;
     text-align: center;
     background-color: #fff;
-    border-radius: 30px;
+    border-radius: 12px;
     overflow: hidden;
 
     & .update-product-form-title {

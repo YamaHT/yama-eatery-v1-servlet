@@ -76,8 +76,8 @@
             </div>
 
             <div class="groupOfProduct">
-                <c:forEach items="${listProduct}" var="product" varStatus="i">
-                    <div class="groupOfProduct-product" id="p${i.index}" onclick="window.location.href = '/product/detail?id=${product.id}'">
+                <c:forEach items="${listProduct}" var="product">
+                    <div class="groupOfProduct-product" id="${product.category.name}" onclick="window.location.href = '/product/detail?id=${product.id}'">
                         <div class="groupOfProduct-product-header">
                             <div class="groupOfProduct-product-category">${product.category.name}</div>
                             <div class="groupOfProduct-product-price">$${product.price}</div>
@@ -86,7 +86,7 @@
                             <img src="data:image/jpeg;base64,${product.imgBase64}">
                         </div>
                         <div class="groupOfProduct-product-name">${product.name}</div>
-                        <button class="groupOfProduct-product-button-viewdetail">
+                        <button type="button" class="groupOfProduct-product-button-viewdetail">
                             VIEW DETAIL
                         </button>
                     </div>

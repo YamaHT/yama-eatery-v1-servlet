@@ -46,7 +46,7 @@ public class LoginGoogleCallback extends HttpServlet {
             }
 
             request.getSession().setAttribute("account", account);
-            response.sendRedirect("/product");
+            response.sendRedirect("/home");
         } catch (Exception e) {
         }
     }

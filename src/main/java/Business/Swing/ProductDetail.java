@@ -250,7 +250,7 @@ public class ProductDetail extends javax.swing.JFrame {
         OrderRepository orderRepo = new OrderRepository();
         Order order = orderRepo.getOrderByAccount(account);
         orderRepo.addOrderDetail(order, product, amount);
-        orderRepo.updateOrder(order, orderRepo.getOrderDetailByOrder(order));
+        orderRepo.updateOrder(order, orderRepo.getAllOrderDetailByOrder(order));
         this.dispose();
     }//GEN-LAST:event_buttonAddToCartActionPerformed
 

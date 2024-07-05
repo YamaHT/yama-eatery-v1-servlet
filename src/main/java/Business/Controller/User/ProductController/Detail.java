@@ -21,32 +21,31 @@ import java.util.List;
  */
 @WebServlet(name = "Detail", urlPatterns = {"/product/detail"})
 public class Detail extends HttpServlet {
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            ProductRepository productRepo = new ProductRepository();
+            ProductRepository productRepository = new ProductRepository();
+
             int id = Integer.parseInt(request.getParameter("id"));
-            Product product = productRepo.getProductById(id);
-            if (product == null) {
-                throw new Exception();
-            }
-            List<Product> list = productRepo.getAllProductByCategoryName(product.getCategory().getName(), -1, null, null, null);
-            Collections.shuffle(list);
+            Product product = productRepository.getProductById(id);
             request.setAttribute("product", product);
-            request.setAttribute("listProduct", list.subList(0, Math.min(4, list.size())));
+
+            List<Product> list = productRepository.getSimilarProduct(product);
+            request.setAttribute("listProduct", list);
+
             request.getRequestDispatcher("/html/user/productDetail.jsp").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("/product");
         }
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

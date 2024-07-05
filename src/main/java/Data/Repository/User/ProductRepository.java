@@ -147,6 +147,37 @@ public class ProductRepository {
         return list;
     }
 
+    public List<Product> getSimilarProduct(Product product) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT TOP 4 *\n"
+                + "FROM Product\n"
+                + "INNER JOIN Category ON Product.CategoryId = Category.Id\n"
+                + "WHERE (Category.Id = ?)\n"
+                + "  AND (Product.Id <> ?)\n"
+                + "  AND (Product.Available = 1)"
+                + "ORDER BY NEWID()";
+        try {
+            ResultSet rs = DbContext.executeQuery(query,
+                    product.getCategory().getId(),
+                    product.getId());
+
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        ImageUtils.decompressImage(rs.getBytes(3)),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getBoolean(7),
+                        new Category(rs.getInt(9), rs.getString(10))
+                ));
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return list;
+    }
+
     public List<Product> getTop5MostSoldProduct() {
         List<Product> list = new ArrayList<>();
         String query
@@ -159,11 +190,13 @@ public class ProductRepository {
                 + "INNER JOIN Product ON OrderDetail.ProductId = Product.Id\n"
                 + "INNER JOIN [Order] ON OrderDetail.OrderId = [Order].Id\n"
                 + "WHERE [Order].StatusId = 3\n"
+                + "AND Product.Available = 1"
                 + "GROUP BY \n"
                 + "    Product.Id,\n"
                 + "    Product.Name,\n"
                 + "    Product.Image,\n"
-                + "    Product.Price\n"
+                + "    Product.Price,\n"
+                + "    Product.Available\n"
                 + "ORDER BY TotalSold DESC\n"
                 + "OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY";
         try {
@@ -196,11 +229,13 @@ public class ProductRepository {
                 + "INNER JOIN Product ON OrderDetail.ProductId = Product.Id\n"
                 + "INNER JOIN [Order] ON OrderDetail.OrderId = [Order].Id\n"
                 + "WHERE [Order].StatusId = 3\n"
+                + "AND Product.Available = 1"
                 + "GROUP BY \n"
                 + "    Product.Id,\n"
                 + "    Product.Name,\n"
                 + "    Product.Image,\n"
                 + "    Product.Price,\n"
+                + "    Product.Available\n"
                 + "ORDER BY TotalSold DESC\n"
                 + "OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY";
         try {
@@ -229,6 +264,7 @@ public class ProductRepository {
                 + "       Image,\n"
                 + "       Price\n"
                 + "FROM Product\n"
+                + "WHERE Available = 1"
                 + "ORDER BY Id DESC\n"
                 + "OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY";
         try {
@@ -257,6 +293,7 @@ public class ProductRepository {
                 + "       Image,\n"
                 + "       Price\n"
                 + "FROM Product\n"
+                + "WHERE Available = 1"
                 + "ORDER BY Id DESC\n"
                 + "OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY";
         try {

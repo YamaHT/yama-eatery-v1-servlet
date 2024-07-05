@@ -8,6 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/layout/layout.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <%
     java.util.List<Data.Model.Category> listCategory = new Data.Repository.User.ProductRepository().getAllCategory();
     request.setAttribute("listCategory", listCategory);

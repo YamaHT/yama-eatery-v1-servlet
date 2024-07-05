@@ -7,6 +7,7 @@ package Data.Repository.Admin;
 import Data.DbContext;
 import Data.Model.Account;
 import Data.Model.Order;
+import Data.Model.OrderDetail;
 import Data.Model.Shipping;
 import Data.Model.Status;
 import java.sql.ResultSet;
@@ -65,22 +66,22 @@ public class OrderRepository {
         }
     }
 
-    public void refuseOrder(int id) {
-        String query = "UPDATE [Order]\n"
+    public void refuseOrder(Order order) {
+        String queryToRefuseOrder = "UPDATE [Order]\n"
                 + "SET StatusId = 4\n"
                 + "WHERE (Id = ?)";
+        String queryToRestoreInventory = "UPDATE Product\n"
+                + "SET Inventory = ?\n"
+                + "WHERE Id = ?";
         try {
-            DbContext.executeUpdate(query, id);
-        } catch (Exception e) {
-        }
-    }
+            DbContext.executeUpdate(queryToRefuseOrder, order.getId());
 
-    public void refuseAllOrder() {
-        String query = "UPDATE [Order]\n"
-                + "SET StatusId = 4\n"
-                + "WHERE StatusId = 2";
-        try {
-            DbContext.executeUpdate(query);
+            List<OrderDetail> list = new Data.Repository.User.OrderRepository().getAllOrderDetailByOrder(order);
+            for (OrderDetail orderDetail : list) {
+                DbContext.executeUpdate(queryToRestoreInventory,
+                        orderDetail.getProduct().getInventory() + orderDetail.getAmount(),
+                        orderDetail.getProduct().getId());
+            }
         } catch (Exception e) {
         }
     }

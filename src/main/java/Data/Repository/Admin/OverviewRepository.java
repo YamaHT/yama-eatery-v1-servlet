@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +123,7 @@ public class OverviewRepository {
     }
 
     public Map<Product, Integer> getMostSoldProduct() {
-        Map<Product, Integer> map = new HashMap<>();
+        Map<Product, Integer> map = new LinkedHashMap<>();
         String query
                 = "DECLARE @StartDate DATETIME;\n"
                 + "DECLARE @EndDate DATETIME;\n"

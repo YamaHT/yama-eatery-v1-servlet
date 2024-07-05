@@ -9,12 +9,14 @@
 <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/layout/layout.css">
 <div class="blur" onclick="hideSidenav()"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <%
     java.util.List<Data.Model.Category> listCategory = new Data.Repository.User.ProductRepository().getAllCategory();
     request.setAttribute("listCategory", listCategory);
 %>
 <header>
-    <div class="header-logo" onclick="window.location.href='/home'">
+    <div class="header-logo" onclick="window.location.href = '/home'">
         <img src="/image/brand.jpg">
     </div>
     <nav class="header-navigation">

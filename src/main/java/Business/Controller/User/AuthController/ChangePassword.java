@@ -5,6 +5,7 @@
 package Business.Controller.User.AuthController;
 
 import Data.Model.Account;
+import Data.Repository.User.AccountRepository;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -65,6 +66,7 @@ public class ChangePassword extends HttpServlet {
                 return;
             }
 
+            new AccountRepository().changePassword(error, newPassword);
             request.setAttribute("success", "Change password successfully");
             request.getRequestDispatcher("/home").forward(request, response);
         } catch (Exception e) {

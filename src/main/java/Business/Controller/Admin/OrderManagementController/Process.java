@@ -20,41 +20,44 @@ import java.util.List;
  */
 @WebServlet(name = "Process", urlPatterns = {"/admin/management/order/process"})
 public class Process extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String action = request.getParameter("action");
-
+        
         OrderRepository orderRepository = new OrderRepository();
-
+        
         switch (String.valueOf(action)) {
             case "accept":
                 orderRepository.acceptOrder(Integer.parseInt(request.getParameter("id")));
                 break;
             case "refuse":
-                orderRepository.refuseOrder(Integer.parseInt(request.getParameter("id")));
+                orderRepository.refuseOrder(new Order(Integer.parseInt(request.getParameter("id"))));
                 break;
             case "acceptAll":
-                List<Order> list = orderRepository.getWaitingOrder();
-                for (Order order : list) {
+                List<Order> listToAccept = orderRepository.getWaitingOrder();
+                for (Order order : listToAccept) {
                     orderRepository.acceptOrder(order.getId());
                 }
                 break;
             case "refuseAll":
-                orderRepository.refuseAllOrder();
+                List<Order> listToRefuse = orderRepository.getWaitingOrder();
+                for (Order order : listToRefuse) {
+                    orderRepository.refuseOrder(order);
+                }
                 break;
         }
-
+        
         request.getRequestDispatcher("/admin/management/order").forward(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -1798,7 +1798,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .showConfirmDialog(this, "Are you sure you want to refuse this order?",
                             "Confirm action", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                orderRepository.refuseOrder((int) orderTableData.getValueAt(orderTableData.getSelectedRow(), 0));
+                orderRepository.refuseOrder(new Order((int) orderTableData.getValueAt(orderTableData.getSelectedRow(), 0)));
                 setOrderData();
             }
         }

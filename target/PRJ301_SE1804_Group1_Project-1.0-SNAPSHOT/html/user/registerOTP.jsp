@@ -28,7 +28,7 @@
                 </div>
                 <button type="submit" class="form-box-button" disabled>VERIFY</button>
                 <hr style="margin: 5% 0;" />
-                <p class="form-box-link">Didn't received OTP? <a id="resendOTP" onclick="return false">Resend</a></p>
+                <p class="form-box-link">Didn't received OTP? <a id="resendOTP">Resend</a></p>
             </form>
         </div>
 

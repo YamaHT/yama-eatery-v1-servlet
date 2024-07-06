@@ -24,9 +24,9 @@ import javax.swing.event.HyperlinkEvent;
  * @author ADMIN
  */
 public class Login extends javax.swing.JFrame {
-
+    
     private ResourceRepository repository = new ResourceRepository();
-
+    
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
@@ -34,6 +34,9 @@ public class Login extends javax.swing.JFrame {
             logo_content.setIcon(new ImageIcon(
                     ImageUtils.convertByteToImage(repository.getImageByName("logo"))
                             .getScaledInstance(121, 120, Image.SCALE_SMOOTH)));
+            web_banner_label.setIcon(new ImageIcon(
+                    ImageUtils.convertByteToImage(repository.getImageByName("banner"))
+                            .getScaledInstance(717, 768, Image.SCALE_SMOOTH)));
         } catch (Exception e) {
         }
         login_register.addHyperlinkListener((HyperlinkEvent e) -> {
@@ -45,7 +48,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
-
+        
         login_forgotPass.addHyperlinkListener((HyperlinkEvent e) -> {
             if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
                 Desktop desktop = Desktop.getDesktop();
@@ -55,7 +58,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
-
+        
         login_aboutus.addHyperlinkListener((HyperlinkEvent e) -> {
             if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
                 Desktop desktop = Desktop.getDesktop();
@@ -65,7 +68,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
-
+        
         login_title.requestFocusInWindow();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -90,8 +93,10 @@ public class Login extends javax.swing.JFrame {
         login_forgotPass = new javax.swing.JEditorPane();
         login_aboutus = new javax.swing.JEditorPane();
         web_banner = new javax.swing.JPanel();
+        web_banner_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
 
         login_panel.setBackground(new java.awt.Color(229, 234, 240));
@@ -173,7 +178,7 @@ public class Login extends javax.swing.JFrame {
         login_register.setBackground(new java.awt.Color(229, 234, 240));
         login_register.setContentType("text/html"); // NOI18N
         login_register.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        login_register.setText("<html>\r\n  <head>\r\n\r\t<style> \n\tbody {\nfont-family: 'tahoma';\nfont-size: 9px;\n}\n</style>\n  </head>\r\n  <body>\r\n<div style='text-align: center'>\n<a href='https://www.facebook.com' style='text-decoration: none; color: black; font-weight: bold;'>No account? Register here</a>\n</div>\n  \n  </body>\r\n</html>\r\n");
+        login_register.setText("<html>\r\n  <head>\r\n\r\t<style> \n\tbody {\nfont-family: 'tahoma';\nfont-size: 9px;\n}\n</style>\n  </head>\r\n  <body>\r\n<div style='text-align: center'>\n<a href='http://localhost:8080/auth/login' style='text-decoration: none; color: black; font-weight: bold;'>No account? Register here</a>\n</div>\n  \n  </body>\r\n</html>\r\n");
         login_register.setFocusable(false);
         login_register.setPreferredSize(new java.awt.Dimension(177, 20));
 
@@ -181,7 +186,7 @@ public class Login extends javax.swing.JFrame {
         login_forgotPass.setBackground(new java.awt.Color(229, 234, 240));
         login_forgotPass.setContentType("text/html"); // NOI18N
         login_forgotPass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        login_forgotPass.setText("<html>\r\n  <head>\r\n\r\t<style> \n\tbody {\nfont-family: 'tahoma';\nfont-size: 9px;\n}\n</style>\n  </head>\r\n  <body>\r\n<div style='text-align: center'>\n  <a href='https://www.youtube.com' style='text-decoration: none; color: black; font-weight: bold;'>\n\tForgot password?\n  </a>\n</div>\n  </body>\r\n</html>\r\n");
+        login_forgotPass.setText("<html>\r\n  <head>\r\n\r\t<style> \n\tbody {\nfont-family: 'tahoma';\nfont-size: 9px;\n}\n</style>\n  </head>\r\n  <body>\r\n<div style='text-align: center'>\n  <a href='http://localhost:8080/auth/forgotPassword' style='text-decoration: none; color: black; font-weight: bold;'>\n\tForgot password?\n  </a>\n</div>\n  </body>\r\n</html>\r\n");
         login_forgotPass.setFocusable(false);
 
         login_aboutus.setEditable(false);
@@ -189,7 +194,7 @@ public class Login extends javax.swing.JFrame {
         login_aboutus.setBorder(null);
         login_aboutus.setContentType("text/html"); // NOI18N
         login_aboutus.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        login_aboutus.setText("<html>\n  <head>\n\t<style> \n\tbody {\nfont-family: 'tahoma';\nfont-size: 10px;\nfont-style: italic;\n}\n</style>\n  </head>\n  <body>\n<div style='text-align: center'>\n <a href='https://www.fb.com/dangtran1301' style='text-decoration: none; color: black; font-weight: italic;'>\n \tCopyright © 2024 Yama, Inc. FPTU Can Tho\n  </a>\n</div>\n  </body>\n</html>\n");
+        login_aboutus.setText("<html>\n  <head>\n\t<style> \n\tbody {\nfont-family: 'tahoma';\nfont-size: 10px;\nfont-style: italic;\n}\n</style>\n  </head>\n  <body>\n<div style='text-align: center'>\n <a href='http://localhost:8080/home' style='text-decoration: none; color: black; font-weight: italic;'>\n \tCopyright © 2024 Yama, Inc. FPTU Can Tho\n  </a>\n</div>\n  </body>\n</html>\n");
         login_aboutus.setFocusable(false);
 
         javax.swing.GroupLayout login_panelLayout = new javax.swing.GroupLayout(login_panel);
@@ -229,7 +234,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(login_input_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(login_button, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(login_register, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(login_forgotPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,17 +244,22 @@ public class Login extends javax.swing.JFrame {
         );
 
         web_banner.setBackground(new java.awt.Color(255, 102, 153));
-        web_banner.setPreferredSize(new java.awt.Dimension(717, 0));
+        web_banner.setPreferredSize(new java.awt.Dimension(717, 768));
+
+        web_banner_label.setPreferredSize(new java.awt.Dimension(717, 768));
 
         javax.swing.GroupLayout web_bannerLayout = new javax.swing.GroupLayout(web_banner);
         web_banner.setLayout(web_bannerLayout);
         web_bannerLayout.setHorizontalGroup(
             web_bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 717, Short.MAX_VALUE)
+            .addComponent(web_banner_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         web_bannerLayout.setVerticalGroup(
             web_bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(web_bannerLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(web_banner_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,8 +273,8 @@ public class Login extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(login_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-            .addComponent(web_banner, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addComponent(login_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+            .addComponent(web_banner, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
         );
 
         pack();
@@ -290,7 +300,7 @@ public class Login extends javax.swing.JFrame {
             login_input_password.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.RED), new EmptyBorder(5, 10, 5, 10)));
             return;
         }
-
+        
         this.dispose();
         if (account.isRole()) {
             new Dashboard();
@@ -336,7 +346,7 @@ public class Login extends javax.swing.JFrame {
             login_button.doClick();
         }
     }//GEN-LAST:event_login_input_passwordKeyPressed
-
+    
     public void run() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -380,5 +390,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel logo;
     private javax.swing.JLabel logo_content;
     private javax.swing.JPanel web_banner;
+    private javax.swing.JLabel web_banner_label;
     // End of variables declaration//GEN-END:variables
 }

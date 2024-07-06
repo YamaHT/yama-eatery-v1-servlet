@@ -6,6 +6,7 @@ package Business.Swing;
 
 import Data.Model.Account;
 import Data.Model.Order;
+import Data.Model.OrderDetail;
 import Data.Model.Product;
 import Data.Repository.User.OrderRepository;
 import Utils.ImageUtils;
@@ -238,19 +239,41 @@ public class ProductDetail extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonReturnActionPerformed
 
     private void buttonAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddToCartActionPerformed
+        if (product.getInventory() == 0) {
+            JOptionPane.showMessageDialog(null, "This product is out of stock", "System error", JOptionPane.OK_OPTION);
+            return;
+        }
+
         if (!inputAmount.getText().matches("[+-]?\\d+")) {
             JOptionPane.showMessageDialog(null, "Amount must be a number", "User error", JOptionPane.OK_OPTION);
             return;
         }
+
         int amount = Integer.parseInt(inputAmount.getText());
         if (amount <= 0) {
             JOptionPane.showMessageDialog(null, "Amount must higher than 0", "User error", JOptionPane.OK_OPTION);
             return;
         }
-        OrderRepository orderRepo = new OrderRepository();
-        Order order = orderRepo.getOrderByAccount(account);
-        orderRepo.addOrderDetail(order, product, amount);
-        orderRepo.updateOrder(order, orderRepo.getAllOrderDetailByOrder(order));
+
+        amount = Math.min(Math.max(amount, 1), product.getInventory());
+
+        OrderRepository orderRepository = new OrderRepository();
+        Order order = orderRepository.getOrderByAccount(account);
+        if (order == null) {
+            orderRepository.createOrder(account);
+            order = orderRepository.getOrderByAccount(account);
+        }
+
+        OrderDetail orderDetail = orderRepository.getOrderDetailByOrderAndProduct(order, product);
+        if (orderDetail == null) {
+            orderRepository.addOrderDetail(order, product, amount);
+        } else {
+            amount = Math.min(product.getInventory(),
+                    orderDetail.getAmount() + amount);
+            orderRepository.updateOrderDetail(order, product, amount);
+        }
+        
+        orderRepository.updateOrder(order, orderRepository.getAllOrderDetailByOrder(order));
         this.dispose();
     }//GEN-LAST:event_buttonAddToCartActionPerformed
 

@@ -58,6 +58,7 @@ Business\Controller\User\HomeController\SystemFeedback.class
 Business\Controller\User\AuthController\LoginGoogle.class
 Business\Swing\Dashboard$1.class
 Business\Swing\Component\ProductInCart.class
+Business\Controller\Admin\ResourceManagementController\Index.class
 Business\Swing\Cart$1.class
 Business\Swing\Dashboard$2.class
 Business\Swing\Component\Subcomponent\ImageAvatar.class

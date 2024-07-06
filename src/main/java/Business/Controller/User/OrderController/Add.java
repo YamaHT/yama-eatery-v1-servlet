@@ -39,7 +39,7 @@ public class Add extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
-        OrderRepository orderRepo = new OrderRepository();
+        OrderRepository orderRepository = new OrderRepository();
         ProductRepository productRepo = new ProductRepository();
 
         int productId = Integer.parseInt(request.getParameter("productId"));
@@ -53,21 +53,21 @@ public class Add extends HttpServlet {
         int amount = request.getParameter("amount") != null ? Integer.parseInt(request.getParameter("amount")) : 1;
         amount = Math.min(Math.max(amount, 1), product.getInventory());
 
-        Order order = orderRepo.getOrderByAccount(account);
+        Order order = orderRepository.getOrderByAccount(account);
         if (order == null) {
-            orderRepo.createOrder(account);
-            order = orderRepo.getOrderByAccount(account);
+            orderRepository.createOrder(account);
+            order = orderRepository.getOrderByAccount(account);
         }
 
-        OrderDetail orderDetail = orderRepo.getOrderDetailByOrderAndProduct(order, product);
+        OrderDetail orderDetail = orderRepository.getOrderDetailByOrderAndProduct(order, product);
         if (orderDetail == null) {
-            orderRepo.addOrderDetail(order, product, amount);
+            orderRepository.addOrderDetail(order, product, amount);
         } else {
             amount = Math.min(product.getInventory(),
                     orderDetail.getAmount() + amount);
-            orderRepo.updateOrderDetail(order, product, amount);
+            orderRepository.updateOrderDetail(order, product, amount);
         }
-        orderRepo.updateOrder(order, orderRepo.getAllOrderDetailByOrder(order));
+        orderRepository.updateOrder(order, orderRepository.getAllOrderDetailByOrder(order));
         response.sendRedirect("/order");
     }
 

@@ -6,7 +6,4 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/css/layout/loading.css"/>
-<div class="loading-container">
-    <div class="loading"></div>
-    <div id="loading-text">loading</div>
-</div>
+<div class="loader"></div>

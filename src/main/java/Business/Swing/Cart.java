@@ -15,9 +15,11 @@ import Data.Model.Order;
 import Data.Model.Shipping;
 import Data.Repository.User.OrderRepository;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.URI;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,30 +31,34 @@ import javax.swing.JOptionPane;
  */
 public class Cart extends javax.swing.JFrame {
 
-    private OrderRepository orderRepo = new OrderRepository();
+    private OrderRepository orderRepository = new OrderRepository();
     private Order order;
     private Account account;
 
     public Cart(Account account) {
         initComponents();
         this.account = account;
-        this.order = orderRepo.getOrderByAccount(account);
-        if (order == null) {
-            int orderId = orderRepo.createOrder(account);
-            order = new Order(orderId, 0, 0, null, account, null, null);
+        if (account.getProfile().getName() != null) {
+            checkout_input_name.setText(account.getProfile().getName());
+            checkout_input_phone.setText(account.getProfile().getPhone());
+            checkout_input_address.setText(account.getProfile().getAddress());
         }
-        List<OrderDetail> list = orderRepo.getAllOrderDetailByOrder(order);
+        this.order = orderRepository.getOrderByAccount(account);
+        if (order == null) {
+            orderRepository.createOrder(account);
+            order = orderRepository.getOrderByAccount(account);
+        }
+        List<OrderDetail> list = orderRepository.getAllOrderDetailByOrder(order);
         setProductCart(list);
         checkout_quantity_value.setText(String.valueOf(order.getQuantity()));
         checkout_total_value.setText("$" + order.getTotal());
 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                new User(account);
+                disposeFrame();
             }
-
         });
         this.setVisible(true);
     }
@@ -76,7 +82,7 @@ public class Cart extends javax.swing.JFrame {
                     productAmount.setText((Integer.parseInt(productAmount.getText()) - 1) + "");
                     int amount = Integer.parseInt(productAmount.getText());
                     if (amount == 0) {
-                        orderRepo.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
+                        orderRepository.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
                         Container parent = productInCart.getParent();
                         parent.remove(productInCart);
                         parent.revalidate();
@@ -85,11 +91,11 @@ public class Cart extends javax.swing.JFrame {
                     } else {
                         double subtotal = amount * orderDetail.getProduct().getPrice();
                         productTotal.setText("$" + subtotal);
-                        orderRepo.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
+                        orderRepository.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
                         orderDetail.setAmount(amount);
                         orderDetail.setSubtotal(subtotal);
                     }
-                    orderRepo.updateOrder(order, list);
+                    orderRepository.updateOrder(order, list);
                     checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) - 1) + "");
                     checkout_total_value.setText("$" + (Double.parseDouble(checkout_total_value.getText().substring(1)) - orderDetail.getProduct().getPrice()));
                 }
@@ -99,12 +105,15 @@ public class Cart extends javax.swing.JFrame {
             productAmountIncrease.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    if (Integer.parseInt(productAmount.getText()) == orderDetail.getProduct().getInventory()) {
+                        return;
+                    }
                     productAmount.setText((Integer.parseInt(productAmount.getText()) + 1) + "");
                     int amount = Integer.parseInt(productAmount.getText());
                     double subtotal = amount * orderDetail.getProduct().getPrice();
                     productTotal.setText("$" + subtotal);
-                    orderRepo.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
-                    orderRepo.updateOrder(order, list);
+                    orderRepository.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
+                    orderRepository.updateOrder(order, list);
                     orderDetail.setAmount(amount);
                     orderDetail.setSubtotal(subtotal);
                     checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) + 1) + "");
@@ -117,8 +126,8 @@ public class Cart extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     list.remove(orderDetail);
-                    orderRepo.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
-                    orderRepo.updateOrder(order, list);
+                    orderRepository.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
+                    orderRepository.updateOrder(order, list);
                     checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) - orderDetail.getAmount()) + "");
                     checkout_total_value.setText("$" + (Double.parseDouble(checkout_total_value.getText().substring(1)) - orderDetail.getSubtotal()));
                     Container parent = productInCart.getParent();
@@ -429,7 +438,7 @@ public class Cart extends javax.swing.JFrame {
     }//GEN-LAST:event_cart_button_returnActionPerformed
 
     private void checkout_button_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkout_button_checkoutActionPerformed
-        if (checkout_quantity_value.getText().equals(0)) {
+        if (checkout_quantity_value.getText().equals("0")) {
             JOptionPane.showMessageDialog(this, "No items in cart to checkout. Please add more!", "User error", JOptionPane.OK_OPTION);
             return;
         }
@@ -450,16 +459,34 @@ public class Cart extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Phone must be 10 digits", "User error", JOptionPane.OK_OPTION);
             return;
         }
-        int shippingId = orderRepo.addShipping(name, phone, address, deliveryId);
-        Shipping shipping = orderRepo.getShippingById(shippingId);
-        orderRepo.checkout(order, shipping);
-        List<OrderDetail> list = orderRepo.getAllOrderDetailByOrder(order);
-        orderRepo.updateAllProductInventoryAfterCheckout(list);
-        list = orderRepo.getAllOrderDetailByOrder(order);
-        orderRepo.updateAllOrderAfterCheckout(list);
-        this.dispose();
+        int shippingId = orderRepository.addShipping(name, phone, address, deliveryId);
+        Shipping shipping = orderRepository.getShippingById(shippingId);
+
+        orderRepository.checkout(order, shipping);
+
+        // After checkout
+        List<OrderDetail> list = orderRepository.getAllOrderDetailByOrder(order);
+        orderRepository.updateAllProductInventoryAfterCheckout(list);
+        list = orderRepository.getAllOrderDetailByOrder(order);
+        orderRepository.updateAllOrderAfterCheckout(list);
+
+        disposeFrame();
+
+        // Open the payment web
+        try {
+            String paymentPrice = String.valueOf((order.getTotal() + shipping.getDelivery().getPrice()) * 24000);
+            String description = "a" + account.getId() + "o" + order.getId();
+            URI uri = new URI("http://localhost:8080/payment?paymentPrice=" + paymentPrice + "&description=" + description);
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(uri);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_checkout_button_checkoutActionPerformed
 
+    private void disposeFrame() {
+        this.dispose();
+        new User(account);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cart_button_return;

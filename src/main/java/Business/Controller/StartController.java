@@ -4,6 +4,7 @@
  */
 package Business.Controller;
 
+import Business.Swing.Login;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ public class StartController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        new Login().run();
+        new Login().run();
         response.sendRedirect("home");
     }
 

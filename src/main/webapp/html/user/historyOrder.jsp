@@ -37,30 +37,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach begin="0" end="${listOrder.size()-1}" step="1" var="i" >
+                            <c:forEach begin="1" end="${listOrder.size()}" step="1" var="i" >
                                 <tr class="historyOrder-body-table-content" onclick="showContent(${i})">
-                                    <td>${listOrder[i].shipping.recipientName}</td>
-                                    <td>${listOrder[i].shipping.address}</td>
-                                    <td style="padding: 1% 0;">${listOrder[i].shipping.phone}</td>
-                                    <td>${listOrder[i].orderDate}</td>
-                                    <td>${listOrder[i].shipping.deliveryDate}</td>
-                                    <td>${listOrder[i].shipping.delivery.type}</td>
-                                    <td>${listOrder[i].quantity}</td>
-                                    <td><strong>$${listOrder[i].total}</strong></td>
-                                    <c:if test="${listOrder[i].status.id != 3}">
-                                        <td class="historyOrder-body-table-status ${listOrder[i].status.name}">
-                                            <p>${listOrder[i].status.name}</p>
+                                    <td>${listOrder[i-1].shipping.recipientName}</td>
+                                    <td>${listOrder[i-1].shipping.address}</td>
+                                    <td style="padding: 1% 0;">${listOrder[i-1].shipping.phone}</td>
+                                    <td>${listOrder[i-1].orderDate}</td>
+                                    <td>${listOrder[i-1].shipping.deliveryDate}</td>
+                                    <td>${listOrder[i-1].shipping.delivery.type}</td>
+                                    <td>${listOrder[i-1].quantity}</td>
+                                    <td><strong>$${listOrder[i-1].total}</strong></td>
+                                    <c:if test="${listOrder[i-1].status.id != 3}">
+                                        <td class="historyOrder-body-table-status ${listOrder[i-1].status.name}">
+                                            <p>${listOrder[i-1].status.name}</p>
                                         </td>
                                     </c:if>
-                                    <c:if test="${listOrder[i].status.id == 3}">
+                                    <c:if test="${listOrder[i-1].status.id == 3}">
                                         <%@ page import="java.util.Date" %>
                                         <c:set var="currentDate" value="<%= new Date() %>" />
-                                        <c:if test="${listOrder[i].shipping.deliveryDate.before(currentDate)}">
+                                        <c:if test="${listOrder[i-1].shipping.deliveryDate.before(currentDate)}">
                                             <td class="historyOrder-body-table-status Success">
                                                 <p>Success</p>
                                             </td>
                                         </c:if>
-                                        <c:if test="${listOrder[i].shipping.deliveryDate.after(currentDate)}">
+                                        <c:if test="${listOrder[i-1].shipping.deliveryDate.after(currentDate)}">
                                             <td class="historyOrder-body-table-status Delivering">
                                                 <p>Delivering</p>
                                             </td>
@@ -68,7 +68,7 @@
                                     </c:if>
 
                                 </tr>
-                                <c:forEach items="${listOrderDetailInOrder[i]}" var="orderDetail">
+                                <c:forEach items="${listOrderDetailInOrder[i-1]}" var="orderDetail">
                                     <tr class="historyOrder-body-table-subcontent" id="subcontent-${i}" style="display: none;">
                                         <td></td>
                                         <td class="historyOrder-body-table-subcontent-image"><img src="data:image/jpeg;base64, ${orderDetail.product.imgBase64}">

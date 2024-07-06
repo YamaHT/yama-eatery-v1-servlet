@@ -8,10 +8,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/css/layout/paging.css">
 <div class="paging">
-    <button type="button" class="paging-first" onclick="changingPage(1)" ${page == 1 ? 'disabled' : ''}>
+    <button type="button" class="paging-first" onclick="changingPage(1)" ${page <= 1 ? 'disabled' : ''}>
         <i class="fa-solid fa-angles-left"></i>
     </button>
-    <button type="button" class="paging-before" onclick="changingPage(${page-1})"  ${page == 1 ? 'disabled' : ''}>
+    <button type="button" class="paging-before" onclick="changingPage(${page-1})"  ${page <= 1 ? 'disabled' : ''}>
         <i class="fa-solid fa-angle-left"></i>
     </button>
     <div class="paging-groupOfPage">
@@ -22,10 +22,10 @@
             </button>
         </c:forEach>
     </div>
-    <button type="button" class="paging-after" onclick="changingPage(${page+1})" ${page == endPage ? 'disabled' : ''}>
+    <button type="button" class="paging-after" onclick="changingPage(${page+1})" ${page >= endPage ? 'disabled' : ''}>
         <i class="fa-solid fa-angle-right"></i>
     </button>
-    <button type="button" class="paging-last" onclick="changingPage(${endPage})" ${page == endPage ? 'disabled' : ''}>
+    <button type="button" class="paging-last" onclick="changingPage(${endPage})" ${page >= endPage ? 'disabled' : ''}>
         <i class="fa-solid fa-angles-right"></i>
     </button>
 </div>

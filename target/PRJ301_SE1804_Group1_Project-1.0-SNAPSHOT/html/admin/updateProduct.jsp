@@ -36,7 +36,7 @@
             </div>
             <div class="update-product-form-input">
                 <label for="price">Price</label>
-                <input type="number" name="price" min="0" value="${product.price}" placeholder="Enter product price..." required>
+                <input type="number" step="any" name="price" min="0" value="${product.price}" placeholder="Enter product price..." required>
             </div>
             <div class="update-product-form-input">
                 <label for="description">Description</label>

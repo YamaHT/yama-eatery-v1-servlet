@@ -32,7 +32,7 @@
             </div>
             <div class="add-product-form-input">
                 <label for="price">Price</label>
-                <input type="number" name="price" min="0" placeholder="Enter product price..." required>
+                <input type="number" step="any" name="price" min="0" placeholder="Enter product price..." required>
             </div>
             <div class="add-product-form-input">
                 <label for="description">Description</label>

@@ -475,7 +475,7 @@ public class Cart extends javax.swing.JFrame {
         // Open the payment web
         try {
             String paymentPrice = String.valueOf((order.getTotal() + shipping.getDelivery().getPrice()) * 24000);
-            String description = "a" + account.getId() + "o" + order.getId();
+            String description = account.getEmail() + "%20o" + order.getId();
             URI uri = new URI("http://localhost:8080/payment?paymentPrice=" + paymentPrice + "&description=" + description);
             Desktop desktop = Desktop.getDesktop();
             desktop.browse(uri);

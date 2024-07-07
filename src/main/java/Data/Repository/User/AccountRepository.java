@@ -141,12 +141,12 @@ public class AccountRepository {
         }
     }
 
-    public int addProfile() {
+    public int addProfile(String username) {
         String query = "INSERT INTO [dbo].[Profile]\n"
                 + "OUTPUT inserted.Id\n"
-                + "VALUES (NULL, '1900-01-01', NULL, NULL, NULL)";
+                + "VALUES (?, '1900-01-01', NULL, NULL, NULL)";
         try {
-            ResultSet rs = DbContext.executeQuery(query);
+            ResultSet rs = DbContext.executeQuery(query, username);
             rs.next();
             return rs.getInt(1);
         } catch (Exception e) {

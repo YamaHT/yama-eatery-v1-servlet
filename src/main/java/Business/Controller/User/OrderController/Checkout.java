@@ -76,7 +76,7 @@ public class Checkout extends HttpServlet {
         list = orderRepository.getAllOrderDetailByOrder(order);
         orderRepository.updateAllOrderAfterCheckout(list);
         String paymentPrice = "" + (order.getTotal() + shipping.getDelivery().getPrice()) * 24000;
-        String description = "a" + account.getId() + "o" + order.getId();
+        String description = account.getEmail() + "%20o" + order.getId();
         request.getRequestDispatcher("/payment?paymentPrice=" + paymentPrice + "&description=" + description).forward(request, response);
     }
 

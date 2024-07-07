@@ -9,6 +9,7 @@
 <script src="https://kit.fontawesome.com/31a6f4185b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/layout/layout.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 
 <%
     java.util.List<Data.Model.Category> listCategory = new Data.Repository.User.ProductRepository().getAllCategory();

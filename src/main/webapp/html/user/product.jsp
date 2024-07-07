@@ -85,7 +85,7 @@
                         <div class="groupOfProduct-product-image"> 
                             <img src="data:image/jpeg;base64,${product.imgBase64}">
                         </div>
-                        <div class="groupOfProduct-product-name">${product.name}</div>
+                        <p class="groupOfProduct-product-name">${product.name}</p>
                         <button type="button" class="groupOfProduct-product-button-viewdetail">
                             VIEW DETAIL
                         </button>

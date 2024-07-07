@@ -240,9 +240,16 @@
 }
 
 .groupOfProduct-product-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-weight: bold;
     font-size: 1.25rem;
     margin: 8% 0;
+    padding: 0 5%;
+    text-overflow: ellipsis;
+    height: 3rem;
+    overflow: hidden;
 }
 
 .groupOfProduct-product-button-viewdetail {
@@ -451,6 +458,10 @@
         font-size: 1rem;
     }
 
+    .groupOfProduct-product-name {
+        height: 2.5rem;
+    }
+
     .groupOfProduct-product-price {
         padding: 2.5%;
     }
@@ -514,6 +525,9 @@
         font-size: 0.875rem;
     }
 
+    .groupOfProduct-product-name {
+        height: 2.25rem;
+    }
     .groupOfProduct-product-price {
         padding: 2%;
     }

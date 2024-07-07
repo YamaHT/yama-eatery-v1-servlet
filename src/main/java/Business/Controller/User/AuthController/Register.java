@@ -106,7 +106,7 @@ public class Register extends HttpServlet {
                 }
             }
 
-            int profileId = accountRepo.addProfile();
+            int profileId = accountRepo.addProfile(username);
             accountRepo.register(username, email, password, profileId);
             request.setAttribute("success", "Register successfully! You can login now");
             request.getRequestDispatcher("/auth/login").forward(request, response);

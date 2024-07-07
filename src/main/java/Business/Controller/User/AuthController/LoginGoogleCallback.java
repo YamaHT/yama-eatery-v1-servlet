@@ -39,9 +39,8 @@ public class LoginGoogleCallback extends HttpServlet {
             Account account = accountRepo.getAccountByUsernameOrEmail(email);
 
             if (account == null) {
-                int profileId = accountRepo.addProfile();
-                String username = email.split("@")[0] + "@g";
-                accountRepo.register(username, email, RandomStringUtils.randomAlphanumeric(14), profileId);
+                int profileId = accountRepo.addProfile(email);
+                accountRepo.register(email, email, RandomStringUtils.randomAlphanumeric(14), profileId);
                 account = accountRepo.getAccountByUsernameOrEmail(email);
             }
 

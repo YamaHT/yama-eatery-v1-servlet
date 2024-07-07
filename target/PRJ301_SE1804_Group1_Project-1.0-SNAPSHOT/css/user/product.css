@@ -159,7 +159,7 @@
     flex-wrap: wrap;
 
     & #Dessert {
-       background: linear-gradient(to right, #ffcccb, #ffb6c1, #ff99aa, #ff8c94);
+        background: linear-gradient(to right, #ffcccb, #ffb6c1, #ff99aa, #ff8c94);
     }
 
     & #Snack {
@@ -186,6 +186,8 @@
     transition: 1s ease;
     overflow: hidden;
     cursor: pointer;
+    height: max-content;
+    transition: .25s ease;
 
     & * {
         transition: .125s ease;
@@ -241,13 +243,16 @@
 }
 
 .groupOfProduct-product-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-weight: bold;
     font-size: 1.25rem;
     margin: 8% 0;
-    padding: 0 10%;
+    padding: 0 5%;
     text-overflow: ellipsis;
+    height: 3rem;
     overflow: hidden;
-    white-space: nowrap;
 }
 
 .groupOfProduct-product-button-viewdetail {
@@ -469,6 +474,10 @@
         font-size: 1rem;
     }
 
+    .groupOfProduct-product-name {
+        height: 2.5rem;
+    }
+
     .groupOfProduct-product-price {
         padding: 2.5%;
     }
@@ -532,6 +541,10 @@
     .groupOfProduct-product-name,
     .groupOfProduct-product-category {
         font-size: 0.675rem;
+    }
+
+    .groupOfProduct-product-name {
+        height: 2rem;
     }
 
     .groupOfProduct-product-price {

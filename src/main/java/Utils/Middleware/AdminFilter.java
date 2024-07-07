@@ -24,16 +24,6 @@ import jakarta.servlet.http.HttpSession;
 @WebFilter(filterName = "AdminFilter", urlPatterns = {"/admin/*"})
 public class AdminFilter implements Filter {
 
-    private static final boolean debug = true;
-
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
-    private FilterConfig filterConfig = null;
-
-    public AdminFilter() {
-    }
-
     @Override
     public void init(FilterConfig filterConfig) {
 

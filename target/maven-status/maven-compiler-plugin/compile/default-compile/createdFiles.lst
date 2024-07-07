@@ -41,6 +41,7 @@ Business\Controller\User\ProductController\Detail.class
 Business\Swing\User$6.class
 Business\Controller\User\AuthController\ResendOTP.class
 Business\Swing\Dashboard$8.class
+Business\Controller\User\OrderController\Payment.class
 Business\Swing\Dashboard$10.class
 Business\Swing\Login$5.class
 Data\Model\Feedback.class
@@ -88,6 +89,7 @@ Business\Swing\Dashboard$11.class
 Business\Controller\User\ProductController\Index.class
 Business\Swing\Cart$5.class
 Business\Controller\User\AuthController\ChangePassword.class
+Business\Controller\User\HomeController\ChatEndPoint.class
 Business\Swing\Cart.class
 Business\Controller\User\AuthController\Logout.class
 Business\Swing\Dashboard$24.class
@@ -102,10 +104,12 @@ Data\Repository\Admin\OrderRepository.class
 Business\Controller\User\AccountController\MyFeedback.class
 Business\Swing\ProductDetail$1.class
 Data\Repository\Admin\ProductRepository.class
+Data\Model\Chat.class
 Business\Controller\Admin\FeedbackManagementController\Index.class
 Business\Controller\Admin\ProductManagementController\Update.class
 Business\Controller\User\ProductController\Search.class
 Business\Swing\Dashboard$20.class
+Business\Swing\Dashboard$30.class
 Data\Model\Delivery.class
 Business\Controller\User\AuthController\Register.class
 Business\Controller\User\OrderController\Checkout.class
@@ -115,6 +119,7 @@ Business\Swing\Login$2.class
 Business\Swing\Dashboard$13.class
 Business\Swing\Profile$3.class
 Business\Swing\Dashboard$26.class
+Data\Repository\User\ChatRepository.class
 Business\Controller\Admin\ProductManagementController\Delete.class
 Business\Controller\User\HomeController\AboutUs.class
 Business\Swing\Dashboard$14.class
@@ -130,3 +135,4 @@ Business\Swing\Cart$4.class
 Business\Swing\Dashboard$5.class
 Business\Controller\Admin\FeedbackManagementController\Ignore.class
 Data\Model\Category.class
+Utils\Configurator\HttpSessionConfigurator.class

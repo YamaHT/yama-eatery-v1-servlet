@@ -48,10 +48,7 @@
                     </form> 
                 </c:if>
                 <div class="productDetail-content-description">
-                    <textarea readonly rows="10">
-                        ${product.description}
-                    </textarea>
-                    
+                    <textarea readonly rows="10">${product.description}</textarea>
                 </div>
             </div>
         </div>

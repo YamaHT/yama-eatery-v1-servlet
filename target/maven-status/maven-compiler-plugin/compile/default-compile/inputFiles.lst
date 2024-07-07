@@ -1,3 +1,4 @@
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Chat.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\FeedbackManagementController\Response.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\StartController.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\Subcomponent\CustomScrollBarUI.java
@@ -14,6 +15,8 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\Admin\FeedbackRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\User\AccountRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\HomeController\Index.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\HomeController\ChatEndPoint.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\User\ChatRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\AccountController\HistoryOrder.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\OrderDetail.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Utils\GoogleUtils.java
@@ -41,6 +44,7 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\ProductController\Detail.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\AuthController\Login.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\OrderController\Checkout.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Utils\Configurator\HttpSessionConfigurator.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\ProductInCart.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\HomeController\SystemFeedback.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\ResourceManagementController\Index.java

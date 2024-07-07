@@ -23,7 +23,7 @@ public class FeedbackRepository {
     public List<Feedback> getAllFeedback(int page) {
         List<Feedback> list = new ArrayList<>();
         String query = "SELECT Feedback.*,\n"
-                + "       Account.Username,\n"
+                + "       Profile.Name,\n"
                 + "       Profile.Image\n"
                 + "FROM Feedback\n"
                 + "INNER JOIN Account ON Feedback.AccountId = Account.Id\n"
@@ -41,9 +41,9 @@ public class FeedbackRepository {
                         rs.getTimestamp(4),
                         rs.getTimestamp(5),
                         rs.getBoolean(6),
-                        new Account(rs.getInt(7), rs.getString(8), null, null, null, false,
+                        new Account(rs.getInt(7), null, null, null, null, false,
                                 new Profile(0, ImageUtils.decompressImage(rs.getBytes(9)),
-                                        null, null, null, null))));
+                                        null, rs.getString(8), null, null))));
             }
         } catch (Exception e) {
         }
@@ -53,7 +53,7 @@ public class FeedbackRepository {
     public List<Feedback> getAllFeedbackByAccount(Account account) {
         List<Feedback> list = new ArrayList<>();
         String query = "SELECT Feedback.*,\n"
-                + "       Account.Username,\n"
+                + "       Profile.Name,\n"
                 + "       Profile.Image\n"
                 + "FROM Feedback\n"
                 + "INNER JOIN Account ON Feedback.AccountId = Account.Id\n"
@@ -69,9 +69,9 @@ public class FeedbackRepository {
                         rs.getTimestamp(4),
                         rs.getTimestamp(5),
                         rs.getBoolean(6),
-                        new Account(rs.getInt(7), rs.getString(8), null, null, null, false,
+                        new Account(rs.getInt(7), null, null, null, null, false,
                                 new Profile(0, ImageUtils.decompressImage(rs.getBytes(9)),
-                                        null, null, null, null))));
+                                        null, rs.getString(8), null, null))));
             }
         } catch (Exception e) {
         }

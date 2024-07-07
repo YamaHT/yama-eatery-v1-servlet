@@ -34,12 +34,12 @@ function showSidenavSubmenu(link) {
 }
 
 function showSidenav() {
-    document.querySelector('.header-navigation-side').style.width = '300px';
+    document.querySelector('.header-navigation-side').classList.add('open');
     document.querySelector('.blur').style.display = 'block';
 }
 
 function hideSidenav() {
-    document.querySelector('.header-navigation-side').style.width = '0px';
+    document.querySelector('.header-navigation-side').classList.remove('open');
     setTimeout(function () {
         document.querySelector('.blur').style.display = 'none';
     }, 300);

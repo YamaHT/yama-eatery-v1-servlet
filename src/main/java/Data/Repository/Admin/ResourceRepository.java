@@ -18,7 +18,7 @@ import java.util.List;
 public class ResourceRepository {
 
     public void upload(String name, byte[] image) {
-        String query = "insert into ImageResource values(?,?)";
+        String query = "INSERT INTO ImageResource VALUES(?,?)";
         try {
             DbContext.executeUpdate(query, name, image);
         } catch (Exception e) {
@@ -26,7 +26,7 @@ public class ResourceRepository {
     }
 
     public void delete(String name) {
-        String query = "delete from ImageResource where Name = ?";
+        String query = "DELETE FROM ImageResource WHERE Name = ?";
         try {
             DbContext.executeUpdate(query, name);
         } catch (Exception e) {
@@ -34,7 +34,7 @@ public class ResourceRepository {
     }
 
     public byte[] getImageByName(String name) {
-        String query = "select * from ImageResource where Name = ?";
+        String query = "SELECT * FROM ImageResource WHERE Name = ?";
         try {
             ResultSet rs = DbContext.executeQuery(query, name);
             while (rs.next()) {
@@ -47,7 +47,7 @@ public class ResourceRepository {
 
     public List<ImageResource> getAllResource() {
         List<ImageResource> list = new ArrayList<>();
-        String query = "select * from ImageResource";
+        String query = "SELECT * FROM ImageResource";
         try {
             ResultSet rs = DbContext.executeQuery(query);
             while (rs.next()) {
@@ -58,4 +58,16 @@ public class ResourceRepository {
         return list;
     }
 
+    public List<ImageResource> getAllResourceSearchByName(String name) {
+        List<ImageResource> list = new ArrayList<>();
+        String query = "SELECT * FROM ImageResource WHERE Name LIKE '%" + name + "%'";
+        try {
+            ResultSet rs = DbContext.executeQuery(query);
+            while (rs.next()) {
+                list.add(new ImageResource(rs.getString(1), ImageUtils.decompressImage(rs.getBytes(2))));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
 }

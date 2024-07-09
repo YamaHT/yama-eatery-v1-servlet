@@ -45,8 +45,8 @@ public class Index extends HttpServlet {
 
             request.setAttribute("listProduct", list);
             request.setAttribute("filter", (filter == null || filter.equals("")) ? "Id-DESC" : filter.replace(" ", "-"));
-            request.setAttribute("minPrice", productRepository.getMinPriceProduct(null, null));
-            request.setAttribute("maxPrice", productRepository.getMaxPriceProduct(null, null));
+            request.setAttribute("minPrice", Math.floor(productRepository.getMinPriceProduct(null, null)));
+            request.setAttribute("maxPrice", Math.ceil(productRepository.getMaxPriceProduct(null, null)));
             request.setAttribute("lastMinPrice", lastMinPrice);
             request.setAttribute("lastMaxPrice", lastMaxPrice);
             request.setAttribute("page", page);

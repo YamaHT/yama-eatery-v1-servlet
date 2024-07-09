@@ -32,7 +32,7 @@ public class ChatRepository {
                 + "INNER JOIN Account ON Chat.AccountId = Account.Id\n"
                 + "INNER JOIN Profile ON Account.ProfileId = Profile.Id\n"
                 + "ORDER BY Chat.Id DESC\n"
-                + "OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
+                + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
         try {
             ResultSet rs = DbContext.executeQuery(query, index * 10);
             while (rs.next()) {

@@ -58,7 +58,7 @@
                 </div>
                 <div class="feedback-user-content">
                     <div class="feedback-user-content-header">
-                        <p>${feedback.account.username}</p>
+                        <p>${feedback.account.profile.name}</p>
                         <i class="fa-solid fa-circle"></i>
                         <span>${feedback.feedbackDate}</span>
                     </div>

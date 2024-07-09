@@ -14,6 +14,15 @@
 <%
     java.util.List<Data.Model.Category> listCategory = new Data.Repository.User.ProductRepository().getAllCategory();
     request.setAttribute("listCategory", listCategory);
+    
+    int countOrder = 0;
+    try {
+        countOrder = new Data.Repository.User.OrderRepository()
+                        .getOrderByAccount((Data.Model.Account)request.getSession().getAttribute("account"))
+                        .getQuantity();
+    } catch (Exception e) {
+    }
+    request.setAttribute("countOrder", countOrder);
 %>
 <div class="blur" onclick="hideSidenav()"></div>
 <header>
@@ -43,13 +52,16 @@
 
     <div class="headerLoggedIn-button">
         <i class="fa-solid fa-bars header-navigation-mobile" onclick="showSidenav()"></i>
-        <i class="fa-solid fa-cart-shopping header-button-cart" onclick="window.location.href = '/order'"></i>
+
+        <i class="fa-solid fa-cart-shopping header-button-cart" onclick="window.location.href = '/order'"><span>${countOrder}</span></i>
+
         <i onclick="showSearchBar(this)" class="fa-solid fa-magnifying-glass header-button-search"></i>
         <form action="/product/search" method="get" class="header-button-search-bar" style=" display: none;">
             <input type="text" id="name" name="name" placeholder="Search product..." />
             <i class="fa-solid fa-xmark header-button-search-bar-close" onclick="emptySearchInput()"></i>
             <i class="fa-solid fa-magnifying-glass header-button-search-bar-search" onclick="submitSearchForm()"></i>
         </form>
+
         <div class="header-button-user subnav-user-holder">
             <c:if test="${sessionScope.account.profile.image == null}">
                 <img src="/image/logo.jpg">

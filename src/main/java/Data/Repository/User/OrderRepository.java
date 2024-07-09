@@ -16,6 +16,7 @@ import Data.Model.Status;
 import Utils.ImageUtils;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class OrderRepository {
                         rs.getBoolean(11),
                         new Category(rs.getInt(13), rs.getString(14)));
 
-                list.add(new OrderDetail(order, product, rs.getInt(3), rs.getInt(4)));
+                list.add(new OrderDetail(order, product, rs.getInt(3), rs.getDouble(4)));
             }
         } catch (Exception e) {
         }
@@ -119,7 +120,7 @@ public class OrderRepository {
         try {
             ResultSet rs = DbContext.executeQuery(query, order.getId(), product.getId());
             while (rs.next()) {
-                return new OrderDetail(order, product, rs.getInt(3), rs.getInt(4));
+                return new OrderDetail(order, product, rs.getInt(3), rs.getDouble(4));
             }
         } catch (Exception e) {
         }

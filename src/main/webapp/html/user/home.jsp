@@ -24,10 +24,10 @@
             <jsp:include page="../layout/header_loggedIn.jsp" />
         </c:if>
         <div class="banner">
-            <img class="banner-image" src="/image/banner.jpg" style="display:block; opacity: 1" />
-            <img class="banner-image" src="/image/brand.jpg" />
-            <img class="banner-image" src="/image/category_dessert.jpg" />
-            <img class="banner-image" src="/image/category_food.jpg" />
+            <img class="banner-image" src="/image/banner1.jpg" style="display:block; opacity: 1" />
+            <img class="banner-image" src="/image/banner2.jpg" />
+            <img class="banner-image" src="/image/banner3.jpg" />
+            <img class="banner-image" src="/image/banner4.jpg" />
             <div class="banner-groupOfFeature">
                 <div class="banner-groupOfFeature-feature">
                     <i class="fa-solid fa-truck-fast"></i>

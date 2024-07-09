@@ -52,50 +52,49 @@
                     </c:forEach>
                 </select>
             </div>
-        </div>
-        <div class="add-product-form-button">
-            <button type="reset" class="add-product-form-button-cancel" onclick="changeManagement('product', 'product')">CANCEL</button>
-            <button type="submit" class="add-product-form-button-add">ADD</button>
-        </div>
-    </form>
-</body>
+            <div class="add-product-form-button">
+                <button type="reset" class="add-product-form-button-cancel" onclick="changeManagement('product', 'product')">CANCEL</button>
+                <button type="submit" class="add-product-form-button-add">ADD</button>
+            </div>
+        </form>
+    </body>
 
-<script>
-    document.getElementById('file-upload').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('image-upload').style.display = 'inline-block';
-                document.getElementById('image-upload').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Choose file image please.');
-            event.target.value = '';
-        }
-    });
-
-
-    $('.add-product-form').submit(function (e) {
-        e.preventDefault();
-
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: '/admin/management/product/add',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                changeManagement('product', 'product');
-            },
-            error: function (xhr, status, error) {
-                changeManagement('product', 'product');
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('image-upload').style.display = 'inline-block';
+                    document.getElementById('image-upload').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Choose file image please.');
+                event.target.value = '';
             }
         });
-    });
-</script>
+
+
+        $('.add-product-form').submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/admin/management/product/add',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    changeManagement('product', 'product');
+                },
+                error: function (xhr, status, error) {
+                    changeManagement('product', 'product');
+                }
+            });
+        });
+    </script>
 
 </html>

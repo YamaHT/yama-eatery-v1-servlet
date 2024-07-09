@@ -366,7 +366,7 @@ public class ProductRepository {
         return 0;
     }
 
-    public int getMinPriceProduct(String action, String name) {
+    public double getMinPriceProduct(String action, String name) {
         String query = "SELECT TOP 1 Product.Price FROM Product";
         switch (String.valueOf(action)) {
             case "null":
@@ -386,13 +386,13 @@ public class ProductRepository {
         try {
             ResultSet rs = DbContext.executeQuery(query, name);
             rs.next();
-            return rs.getInt(1);
+            return rs.getDouble(1);
         } catch (Exception e) {
         }
         return 0;
     }
 
-    public int getMaxPriceProduct(String action, String name) {
+    public double getMaxPriceProduct(String action, String name) {
         String query = "SELECT TOP 1 Product.Price FROM Product";
         switch (String.valueOf(action)) {
             case "null":
@@ -412,7 +412,7 @@ public class ProductRepository {
         try {
             ResultSet rs = DbContext.executeQuery(query, name);
             rs.next();
-            return rs.getInt(1);
+            return rs.getDouble(1);
         } catch (Exception e) {
         }
         return 0;

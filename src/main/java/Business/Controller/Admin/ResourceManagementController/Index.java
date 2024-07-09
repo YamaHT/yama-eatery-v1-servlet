@@ -5,12 +5,15 @@
 
 package Business.Controller.Admin.ResourceManagementController;
 
+import Data.Model.ImageResource;
+import Data.Repository.Admin.ResourceRepository;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -28,8 +31,10 @@ public class Index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        List<ImageResource> list = new ResourceRepository().getAllResource();
+        request.setAttribute("listResource", list);
         request.getRequestDispatcher("/html/admin/managementComponent/resourceManagement.jsp").forward(request, response);
-    } 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

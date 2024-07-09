@@ -28,6 +28,7 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Utils\Middleware\AdminFilter.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\HomeController\AboutUs.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Feedback.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\ResourceManagementController\Delete.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Category.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Model\Shipping.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\AuthController\ResendOTP.java
@@ -37,6 +38,7 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\ProductManagementController\Add.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\OrderController\Index.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\Admin\ProductRepository.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\ResourceManagementController\Add.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\AuthController\LoginGoogle.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\ProductCard.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Profile.java
@@ -51,8 +53,10 @@ D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\ProductController\Index.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\ProductController\Search.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\ProductManagementController\Filter.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\Admin\ResourceManagementController\Search.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\AccountController\Profile.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\AuthController\Register.java
+D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\HomeController\ChatLoadmore.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Controller\User\OrderController\Payment.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Data\Repository\User\ProductRepository.java
 D:\0 HOC TAP\S4_SU24\PRJ301\Final Project\PRJ301_SE1804_Group1_Project\src\main\java\Business\Swing\Component\Subcomponent\ChatText.java

@@ -18,7 +18,7 @@
     <div class="chatbox-header">
         <div class="chatbox-header-content">
             <p>Chatbox</p>
-            <i class="fa-solid fa-circle"></i>
+            <i class="fa-solid fa-circle ${sessionScope.account == null ? 'offline' : ''}"></i>
         </div>
         <div class="chatbox-header-close">
             <i class="fa-solid fa-xmark" onclick="hideChatbox()"></i>
@@ -43,6 +43,10 @@
         </c:forEach>
     </div>
     <form class="chatbox-messageInput">
+        <div class="chat-notification" onclick="scrollBarToBottom()">
+            <i class="fa-solid fa-angle-down"></i>
+            <p>New message arrived!</p>
+        </div>
         <input id="messageChat" type="text" placeholder="Comment...">
         <emoji-picker class="hidden"></emoji-picker>
         <i class="fa-solid fa-face-smile" onclick="showEmoji()"></i>
@@ -100,11 +104,10 @@
             websocket.onmessage = function (message) {
                 const data = JSON.parse(message.data);
                 var userEmail = `${sessionScope.account.email}`;
-
                 document.querySelector('.chatbox-body').innerHTML +=
                         "<div class='chatbox-body-chat " + (userEmail === data.sender ? "main-user" : "") + "'>" +
                         "<div class='chatbox-body-chat-avatar'>" +
-                        (data.account.imgBase64 === 'null'
+                        (!data.account.imgBase64
                                 ? "<img src='/image/logo.jpg'>"
                                 : "<img src='data:image/jpeg;base64, " + data.account.imgBase64 + "'>") +
                         "</div>" +
@@ -115,6 +118,8 @@
                         "</div>";
                 if (userEmail === data.sender) {
                     chatboxBody.scrollTop = chatboxBody.scrollHeight;
+                } else {
+                    document.querySelector('.chat-notification').style.display = 'flex';
                 }
             };
 
@@ -125,9 +130,13 @@
                 }
 
                 var message = document.querySelector('#messageChat');
+                if (message.value.trim() === '') {
+                    return;
+                }
+                
                 var messageData = {
                     sender: `${sessionScope.account.email}`,
-                    message: message.value
+                    message: message.value.trim()
                 };
                 websocket.send(JSON.stringify(messageData));
                 message.value = '';

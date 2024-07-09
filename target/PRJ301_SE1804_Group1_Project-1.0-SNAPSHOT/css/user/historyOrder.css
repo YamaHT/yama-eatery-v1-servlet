@@ -53,7 +53,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     max-height: 80%;
     margin: 2% auto;
     border-radius: 8px;
-    overflow: scroll;
+    overflow: auto;
 
     &::-webkit-scrollbar {
         width: 0.5rem;
@@ -170,6 +170,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
         color: #fff;
         background: #2196F3;
         padding: 5%;
+        word-wrap: normal;
+        overflow: hidden;
     }
 
     & p {

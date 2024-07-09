@@ -52,7 +52,7 @@
                     <div class="profile-form-input-tag-less">
                         <label for="email">Email:</label>
                         <p>${sessionScope.account.email}</p>
-                        <button type="button" onclick="window.location.href = '/account/profile'">
+                        <button type="button" onclick="alert('Tính năng đang phát triển')">
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </div>

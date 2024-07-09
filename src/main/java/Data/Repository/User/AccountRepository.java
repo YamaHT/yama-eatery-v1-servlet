@@ -144,7 +144,7 @@ public class AccountRepository {
     public int addProfile(String username) {
         String query = "INSERT INTO [dbo].[Profile]\n"
                 + "OUTPUT inserted.Id\n"
-                + "VALUES (?, '1900-01-01', NULL, NULL, NULL)";
+                + "VALUES (NULL, '1900-01-01', ?, NULL, NULL)";
         try {
             ResultSet rs = DbContext.executeQuery(query, username);
             rs.next();

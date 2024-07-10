@@ -47,10 +47,9 @@ public class Index extends HttpServlet {
         request.setAttribute("productSoldLastMonth", overviewRepository.getProductSoldLastMonth());
         request.setAttribute("productSoldThisMonth", overviewRepository.getProductSoldThisMonth());
 
-        DecimalFormat df = new DecimalFormat("0.00");
-        request.setAttribute("revenue", df.format(overviewRepository.getRevenue()));
-        request.setAttribute("revenueLastMonth", df.format(overviewRepository.getRevenueLastMonth()));
-        request.setAttribute("revenueThisMonth", df.format(overviewRepository.getRevenueThisMonth()));
+        request.setAttribute("revenue", overviewRepository.getRevenue());
+        request.setAttribute("revenueLastMonth", overviewRepository.getRevenueLastMonth());
+        request.setAttribute("revenueThisMonth", overviewRepository.getRevenueThisMonth());
 
         request.setAttribute("chartProduct", overviewRepository.getChartProduct(productYear).toString());
         request.setAttribute("chartRevenue", overviewRepository.getChartRevenue(revenueYear).toString());

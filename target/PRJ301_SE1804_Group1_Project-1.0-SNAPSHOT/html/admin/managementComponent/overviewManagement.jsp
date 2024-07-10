@@ -60,6 +60,7 @@
                 </div>
                 <canvas id="chart-revenue"></canvas>
             </div>
+            <div type="button" class="overview-body-chart-export" onclick="exportData()"><i class="fa-solid fa-file-export"> Export </i></div>
         </div>
         <div class="overview-body-statistic">
             <div class="overview-body-statistic-mostSold">
@@ -102,6 +103,33 @@
         const productYear = document.getElementById('productYear').value;
         const revenueYear = document.getElementById('revenueYear').value;
         changeManagement(`overview?productYear=` + productYear + `&revenueYear=` + revenueYear, 'overview');
+    }
+
+    function exportData() {
+        // Define months and data arrays
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let dataProduct = [
+            months,
+    ${chartProduct}
+        ];
+        let dataRevenue = [
+            months,
+    ${chartRevenue}
+        ];
+
+        // Create a new workbook
+        let wb = XLSX.utils.book_new();
+
+        // Convert data to sheets
+        let wsProduct = XLSX.utils.aoa_to_sheet(dataProduct);
+        let wsRevenue = XLSX.utils.aoa_to_sheet(dataRevenue);
+
+        // Append sheets to workbook with meaningful names
+        XLSX.utils.book_append_sheet(wb, wsProduct, 'Product');
+        XLSX.utils.book_append_sheet(wb, wsRevenue, 'Revenue');
+
+        // Generate XLSX file and trigger download
+        XLSX.writeFile(wb, 'Export.xlsx');
     }
 
     //////////////////////

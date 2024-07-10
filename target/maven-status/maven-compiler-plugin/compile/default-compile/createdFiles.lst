@@ -7,6 +7,7 @@ Business\Swing\Dashboard$3.class
 Business\Controller\User\HomeController\ContactUs.class
 Business\Swing\Dashboard$25.class
 Utils\Middleware\UserFilter.class
+Business\Controller\Admin\ResourceManagementController\Delete.class
 Business\Controller\Admin\ProductManagementController\Filter.class
 Business\Controller\User\AuthController\LoginGoogleCallback.class
 Utils\SendMailUtils$1.class
@@ -41,7 +42,9 @@ Business\Controller\User\ProductController\Detail.class
 Business\Swing\User$6.class
 Business\Controller\User\AuthController\ResendOTP.class
 Business\Swing\Dashboard$8.class
+Business\Controller\Admin\ResourceManagementController\Add.class
 Business\Controller\User\OrderController\Payment.class
+Business\Controller\Admin\ResourceManagementController\Search.class
 Business\Swing\Dashboard$10.class
 Business\Swing\Login$5.class
 Data\Model\Feedback.class
@@ -97,6 +100,7 @@ Business\Swing\Dashboard$7.class
 Data\Model\Product.class
 Business\Swing\Dashboard$19.class
 Business\Swing\Component\FeedbackPanel.class
+Business\Controller\User\HomeController\ChatLoadmore.class
 Utils\GoogleUtils.class
 Business\Swing\Dashboard$27.class
 Business\Controller\User\OrderController\Update.class

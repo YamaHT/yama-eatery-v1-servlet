@@ -104,6 +104,31 @@
     }
 }
 
+.overview-body-chart-export {
+    padding: 1% 2%;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    transition: .5s ease-in-out;
+    color: teal;
+    margin: 0 auto;
+    width: max-content;
+    font-weight: 600;
+    font-size: 2rem;
+    border-radius: 15px;
+    margin-top: 2%;
+}
+
+.overview-body-chart-export:hover {
+    transition: .5s ease-in-out;
+    background: teal;
+    color: white;
+}
+.overview-body-chart-export-button:active {
+    opacity: 0.4;
+}
+
 .overview-body-statistic {
     width: 35%;
     text-align: center;

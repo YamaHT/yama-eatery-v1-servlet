@@ -6,6 +6,7 @@ package Business.Controller.User.AuthController;
 
 import Data.Model.Account;
 import Data.Repository.User.AccountRepository;
+import Utils.CryptUtil;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -52,7 +53,7 @@ public class ChangePassword extends HttpServlet {
             String confirmPassword = request.getParameter("conPass");
 
             String error = null;
-            if (!oldPassword.equals(account.getPassword())) {
+            if (!CryptUtil.checkPassword(oldPassword, account.getPassword())) {
                 error = "Your old password is incorrect.";
             } else if (!confirmPassword.equals(newPassword)) {
                 error = "Confirm password does not match new password.";
@@ -66,9 +67,9 @@ public class ChangePassword extends HttpServlet {
                 return;
             }
 
-            new AccountRepository().changePassword(error, newPassword);
+            new AccountRepository().changePassword(account.getEmail(), newPassword);
             request.setAttribute("success", "Change password successfully");
-            request.getRequestDispatcher("/home").forward(request, response);
+            doGet(request, response);
         } catch (Exception e) {
             response.sendRedirect("/auth/changePassword");
         }

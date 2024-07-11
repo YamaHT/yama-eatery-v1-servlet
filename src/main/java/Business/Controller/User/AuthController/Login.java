@@ -41,12 +41,14 @@ public class Login extends HttpServlet {
             if (username == null || password == null) {
                 throw new Exception();
             }
+            
             Account account = new AccountRepository().login(username, password);
             if (account == null) {
                 request.setAttribute("error", "Wrong username or password");
                 request.getRequestDispatcher("/html/user/login.jsp").forward(request, response);
                 return;
             }
+            
             request.getSession().setAttribute("account", account);
             if (account.isRole()) {
                 response.sendRedirect("/admin/management");

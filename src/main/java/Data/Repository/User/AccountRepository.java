@@ -7,6 +7,7 @@ package Data.Repository.User;
 import Data.DbContext;
 import Data.Model.Account;
 import Data.Model.Profile;
+import Utils.CryptUtil;
 import Utils.ImageUtils;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -20,34 +21,10 @@ import java.time.LocalDate;
 public class AccountRepository {
 
     public Account login(String username, String password) {
-        String query = "SELECT *\n"
-                + "FROM Account\n"
-                + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
-                + "WHERE (Account.Username = ?)\n"
-                + "  AND (Account.Password = ? COLLATE SQL_Latin1_General_CP1_CS_AS)";
-        if (username.contains("@")) {
-            query = "SELECT *\n"
-                    + "FROM Account\n"
-                    + "INNER JOIN PROFILE ON Account.ProfileId = Profile.Id\n"
-                    + "WHERE (Account.Email = ?)\n"
-                    + "  AND (Account.Password = ? COLLATE SQL_Latin1_General_CP1_CS_AS)";
-        }
         try {
-            ResultSet rs = DbContext.executeQuery(query, username, password);
-            while (rs.next()) {
-                return new Account(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getTimestamp(5),
-                        rs.getBoolean(6),
-                        new Profile(rs.getInt(8),
-                                ImageUtils.decompressImage(rs.getBytes(9)),
-                                rs.getTimestamp(10),
-                                rs.getString(11),
-                                rs.getString(12),
-                                rs.getString(13)));
-
+            Account account = getAccountByUsernameOrEmail(username);
+            if (CryptUtil.checkPassword(password, account.getPassword())) {
+                return account;
             }
         } catch (Exception e) {
         }
@@ -61,11 +38,10 @@ public class AccountRepository {
             DbContext.executeUpdate(query,
                     username,
                     email,
-                    password,
+                    CryptUtil.encrypt(password),
                     Date.valueOf(LocalDate.now()),
                     profileId);
         } catch (Exception e) {
-            e.getMessage();
         }
     }
 
@@ -135,7 +111,7 @@ public class AccountRepository {
                 + "SET [Password] = ?\n"
                 + "WHERE (Email = ?)";
         try {
-            DbContext.executeUpdate(query, password, email);
+            DbContext.executeUpdate(query, CryptUtil.encrypt(password), email);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -186,7 +162,6 @@ public class AccountRepository {
                         account.getProfile().getId());
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 }

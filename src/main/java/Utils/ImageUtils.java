@@ -1,6 +1,7 @@
 package Utils;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -90,9 +91,14 @@ public class ImageUtils {
         return outputStream.toByteArray();
     }
 
-    public static Image convertByteToImage(byte[] image) {
+    public static BufferedImage convertByteToImage(byte[] image) {
         try {
-            return ImageIO.read(new ByteArrayInputStream(image));
+            BufferedImage bImage = ImageIO.read(new ByteArrayInputStream(image));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bImage, "jpg", bos);
+            byte[] data = bos.toByteArray();
+            ByteArrayInputStream bis = new ByteArrayInputStream(data);
+            return ImageIO.read(bis);
         } catch (Exception e) {
         }
         return null;

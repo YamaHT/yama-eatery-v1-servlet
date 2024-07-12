@@ -54,7 +54,7 @@
 </div>
 
 <div class="blur" onclick="cancelAction()"></div>
-<div class="order-management-confirm-acceptAll">
+<div class="order-management-confirm-container dialog-acceptAll">
     <p>ARE YOU SURE TO ACCEPT ALL THESE ORDER ?</p>
     <div class="order-management-confirm-button">
         <button type="button" class="order-management-confirm-button-acceptAll-yes" onclick="changeManagement('order/process?action=acceptAll', 'order')">Yes</button>
@@ -62,7 +62,7 @@
     </div>
 
 </div>
-<div class="order-management-confirm-rejectAll">
+<div class="order-management-confirm-container dialog-rejectAll">
     <p>ARE YOU SURE TO REJECT ALL THESE ORDER ?</p>
     <div class="order-management-confirm-button">
         <button type="button" class="order-management-confirm-button-rejectAll-yes" onclick="changeManagement('order/process?action=refuseAll', 'order')">Yes</button>
@@ -96,18 +96,18 @@
     }
 
     function showAcceptAll() {
-        document.querySelector('.order-management-confirm-acceptAll').style.display = 'block';
+        document.querySelector('.order-management-confirm-container.dialog-acceptAll').classList.add('open-dialog');
         document.querySelector('.blur').style.display = 'block';
     }
 
     function showRejectAll() {
-        document.querySelector('.order-management-confirm-rejectAll').style.display = 'block';
+        document.querySelector('.order-management-confirm-container.dialog-rejectAll').classList.add('open-dialog');
         document.querySelector('.blur').style.display = 'block';
     }
 
     function cancelAction() {
-        document.querySelector('.order-management-confirm-acceptAll').style.display = 'none';
-        document.querySelector('.order-management-confirm-rejectAll').style.display = 'none';
+        document.querySelector('.order-management-confirm-container.dialog-acceptAll').classList.remove('open-dialog');
+        document.querySelector('.order-management-confirm-container.dialog-rejectAll').classList.remove('open-dialog');
         document.querySelector('.blur').style.display = 'none';
     }
 </script>

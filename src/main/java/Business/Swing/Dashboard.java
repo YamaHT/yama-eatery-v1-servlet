@@ -1598,6 +1598,7 @@ public class Dashboard extends javax.swing.JFrame {
                         new ImageIcon(ImageUtils.convertByteToImage(image).getScaledInstance(70, 50, Image.SCALE_SMOOTH))
                 );
             } catch (Exception e) {
+                e.getMessage();
             }
         }
     }//GEN-LAST:event_productInputImageActionPerformed
@@ -1850,10 +1851,10 @@ public class Dashboard extends javax.swing.JFrame {
         generalRevenueProgressBar.setValue((int) Math.round(revenue));
 
         Map<Product, Integer> mostProduct = overviewRepository.getMostSoldProduct();
-        if (!mostProduct.isEmpty()) {
-            Map.Entry<Product, Integer> entry = mostProduct.entrySet().iterator().next();
-            Product mostSoldProduct = entry.getKey();
-            Integer quantitySold = entry.getValue();
+        Map.Entry<Product, Integer> entry = mostProduct.entrySet().iterator().next();
+        Product mostSoldProduct = entry.getKey();
+        Integer quantitySold = entry.getValue();
+        if (mostSoldProduct != null) {
             detail_id.setText(String.valueOf(mostSoldProduct.getId()));
             detail_name.setText(mostSoldProduct.getName());
             detail_image.setIcon(new ImageIcon(

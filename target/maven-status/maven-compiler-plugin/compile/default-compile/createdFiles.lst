@@ -131,6 +131,7 @@ Data\DbContext.class
 Data\Model\Account.class
 Data\Repository\User\ProductRepository.class
 Business\Controller\StartController.class
+Utils\CryptUtil.class
 Utils\ImageUtils.class
 Business\Swing\Login$1.class
 Business\Swing\Profile$2.class

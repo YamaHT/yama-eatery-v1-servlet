@@ -47,8 +47,8 @@ public class Search extends HttpServlet {
             request.setAttribute("listProduct", list);
             request.setAttribute("name", name);
             request.setAttribute("filter", (filter == null || filter.equals("")) ? "Id-DESC" : filter.replace(" ", "-"));
-            request.setAttribute("minPrice", productRepo.getMinPriceProduct("search", name));
-            request.setAttribute("maxPrice", productRepo.getMaxPriceProduct("search", name));
+            request.setAttribute("minPrice", Math.floor(productRepo.getMinPriceProduct("search", name)));
+            request.setAttribute("maxPrice", Math.ceil(productRepo.getMaxPriceProduct("search", name)));
             request.setAttribute("lastMinPrice", lastMinPrice);
             request.setAttribute("lastMaxPrice", lastMaxPrice);
             request.setAttribute("page", page);

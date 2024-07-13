@@ -725,7 +725,8 @@ header .header-navigation-side .header-navigation-side-menu {
         width: 100%;
         height: max-content;
         display: flex;
-        justify-content: space-between;
+        justify-content: left;
+        gap: 2.5%;
         align-items: start;
         padding: 2.5%;
 
@@ -743,7 +744,7 @@ header .header-navigation-side .header-navigation-side-menu {
         & .chatbox-body-chat-message {
             background: #EEE;
             border-radius: 15px;
-            width: 82.5%;
+            width: max-content;
             height: max-content;
             word-wrap: break-word;
             padding: 2.5% 5%;
@@ -764,6 +765,7 @@ header .header-navigation-side .header-navigation-side-menu {
 
         &.main-user {
             flex-direction: row-reverse;
+            justify-content: right;
 
             & .chatbox-body-chat-message-username {
                 text-align: right;
@@ -1117,7 +1119,7 @@ footer .copyright {
     25% {
         transform: rotate(20deg);
     }
-    
+
     30% {
         transform: rotate(0deg);
     }

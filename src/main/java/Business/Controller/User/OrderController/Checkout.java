@@ -39,6 +39,10 @@ public class Checkout extends HttpServlet {
         Account account = (Account) request.getSession().getAttribute("account");
 
         Order order = orderRepository.getOrderByAccount(account);
+        if (order == null || order.getQuantity() == 0) {
+            response.sendRedirect("/order");
+            return;
+        }
         List<OrderDetail> listOrderDetail = orderRepository.getAllOrderDetailByOrder(order);
         List<Delivery> listDelivery = orderRepository.getAllDelivery();
         request.setAttribute("listOrderDetail", listOrderDetail);

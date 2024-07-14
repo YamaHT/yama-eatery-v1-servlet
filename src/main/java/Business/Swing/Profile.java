@@ -395,7 +395,7 @@ public class Profile extends javax.swing.JFrame {
 
     private void profile_form_button_changePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_form_button_changePassActionPerformed
         try {
-            URI uri = new URI("http://localhost:8080/Product/Add");
+            URI uri = new URI("http://localhost:8080/auth/changePassword");
             Desktop dt = Desktop.getDesktop();
             dt.browse(uri);
         } catch (Exception e) {

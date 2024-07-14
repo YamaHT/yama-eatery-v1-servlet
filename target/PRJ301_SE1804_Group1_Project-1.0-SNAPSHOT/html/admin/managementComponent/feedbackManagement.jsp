@@ -22,7 +22,7 @@
             <div class="feedback-user-content">
                 <div class="feedback-user-content-header">
                     <div class="feedback-user-content-header-info">
-                        <div class="feedback-user-content-header-info-username">${feedback.account.username}</div>
+                        <div class="feedback-user-content-header-info-username">${feedback.account.profile.name}</div>
                         <i class="fa-solid fa-circle"></i>
                         <span>${feedback.feedbackDate}</span>
                     </div>

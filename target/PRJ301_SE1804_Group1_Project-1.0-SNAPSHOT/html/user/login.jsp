@@ -54,7 +54,7 @@
                     <h2>Welcome to Yama Eatery!</h2>
                     <p>Register to join us today and start enjoying exclusive benefits and tailored culinary experiences!
                     </p>
-                    <img src="/image/banner.jpg" alt="">
+                    <img src="/image/banner1.jpg" alt="">
                 </div>
                 <form action="/auth/register" method="get" class="form-box">
                     <h1 class="form-box-title">Register</h1>

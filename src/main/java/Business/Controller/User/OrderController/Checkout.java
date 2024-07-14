@@ -66,6 +66,11 @@ public class Checkout extends HttpServlet {
         String address = request.getParameter("address");
         int deliveryId = Integer.parseInt(request.getParameter("delivery"));
         Order order = orderRepository.getOrderByAccount(account);
+        if (order == null) {
+            response.sendRedirect("/order");
+            return;
+        }
+        
         List<OrderDetail> list = orderRepository.getAllOrderDetailByOrder(order);
 
         // Add new Shipping

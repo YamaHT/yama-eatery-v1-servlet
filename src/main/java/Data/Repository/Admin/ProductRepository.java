@@ -157,7 +157,7 @@ public class ProductRepository {
     public List<Product> getAllProductSearchByPrice(double price) {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM\n"
-                + "Product INNER JOIN Categoryn"
+                + "Product INNER JOIN Category\n"
                 + "ON Product.CategoryId = Category.Id\n"
                 + "WHERE Product.Price <= ?\n"
                 + "AND Product.Available = 1\n"

@@ -34,6 +34,11 @@ public class Detail extends HttpServlet {
 
             int id = Integer.parseInt(request.getParameter("id"));
             Product product = productRepository.getProductById(id);
+            if (product == null) {
+                response.sendRedirect("/product");
+                return;
+            }
+
             request.setAttribute("product", product);
 
             List<Product> list = productRepository.getSimilarProduct(product);

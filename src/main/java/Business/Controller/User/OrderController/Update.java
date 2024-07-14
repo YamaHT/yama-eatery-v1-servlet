@@ -37,20 +37,23 @@ public class Update extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
+        try {
+            Account account = (Account) request.getSession().getAttribute("account");
 
-        OrderRepository orderRepo = new OrderRepository();
-        ProductRepository productRepo = new ProductRepository();
+            OrderRepository orderRepo = new OrderRepository();
+            ProductRepository productRepo = new ProductRepository();
 
-        Order order = orderRepo.getOrderByAccount(account);
-        String[] productId = request.getParameterValues("productId");
-        String[] amount = request.getParameterValues("amount");
-        for (int i = 0; i < amount.length; i++) {
-            Product product = productRepo.getProductById(Integer.parseInt(productId[i]));
-            int filterAmount = Math.min(Math.max(Integer.parseInt(amount[i]), 1), product.getInventory());
-            orderRepo.updateOrderDetail(order, product, filterAmount);
+            Order order = orderRepo.getOrderByAccount(account);
+            String[] productId = request.getParameterValues("productId");
+            String[] amount = request.getParameterValues("amount");
+            for (int i = 0; i < amount.length; i++) {
+                Product product = productRepo.getProductById(Integer.parseInt(productId[i]));
+                int filterAmount = Math.min(Math.max(Integer.parseInt(amount[i]), 1), product.getInventory());
+                orderRepo.updateOrderDetail(order, product, filterAmount);
+            }
+            orderRepo.updateOrder(order, orderRepo.getAllOrderDetailByOrder(order));
+        } catch (Exception e) {
         }
-        orderRepo.updateOrder(order, orderRepo.getAllOrderDetailByOrder(order));
         response.sendRedirect("/order");
     }
 

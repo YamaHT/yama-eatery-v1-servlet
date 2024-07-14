@@ -112,10 +112,10 @@ public class Cart extends javax.swing.JFrame {
                     int amount = Integer.parseInt(productAmount.getText());
                     double subtotal = amount * orderDetail.getProduct().getPrice();
                     productTotal.setText("$" + subtotal);
-                    orderRepository.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
-                    orderRepository.updateOrder(order, list);
                     orderDetail.setAmount(amount);
                     orderDetail.setSubtotal(subtotal);
+                    orderRepository.updateOrderDetail(orderDetail.getOrder(), orderDetail.getProduct(), amount);
+                    orderRepository.updateOrder(order, list);
                     checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) + 1) + "");
                     checkout_total_value.setText("$" + (Double.parseDouble(checkout_total_value.getText().substring(1)) + orderDetail.getProduct().getPrice()));
                 }
@@ -438,8 +438,9 @@ public class Cart extends javax.swing.JFrame {
     }//GEN-LAST:event_cart_button_returnActionPerformed
 
     private void checkout_button_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkout_button_checkoutActionPerformed
-        if (checkout_quantity_value.getText().equals("0")) {
+        if (orderRepository.getOrderByAccount(account).getQuantity() == 0) {
             JOptionPane.showMessageDialog(this, "No items in cart to checkout. Please add more!", "User error", JOptionPane.OK_OPTION);
+            disposeFrame();
             return;
         }
 

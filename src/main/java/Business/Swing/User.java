@@ -20,6 +20,7 @@ import Business.Swing.Component.ProductCard;
 import Business.Swing.Component.Subcomponent.CustomScrollBarUI;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collections;
 
 /**
  *
@@ -358,6 +359,12 @@ public class User extends javax.swing.JFrame {
             return;
         }
 
+        if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
+            String temp = minPrice;
+            minPrice = maxPrice;
+            maxPrice = temp;
+        }
+        
         priceInputMin.setText("");
         priceInputMax.setText("");
         if (categoryInput.getSelectedIndex() == 0) {

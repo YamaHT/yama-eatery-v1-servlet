@@ -30,11 +30,6 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        if (account == null) {
-            response.sendRedirect("/auth/login");
-            return;
-        }
         request.getRequestDispatcher("/html/user/changePassword.jsp").forward(request, response);
     }
 

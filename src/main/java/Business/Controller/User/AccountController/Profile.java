@@ -45,22 +45,25 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
+        try {
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("account");
 
-        AccountRepository accountRepo = new AccountRepository();
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String birthday = request.getParameter("birthday");
-        Part part = request.getPart("image");
-        byte[] image = null;
-        if (part != null && part.getSize() > 0) {
-            image = ImageUtils.compressImageFromWebsite(part.getInputStream());
+            AccountRepository accountRepo = new AccountRepository();
+            String name = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            String birthday = request.getParameter("birthday");
+            Part part = request.getPart("image");
+            byte[] image = null;
+            if (part != null && part.getSize() > 0) {
+                image = ImageUtils.compressImageFromWebsite(part.getInputStream());
+            }
+            accountRepo.updateProfile(account, image, birthday, name, phone, address);
+            account = accountRepo.getAccountById(account.getId());
+            session.setAttribute("account", account);
+        } catch (Exception e) {
         }
-        accountRepo.updateProfile(account, image, birthday, name, phone, address);
-        account = accountRepo.getAccountById(account.getId());
-        session.setAttribute("account", account);
         response.sendRedirect("/account/profile");
     }
 

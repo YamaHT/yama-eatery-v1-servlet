@@ -34,19 +34,21 @@ public class ContactUs extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String message = request.getParameter("message");
-        new SendMailUtils().sendMailNormal("DuyLPCE181153@fpt.edu.vn",
-                "Mail from " + email,
-                "Hello, My name is: <span style='font-weight: bold'>" + name + "</span>"
-                + "<br/><br/> I am contacting you to communicate the following message: "
-                + "<br/><span style='font-weight: bold'>" + message + "</span>"
-                + "<br/><br/> Best regard,"
-                + "<br/><span style='font-weight:bold'>" + name + "</span>");
-        request.setAttribute("success", "Successfully sended a contact");
+        try {
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String message = request.getParameter("message");
+            new SendMailUtils().sendMailNormal("DuyLPCE181153@fpt.edu.vn",
+                    "Mail from " + email,
+                    "Hello, My name is: <span style='font-weight: bold'>" + name + "</span>"
+                    + "<br/><br/> I am contacting you to communicate the following message: "
+                    + "<br/><span style='font-weight: bold'>" + message + "</span>"
+                    + "<br/><br/> Best regard,"
+                    + "<br/><span style='font-weight:bold'>" + name + "</span>");
+            request.setAttribute("success", "Successfully sended a contact");
+        } catch (Exception e) {
+        }
         request.getRequestDispatcher("/html/user/contactUs.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -33,18 +33,21 @@ public class SystemFeedback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            int count = feedbackRepository.getCountFeedback();
+            int endPage = (int) Math.ceil(count / 10.0);
+            int page = (int) Math.min(
+                    Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
+                    Math.max(endPage, 1));
 
-        int count = feedbackRepository.getCountFeedback();
-        int endPage = (int) Math.ceil(count / 10.0);
-        int page = (int) Math.min(
-                Math.max(request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1, 1),
-                Math.max(endPage, 1));
-
-        List<Feedback> list = feedbackRepository.getAllFeedback(page);
-        request.setAttribute("listFeedback", list);
-        request.setAttribute("page", page);
-        request.setAttribute("endPage", endPage);
-        request.getRequestDispatcher("/html/user/feedback.jsp").forward(request, response);
+            List<Feedback> list = feedbackRepository.getAllFeedback(page);
+            request.setAttribute("listFeedback", list);
+            request.setAttribute("page", page);
+            request.setAttribute("endPage", endPage);
+            request.getRequestDispatcher("/html/user/feedback.jsp").forward(request, response);
+        } catch (Exception e) {
+            response.sendRedirect("/home");
+        }
     }
 
     @Override

@@ -37,7 +37,7 @@
                 <c:if test="${product.inventory != 0}">
                     <form action="/order/add" method="post" class="productDetail-content-action">
                         <div class="productDetail-content-action-quantity">
-                            <input type="number" name="amount" value="1" min="1" max="${product.inventory}">
+                            <input type="number" name="amount" value="1" min="1" max="${product.inventory}" required>
                             <input type="hidden" name="productId" value="${product.id}">
                         </div>
                         <div class="productDetail-content-action-addToCart">

@@ -29,29 +29,32 @@ public class ResendOTP extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean found = false;
-        Cookie[] cookies = request.getCookies();
-        String email = null;
-        for (Cookie cooky : cookies) {
-            if (cooky.getName().equals("email")) {
-                email = cooky.getValue();
-                cooky.setMaxAge(60 * 5);
-                response.addCookie(cooky);
-                found = true;
-            } else if (cooky.getName().equals("password")) {
-                cooky.setMaxAge(60 * 5);
-                response.addCookie(cooky);
-                found = true;
+        try {
+            boolean found = false;
+            Cookie[] cookies = request.getCookies();
+            String email = null;
+            for (Cookie cooky : cookies) {
+                if (cooky.getName().equals("email")) {
+                    email = cooky.getValue();
+                    cooky.setMaxAge(60 * 5);
+                    response.addCookie(cooky);
+                    found = true;
+                } else if (cooky.getName().equals("password")) {
+                    cooky.setMaxAge(60 * 5);
+                    response.addCookie(cooky);
+                    found = true;
+                }
             }
+            if (!found) {
+                request.getRequestDispatcher("/auth/login").forward(request, response);
+                return;
+            }
+            String OTP = new SendMailUtils().sendMailOTP(email);
+            HttpSession session = request.getSession();
+            session.setAttribute("OTP", OTP);
+            session.setMaxInactiveInterval(60 * 5);
+        } catch (Exception e) {
         }
-        if (!found) {
-            request.getRequestDispatcher("/auth/login").forward(request, response);
-            return;
-        }
-        String OTP = new SendMailUtils().sendMailOTP(email);
-        HttpSession session = request.getSession();
-        session.setAttribute("OTP", OTP);
-        session.setMaxInactiveInterval(60 * 5);
     }
 
     @Override

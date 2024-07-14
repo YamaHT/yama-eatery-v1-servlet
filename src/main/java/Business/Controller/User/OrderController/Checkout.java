@@ -36,57 +36,66 @@ public class Checkout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        Account account = (Account) request.getSession().getAttribute("account");
+        try {
+            Account account = (Account) request.getSession().getAttribute("account");
 
-        Order order = orderRepository.getOrderByAccount(account);
-        if (order == null || order.getQuantity() == 0) {
-            response.sendRedirect("/order");
-            return;
+            Order order = orderRepository.getOrderByAccount(account);
+            if (order == null || order.getQuantity() == 0) {
+                response.sendRedirect("/order");
+                return;
+            }
+            List<OrderDetail> listOrderDetail = orderRepository.getAllOrderDetailByOrder(order);
+            List<Delivery> listDelivery = orderRepository.getAllDelivery();
+            request.setAttribute("listOrderDetail", listOrderDetail);
+            request.setAttribute("order", order);
+            request.setAttribute("listDelivery", listDelivery);
+            request.getRequestDispatcher("/html/user/transaction.jsp").forward(request, response);
+        } catch (Exception e) {
+            response.sendRedirect("/home");
         }
-        List<OrderDetail> listOrderDetail = orderRepository.getAllOrderDetailByOrder(order);
-        List<Delivery> listDelivery = orderRepository.getAllDelivery();
-        request.setAttribute("listOrderDetail", listOrderDetail);
-        request.setAttribute("order", order);
-        request.setAttribute("listDelivery", listDelivery);
-        request.getRequestDispatcher("/html/user/transaction.jsp").forward(request, response);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            Account account = (Account) request.getSession().getAttribute("account");
+            if (account == null) {
+                response.sendRedirect("/auth/login");
+                return;
+            }
 
-        Account account = (Account) request.getSession().getAttribute("account");
-        if (account == null) {
-            response.sendRedirect("/auth/login");
-            return;
+            String name = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            int deliveryId = Integer.parseInt(request.getParameter("delivery"));
+            Order order = orderRepository.getOrderByAccount(account);
+            if (order == null) {
+                response.sendRedirect("/order");
+                return;
+            }
+
+            List<OrderDetail> list = orderRepository.getAllOrderDetailByOrder(order);
+
+            // Add new Shipping
+            int shippingId = orderRepository.addShipping(name, phone, address, deliveryId);
+            Shipping shipping = orderRepository.getShippingById(shippingId);
+
+            // Checkout
+            orderRepository.checkout(order, shipping);
+
+            // Update Product Inventory and OrderDetail that have amount higher product inventory
+            orderRepository.updateAllProductInventoryAfterCheckout(list);
+            list = orderRepository.getAllOrderDetailByOrder(order);
+            orderRepository.updateAllOrderAfterCheckout(list);
+            String paymentPrice = "" + (order.getTotal() + shipping.getDelivery().getPrice()) * 24000;
+            String description = account.getEmail() + "%20o" + order.getId();
+            request.getRequestDispatcher("/payment?paymentPrice=" + paymentPrice + "&description=" + description).forward(request, response);
+        } catch (Exception e) {
+            response.sendRedirect("/home");
         }
 
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        int deliveryId = Integer.parseInt(request.getParameter("delivery"));
-        Order order = orderRepository.getOrderByAccount(account);
-        if (order == null) {
-            response.sendRedirect("/order");
-            return;
-        }
-        
-        List<OrderDetail> list = orderRepository.getAllOrderDetailByOrder(order);
-
-        // Add new Shipping
-        int shippingId = orderRepository.addShipping(name, phone, address, deliveryId);
-        Shipping shipping = orderRepository.getShippingById(shippingId);
-
-        // Checkout
-        orderRepository.checkout(order, shipping);
-
-        // Update Product Inventory and OrderDetail that have amount higher product inventory
-        orderRepository.updateAllProductInventoryAfterCheckout(list);
-        list = orderRepository.getAllOrderDetailByOrder(order);
-        orderRepository.updateAllOrderAfterCheckout(list);
-        String paymentPrice = "" + (order.getTotal() + shipping.getDelivery().getPrice()) * 24000;
-        String description = account.getEmail() + "%20o" + order.getId();
-        request.getRequestDispatcher("/payment?paymentPrice=" + paymentPrice + "&description=" + description).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

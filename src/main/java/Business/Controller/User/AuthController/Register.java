@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "Register", urlPatterns = {"/auth/register"})
 public class Register extends HttpServlet {
 
-    AccountRepository accountRepo = new AccountRepository();
+    AccountRepository accountRepository = new AccountRepository();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,8 +40,8 @@ public class Register extends HttpServlet {
             String[] names = {"username", "email", "password"};
             String[] values = {username, email, password};
 
-            if (accountRepo.getAccountByUsernameOrEmail(username) != null 
-                    || accountRepo.getAccountByUsernameOrEmail(email) != null) {
+            if (accountRepository.getAccountByUsernameOrEmail(username) != null 
+                    || accountRepository.getAccountByUsernameOrEmail(email) != null) {
                 request.setAttribute("error", "Username or email existed");
                 request.getRequestDispatcher("/auth/login").forward(request, response);
                 return;
@@ -106,8 +106,8 @@ public class Register extends HttpServlet {
                 }
             }
 
-            int profileId = accountRepo.addProfile(username);
-            accountRepo.register(username, email, password, profileId);
+            int profileId = accountRepository.addProfile(username);
+            accountRepository.register(username, email, password, profileId);
             request.setAttribute("success", "Register successfully! You can login now");
             request.getRequestDispatcher("/auth/login").forward(request, response);
         } catch (Exception e) {

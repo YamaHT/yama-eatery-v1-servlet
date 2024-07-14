@@ -319,6 +319,12 @@ public class User extends javax.swing.JFrame {
             priceInputMin.setText("");
             priceInputMax.setText("");
             return;
+        } else {
+            if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
+                String temp = minPrice;
+                minPrice = maxPrice;
+                maxPrice = temp;
+            }
         }
 
         priceInputMin.setText("");
@@ -357,14 +363,14 @@ public class User extends javax.swing.JFrame {
             priceInputMin.setText("");
             priceInputMax.setText("");
             return;
+        } else {
+            if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
+                String temp = minPrice;
+                minPrice = maxPrice;
+                maxPrice = temp;
+            }
         }
 
-        if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
-            String temp = minPrice;
-            minPrice = maxPrice;
-            maxPrice = temp;
-        }
-        
         priceInputMin.setText("");
         priceInputMax.setText("");
         if (categoryInput.getSelectedIndex() == 0) {

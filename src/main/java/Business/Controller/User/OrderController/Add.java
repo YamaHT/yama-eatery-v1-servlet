@@ -42,14 +42,18 @@ public class Add extends HttpServlet {
         OrderRepository orderRepository = new OrderRepository();
         ProductRepository productRepo = new ProductRepository();
 
-        int productId = Integer.parseInt(request.getParameter("productId"));
+        int productId = 1;
+        try {
+            productId = Integer.parseInt(request.getParameter("productId"));
+        } catch (Exception e) {
+        }
 
         Product product = productRepo.getProductById(productId);
         if (product == null) {
             response.sendRedirect("/product");
             return;
         }
-        
+
         int amount = request.getParameter("amount") != null ? Integer.parseInt(request.getParameter("amount")) : 1;
         amount = Math.min(Math.max(amount, 1), product.getInventory());
 

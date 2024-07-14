@@ -80,7 +80,7 @@ public class Cart extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     productAmount.setText((Integer.parseInt(productAmount.getText()) - 1) + "");
-                    int amount = Integer.parseInt(productAmount.getText());
+                    int amount = Math.min(orderRepository.getOrderDetailByOrderAndProduct(order, orderDetail.getProduct()).getProduct().getInventory(), Integer.parseInt(productAmount.getText()));
                     if (amount == 0) {
                         orderRepository.deleteOrderDetail(orderDetail.getOrder().getId(), orderDetail.getProduct().getId());
                         Container parent = productInCart.getParent();
@@ -105,7 +105,7 @@ public class Cart extends javax.swing.JFrame {
             productAmountIncrease.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    if (Integer.parseInt(productAmount.getText()) == orderDetail.getProduct().getInventory()) {
+                    if (Integer.parseInt(productAmount.getText()) >= orderRepository.getOrderDetailByOrderAndProduct(order, orderDetail.getProduct()).getProduct().getInventory()) {
                         return;
                     }
                     productAmount.setText((Integer.parseInt(productAmount.getText()) + 1) + "");

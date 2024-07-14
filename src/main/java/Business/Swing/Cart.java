@@ -96,8 +96,8 @@ public class Cart extends javax.swing.JFrame {
                         orderDetail.setSubtotal(subtotal);
                     }
                     orderRepository.updateOrder(order, list);
-                    checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) - 1) + "");
-                    checkout_total_value.setText("$" + (Double.parseDouble(checkout_total_value.getText().substring(1)) - orderDetail.getProduct().getPrice()));
+                    checkout_quantity_value.setText((Integer.parseInt(checkout_quantity_value.getText()) - (Integer.parseInt(productAmount.getText()) - amount + 1)) + "");
+                    checkout_total_value.setText("$" + (Double.parseDouble(checkout_total_value.getText().substring(1)) - (Integer.parseInt(productAmount.getText()) - amount + 1) * orderDetail.getProduct().getPrice()));
                 }
             });
 

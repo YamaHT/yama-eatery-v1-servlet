@@ -38,40 +38,40 @@ public class Add extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        OrderRepository orderRepository = new OrderRepository();
-        ProductRepository productRepo = new ProductRepository();
-
-        int productId = 1;
         try {
-            productId = Integer.parseInt(request.getParameter("productId"));
+            Account account = (Account) request.getSession().getAttribute("account");
+            OrderRepository orderRepository = new OrderRepository();
+            ProductRepository productRepo = new ProductRepository();
+
+            int productId = Integer.parseInt(request.getParameter("productId"));
+
+            Product product = productRepo.getProductById(productId);
+            if (product == null) {
+                response.sendRedirect("/product");
+                return;
+            }
+
+            int amount = request.getParameter("amount") != null ? Integer.parseInt(request.getParameter("amount")) : 1;
+            amount = Math.min(Math.max(amount, 1), product.getInventory());
+
+            Order order = orderRepository.getOrderByAccount(account);
+            if (order == null) {
+                orderRepository.createOrder(account);
+                order = orderRepository.getOrderByAccount(account);
+            }
+
+            OrderDetail orderDetail = orderRepository.getOrderDetailByOrderAndProduct(order, product);
+            if (orderDetail == null) {
+                orderRepository.addOrderDetail(order, product, amount);
+            } else {
+                amount = Math.min(product.getInventory(),
+                        orderDetail.getAmount() + amount);
+                orderRepository.updateOrderDetail(order, product, amount);
+            }
+            orderRepository.updateOrder(order, orderRepository.getAllOrderDetailByOrder(order));
         } catch (Exception e) {
         }
-
-        Product product = productRepo.getProductById(productId);
-        if (product == null) {
-            response.sendRedirect("/product");
-            return;
-        }
-
-        int amount = request.getParameter("amount") != null ? Integer.parseInt(request.getParameter("amount")) : 1;
-        amount = Math.min(Math.max(amount, 1), product.getInventory());
-
-        Order order = orderRepository.getOrderByAccount(account);
-        if (order == null) {
-            orderRepository.createOrder(account);
-            order = orderRepository.getOrderByAccount(account);
-        }
-
-        OrderDetail orderDetail = orderRepository.getOrderDetailByOrderAndProduct(order, product);
-        if (orderDetail == null) {
-            orderRepository.addOrderDetail(order, product, amount);
-        } else {
-            amount = Math.min(product.getInventory(),
-                    orderDetail.getAmount() + amount);
-            orderRepository.updateOrderDetail(order, product, amount);
-        }
-        orderRepository.updateOrder(order, orderRepository.getAllOrderDetailByOrder(order));
+        
         response.sendRedirect("/order");
     }
 

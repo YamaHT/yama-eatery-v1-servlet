@@ -119,7 +119,8 @@ public class OrderRepository {
         try {
             ResultSet rs = DbContext.executeQuery(query, order.getId(), product.getId());
             while (rs.next()) {
-                return new OrderDetail(order, product, rs.getInt(3), rs.getDouble(4));
+                return new OrderDetail(order, new ProductRepository().getProductById(product.getId()),
+                        rs.getInt(3), rs.getDouble(4));
             }
         } catch (Exception e) {
         }

@@ -52,16 +52,3 @@ function emptySearchInput() {
 function submitSearchForm() {
     document.querySelector('.header-button-search-bar').submit();
 }
-
-// BLOCK DEVTOOLS !!!!!!!!!!!!!!!
-//document.addEventListener('contextmenu', (e) => e.preventDefault());
-//(function () {
-//    const threshold = 160;
-//    const checkDevTools = () => {
-//        if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
-//            document.body.innerHTML = "<h1>Developer tools are not allowed!</h1>\n<button type='button' onclick='location.reload()'>Return to previous</button>";
-//
-//        }
-//    };
-//    setInterval(checkDevTools, 1000);
-//})();
